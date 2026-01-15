@@ -11,13 +11,20 @@ from pathlib import Path
 import warnings
 warnings.filterwarnings('ignore')
 
+VERBOSE = False
+
+
+def _log(message: str) -> None:
+    if VERBOSE:
+        _log(message)
+
 # SHAP
 try:
     import shap
     SHAP_AVAILABLE = True
 except ImportError:
     SHAP_AVAILABLE = False
-    print("⚠️ SHAP não disponível - instalando fallback de interpretabilidade")
+    _log("⚠️ SHAP não disponível - instalando fallback de interpretabilidade")
 
 # Sklearn
 from sklearn.inspection import permutation_importance, partial_dependence
@@ -35,10 +42,9 @@ except ImportError:
         PLOT_PD_AVAILABLE = True
     except ImportError:
         PLOT_PD_AVAILABLE = False
-        print("⚠️ plot_partial_dependence não disponível - usando implementação manual")
 
-from ..utils.config import load_config, get_results_path
-from ..utils.helpers import print_section, save_figure
+from utils.config import load_config, get_results_path
+from utils.helpers import print_section, save_figure
 
 
 class ModelInterpreter:
@@ -73,9 +79,9 @@ class ModelInterpreter:
         self.X_train = X_train
         self.feature_names = X_test.columns.tolist()
         
-        print(f"✅ Modelo carregado: {type(self.model).__name__}")
-        print(f"📊 Features: {len(self.feature_names)}")
-        print(f"🧪 Amostras de teste: {len(X_test)}")
+        _log(f"✅ Modelo carregado: {type(self.model).__name__}")
+        _log(f"📊 Features: {len(self.feature_names)}")
+        _log(f"🧪 Amostras de teste: {len(X_test)}")
         
     def analyze_feature_importance(self) -> Dict[str, pd.Series]:
         """
@@ -96,7 +102,7 @@ class ModelInterpreter:
             ).sort_values(ascending=False)
             
             importance_results['intrinsic'] = intrinsic_importance
-            print(f"✅ Importância intrínseca calculada")
+            _log(f"✅ Importância intrínseca calculada")
             
         elif hasattr(self.model, 'coef_'):
             coef_importance = pd.Series(
@@ -105,10 +111,10 @@ class ModelInterpreter:
             ).sort_values(ascending=False)
             
             importance_results['coefficients'] = coef_importance
-            print(f"✅ Importância por coeficientes calculada")
+            _log(f"✅ Importância por coeficientes calculada")
         
         # 2. Permutation Importance
-        print("🔄 Calculando Permutation Importance...")
+        _log("🔄 Calculando Permutation Importance...")
         perm_importance = permutation_importance(
             self.model, self.X_test, self.y_test, 
             n_repeats=10, random_state=42, n_jobs=-1
@@ -120,18 +126,18 @@ class ModelInterpreter:
         ).sort_values(ascending=False)
         
         importance_results['permutation'] = perm_importance_series
-        print(f"✅ Permutation importance calculada")
+        _log(f"✅ Permutation importance calculada")
         
         # 3. SHAP Feature Importance (se disponível)
         if self.shap_available and self.X_train is not None:
-            print("🔄 Calculando SHAP Feature Importance...")
+            _log("🔄 Calculando SHAP Feature Importance...")
             try:
                 shap_importance = self._calculate_shap_importance()
                 if shap_importance is not None:
                     importance_results['shap'] = shap_importance
-                    print(f"✅ SHAP importance calculada")
+                    _log(f"✅ SHAP importance calculada")
             except Exception as e:
-                print(f"⚠️ Erro no SHAP: {e}")
+                _log(f"⚠️ Erro no SHAP: {e}")
         
         self.feature_importance = importance_results
         return importance_results
@@ -176,7 +182,7 @@ class ModelInterpreter:
                 return pd.Series(mean_abs_shap, index=self.feature_names).sort_values(ascending=False)
             
         except Exception as e:
-            print(f"Erro no cálculo SHAP: {e}")
+            _log(f"Erro no cálculo SHAP: {e}")
             return None
     
     def create_shap_explanations(self, n_samples: int = 100) -> Dict[str, Any]:
@@ -190,7 +196,7 @@ class ModelInterpreter:
             Dict com explicações SHAP
         """
         if not self.shap_available:
-            print("⚠️ SHAP não disponível")
+            _log("⚠️ SHAP não disponível")
             return {}
             
         print_section("CRIANDO EXPLICAÇÕES SHAP")
@@ -202,7 +208,7 @@ class ModelInterpreter:
             sample_size = min(n_samples, len(self.X_test))
             X_sample = self.X_test.iloc[:sample_size]
             
-            print(f"🔄 Analisando {sample_size} amostras...")
+            _log(f"🔄 Analisando {sample_size} amostras...")
             
             # Escolher explainer apropriado
             if hasattr(self.model, 'predict_proba'):
@@ -237,10 +243,10 @@ class ModelInterpreter:
             explanations['X_sample'] = X_sample
             explanations['feature_names'] = self.feature_names
             
-            print(f"✅ Explicações SHAP criadas para {sample_size} amostras")
+            _log(f"✅ Explicações SHAP criadas para {sample_size} amostras")
             
         except Exception as e:
-            print(f"❌ Erro ao criar explicações SHAP: {e}")
+            _log(f"❌ Erro ao criar explicações SHAP: {e}")
             return {}
         
         self.explanations = explanations
@@ -266,7 +272,7 @@ class ModelInterpreter:
         else:
             important_features = self.feature_names[:top_features]
         
-        print(f"🔄 Analisando dependência parcial para {len(important_features)} features...")
+        _log(f"🔄 Analisando dependência parcial para {len(important_features)} features...")
         
         pd_results = {}
         
@@ -285,10 +291,10 @@ class ModelInterpreter:
                     'grid': pd_result[1][0]
                 }
             
-            print(f"✅ Partial dependence calculada para {len(pd_results)} features")
+            _log(f"✅ Partial dependence calculada para {len(pd_results)} features")
             
         except Exception as e:
-            print(f"❌ Erro no cálculo de partial dependence: {e}")
+            _log(f"❌ Erro no cálculo de partial dependence: {e}")
             
         self.partial_dependence_results = pd_results
         return pd_results
@@ -399,7 +405,7 @@ class ModelInterpreter:
             plt.show()
             
         except Exception as e:
-            print(f"❌ Erro ao plotar SHAP summary: {e}")
+            _log(f"❌ Erro ao plotar SHAP summary: {e}")
     
     def _plot_partial_dependence(self, save_plots: bool) -> None:
         """
@@ -494,7 +500,7 @@ class ModelInterpreter:
             plt.show()
             
         except Exception as e:
-            print(f"❌ Erro ao plotar explicações individuais: {e}")
+            _log(f"❌ Erro ao plotar explicações individuais: {e}")
     
     def generate_interpretation_report(self) -> Dict[str, Any]:
         """
@@ -666,7 +672,7 @@ def create_model_interpreter() -> ModelInterpreter:
 
 
 if __name__ == "__main__":
-    print("🔍 Testando módulo ModelInterpreter...")
+    _log("🔍 Testando módulo ModelInterpreter...")
     
     # Criar dados de teste
     np.random.seed(42)
@@ -682,6 +688,6 @@ if __name__ == "__main__":
     # Testar interpretador
     interpreter = ModelInterpreter()
     
-    print(f"\n✅ Teste concluído!")
-    print(f"🔍 ModelInterpreter pronto para uso")
-    print(f"📊 SHAP {'disponível' if interpreter.shap_available else 'não disponível'}")
+    _log(f"\n✅ Teste concluído!")
+    _log(f"🔍 ModelInterpreter pronto para uso")
+    _log(f"📊 SHAP {'disponível' if interpreter.shap_available else 'não disponível'}")
