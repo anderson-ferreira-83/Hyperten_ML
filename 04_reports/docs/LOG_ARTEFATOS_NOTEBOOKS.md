@@ -1,0 +1,207 @@
+# Log de artefatos (notebooks 01?05)
+
+Gerado em: 2026-01-15T18:01:48
+
+## 04_reports
+- `04_reports/eda`: 8 arquivo(s)
+  - 04_reports/eda/categorical_distributions.png
+  - 04_reports/eda/continuous_boxplots.png
+  - 04_reports/eda/continuous_distributions.png
+  - 04_reports/eda/correlation_matrix.png
+  - 04_reports/eda/missing_values_analysis.png
+  - 04_reports/eda/statistical_tests_results.png
+  - 04_reports/eda/target_distribution.png
+  - 04_reports/eda/vif_analysis.png
+- `04_reports/preprocessing`: 2 arquivo(s)
+  - 04_reports/preprocessing/teste_proporcoes.csv
+  - 04_reports/preprocessing/teste_proporcoes_granular.csv
+- `04_reports/validation`: 4 arquivo(s)
+  - 04_reports/validation/correlation_preservation_analysis.html
+  - 04_reports/validation/correlation_preservation_analysis.json
+  - 04_reports/validation/post_smote_outliers_analysis.json
+  - 04_reports/validation/scaler_comparison_analysis.json
+- `04_reports/modeling`: 6 arquivo(s)
+  - 04_reports/modeling/best_model_predictions.csv
+  - 04_reports/modeling/cross_validation_results.csv
+  - 04_reports/modeling/final_model_results.csv
+  - 04_reports/modeling/medical_analysis_risk_groups.csv
+  - 04_reports/modeling/model_training_report.md
+  - 04_reports/modeling/model_training_summary.json
+- `04_reports/visualizations`: 138 arquivo(s)
+  - 04_reports/visualizations/01_comparison_p1_metricas.pdf
+  - 04_reports/visualizations/01_comparison_p1_metricas.png
+  - 04_reports/visualizations/01_comparison_p1_metricas.svg
+  - 04_reports/visualizations/01_comparison_p2_f2.pdf
+  - 04_reports/visualizations/01_comparison_p2_f2.png
+  - 04_reports/visualizations/01_comparison_p2_f2.svg
+  - 04_reports/visualizations/01_comparison_p3_fn.pdf
+  - 04_reports/visualizations/01_comparison_p3_fn.png
+  - 04_reports/visualizations/01_comparison_p3_fn.svg
+  - 04_reports/visualizations/01_comparison_p4_radar.pdf
+  - 04_reports/visualizations/01_comparison_p4_radar.png
+  - 04_reports/visualizations/01_comparison_p4_radar.svg
+  - 04_reports/visualizations/01_model_comparison_overview.png
+  - 04_reports/visualizations/01_model_comparison_overview.svg
+  - 04_reports/visualizations/01_model_comparison_overview_professional.png
+  - 04_reports/visualizations/01_model_comparison_overview_professional.svg
+  - 04_reports/visualizations/01_model_comparison_part01_metricas.pdf
+  - 04_reports/visualizations/01_model_comparison_part01_metricas.png
+  - 04_reports/visualizations/01_model_comparison_part01_metricas.svg
+  - 04_reports/visualizations/01_model_comparison_part02_f2_scores.pdf
+  - 04_reports/visualizations/01_model_comparison_part02_f2_scores.png
+  - 04_reports/visualizations/01_model_comparison_part02_f2_scores.svg
+  - 04_reports/visualizations/01_model_comparison_part03_falsos_negativos.pdf
+  - 04_reports/visualizations/01_model_comparison_part03_falsos_negativos.png
+  - 04_reports/visualizations/01_model_comparison_part03_falsos_negativos.svg
+  - 04_reports/visualizations/01_model_comparison_part04_radar.pdf
+  - 04_reports/visualizations/01_model_comparison_part04_radar.png
+  - 04_reports/visualizations/01_model_comparison_part04_radar.svg
+  - 04_reports/visualizations/02_confusion_matrices_all.png
+  - 04_reports/visualizations/02_confusion_matrices_all.svg
+  - 04_reports/visualizations/02_confusion_matrices_professional.png
+  - 04_reports/visualizations/02_confusion_matrices_professional.svg
+  - 04_reports/visualizations/03_roc_curves.png
+  - 04_reports/visualizations/03_roc_curves.svg
+  - 04_reports/visualizations/03_roc_curves_professional.pdf
+  - 04_reports/visualizations/03_roc_curves_professional.png
+  - 04_reports/visualizations/03_roc_curves_professional.svg
+  - 04_reports/visualizations/03_roc_p1_curvas.pdf
+  - 04_reports/visualizations/03_roc_p1_curvas.png
+  - 04_reports/visualizations/03_roc_p1_curvas.svg
+  - 04_reports/visualizations/03_roc_p2_zoom.pdf
+  - 04_reports/visualizations/03_roc_p2_zoom.png
+  - 04_reports/visualizations/03_roc_p2_zoom.svg
+  - 04_reports/visualizations/03_roc_p3_rank.pdf
+  - 04_reports/visualizations/03_roc_p3_rank.png
+  - 04_reports/visualizations/03_roc_p3_rank.svg
+  - 04_reports/visualizations/04_pr_p1_curvas.pdf
+  - 04_reports/visualizations/04_pr_p1_curvas.png
+  - 04_reports/visualizations/04_pr_p1_curvas.svg
+  - 04_reports/visualizations/04_pr_p2_thresh.pdf
+  - 04_reports/visualizations/04_pr_p2_thresh.png
+  - 04_reports/visualizations/04_pr_p2_thresh.svg
+  - 04_reports/visualizations/04_pr_p3_rank.pdf
+  - 04_reports/visualizations/04_pr_p3_rank.png
+  - 04_reports/visualizations/04_pr_p3_rank.svg
+  - 04_reports/visualizations/04_precision_recall_curves.png
+  - 04_reports/visualizations/04_precision_recall_curves.svg
+  - 04_reports/visualizations/04_precision_recall_professional.pdf
+  - 04_reports/visualizations/04_precision_recall_professional.png
+  - 04_reports/visualizations/04_precision_recall_professional.svg
+  - 04_reports/visualizations/05_feature_importance.png
+  - 04_reports/visualizations/05_feature_importance.svg
+  - 04_reports/visualizations/05_feature_importance_individual_professional.pdf
+  - 04_reports/visualizations/05_feature_importance_individual_professional.png
+  - 04_reports/visualizations/05_feature_importance_individual_professional.svg
+  - 04_reports/visualizations/06_feat_p1_consenso.pdf
+  - 04_reports/visualizations/06_feat_p1_consenso.png
+  - 04_reports/visualizations/06_feat_p1_consenso.svg
+  - 04_reports/visualizations/06_feat_p2_estab.pdf
+  - 04_reports/visualizations/06_feat_p2_estab.png
+  - 04_reports/visualizations/06_feat_p2_estab.svg
+  - 04_reports/visualizations/06_feat_p3_dist.pdf
+  - 04_reports/visualizations/06_feat_p3_dist.png
+  - 04_reports/visualizations/06_feat_p3_dist.svg
+  - 04_reports/visualizations/06_feat_p4_var.pdf
+  - 04_reports/visualizations/06_feat_p4_var.png
+  - 04_reports/visualizations/06_feat_p4_var.svg
+  - 04_reports/visualizations/06_feature_importance_consensus.png
+  - 04_reports/visualizations/06_feature_importance_consensus.svg
+  - 04_reports/visualizations/06_feature_importance_consensus_professional.png
+  - 04_reports/visualizations/06_feature_importance_consensus_professional.svg
+  - 04_reports/visualizations/07_error_analysis_part01_boxplot.pdf
+  - 04_reports/visualizations/07_error_analysis_part01_boxplot.png
+  - 04_reports/visualizations/07_error_analysis_part01_boxplot.svg
+  - 04_reports/visualizations/07_error_analysis_part02_fn.pdf
+  - 04_reports/visualizations/07_error_analysis_part02_fn.png
+  - 04_reports/visualizations/07_error_analysis_part02_fn.svg
+  - 04_reports/visualizations/07_error_analysis_part03_fp.pdf
+  - 04_reports/visualizations/07_error_analysis_part03_fp.png
+  - 04_reports/visualizations/07_error_analysis_part03_fp.svg
+  - 04_reports/visualizations/07_error_analysis_part04_violin.pdf
+  - 04_reports/visualizations/07_error_analysis_part04_violin.png
+  - 04_reports/visualizations/07_error_analysis_part04_violin.svg
+  - 04_reports/visualizations/07_error_p1_box.pdf
+  - 04_reports/visualizations/07_error_p1_box.png
+  - 04_reports/visualizations/07_error_p1_box.svg
+  - 04_reports/visualizations/07_error_p2_fn.pdf
+  - 04_reports/visualizations/07_error_p2_fn.png
+  - 04_reports/visualizations/07_error_p2_fn.svg
+  - 04_reports/visualizations/07_error_p3_fp.pdf
+  - 04_reports/visualizations/07_error_p3_fp.png
+  - 04_reports/visualizations/07_error_p3_fp.svg
+  - 04_reports/visualizations/07_error_p4_violin.pdf
+  - 04_reports/visualizations/07_error_p4_violin.png
+  - 04_reports/visualizations/07_error_p4_violin.svg
+  - 04_reports/visualizations/07_error_probability_analysis.png
+  - 04_reports/visualizations/07_error_probability_analysis.svg
+  - 04_reports/visualizations/07_error_probability_analysis_professional.pdf
+  - 04_reports/visualizations/07_error_probability_analysis_professional.png
+  - 04_reports/visualizations/07_error_probability_analysis_professional.svg
+  - 04_reports/visualizations/08_threshold_optimization.png
+  - 04_reports/visualizations/08_threshold_optimization.svg
+  - 04_reports/visualizations/08_threshold_optimization_professional.pdf
+  - 04_reports/visualizations/08_threshold_optimization_professional.png
+  - 04_reports/visualizations/08_threshold_optimization_professional.svg
+  - 04_reports/visualizations/09_base_vs_optimized.png
+  - 04_reports/visualizations/09_base_vs_optimized.svg
+  - 04_reports/visualizations/09_base_vs_optimized_professional.pdf
+  - 04_reports/visualizations/09_base_vs_optimized_professional.png
+  - 04_reports/visualizations/09_base_vs_optimized_professional.svg
+  - 04_reports/visualizations/09_comp_p1_abs.pdf
+  - 04_reports/visualizations/09_comp_p1_abs.png
+  - 04_reports/visualizations/09_comp_p1_abs.svg
+  - 04_reports/visualizations/09_comp_p2_rel.pdf
+  - 04_reports/visualizations/09_comp_p2_rel.png
+  - 04_reports/visualizations/09_comp_p2_rel.svg
+  - 04_reports/visualizations/09_comp_p3_trade.pdf
+  - 04_reports/visualizations/09_comp_p3_trade.png
+  - 04_reports/visualizations/09_comp_p3_trade.svg
+  - 04_reports/visualizations/09_comp_p4_sig.pdf
+  - 04_reports/visualizations/09_comp_p4_sig.png
+  - 04_reports/visualizations/09_comp_p4_sig.svg
+  - 04_reports/visualizations/09_comp_p5_heat.pdf
+  - 04_reports/visualizations/09_comp_p5_heat.png
+  - 04_reports/visualizations/09_comp_p5_heat.svg
+  - 04_reports/visualizations/09_comp_p6_res.pdf
+  - 04_reports/visualizations/09_comp_p6_res.png
+  - 04_reports/visualizations/09_comp_p6_res.svg
+- `04_reports/executive`: 2 arquivo(s)
+  - 04_reports/executive/all_models_comparison.csv
+  - 04_reports/executive/final_report.json
+- `04_reports/model_comparison`: 2 arquivo(s)
+  - 04_reports/model_comparison/model_results.csv
+  - 04_reports/model_comparison/training_metadata.json
+- `04_reports/interpretability`: 8 arquivo(s)
+  - 04_reports/interpretability/clinical_category_importance.csv
+  - 04_reports/interpretability/clinical_thresholds_analysis.csv
+  - 04_reports/interpretability/executive_summary.md
+  - 04_reports/interpretability/feature_importance_intrinsic.csv
+  - 04_reports/interpretability/feature_importance_permutation.csv
+  - 04_reports/interpretability/final_predictions_with_explanations.csv
+  - 04_reports/interpretability/interpretability_report.json
+  - 04_reports/interpretability/technical_report.md
+- `04_reports/docs`: 6 arquivo(s)
+  - 04_reports/docs/DEPLOY_AWS.md
+  - 04_reports/docs/DIRETORIOS_DIAGRAMA.md
+  - 04_reports/docs/PASSO_API_GATEWAY.md
+  - 04_reports/docs/PIPELINE_DESCRICAO.md
+  - 04_reports/docs/PIPELINE_DIAGRAMA.md
+  - 04_reports/docs/TUTORIAL_INFERENCIA_LOCAL.md
+
+## 03_models
+- `03_models/trained`: 2 arquivo(s)
+  - 03_models/trained/all_trained_models.pkl
+  - 03_models/trained/best_model.pkl
+- `03_models/final`: 4 arquivo(s)
+  - 03_models/final/best_model_optimized.pkl
+  - 03_models/final/gb_optimized.pkl
+  - 03_models/final/rf_optimized.pkl
+  - 03_models/final/xgb_optimized.pkl
+
+## 02_notebooks/06_model_metrics
+- `02_notebooks/06_model_metrics`: 4 arquivo(s)
+  - 02_notebooks/06_model_metrics/6_analysis_metrics/cross_validation_results.csv
+  - 02_notebooks/06_model_metrics/6_analysis_metrics/final_model_results.csv
+  - 02_notebooks/06_model_metrics/6_analysis_metrics/model_training_report.md
+  - 02_notebooks/06_model_metrics/6_analysis_metrics/model_training_summary.json

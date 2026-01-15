@@ -1,0 +1,153 @@
+{
+  "basic_info": {
+    "timestamp": "2025-11-17T13:49:49.517052",
+    "model_type": "GradientBoostingClassifier",
+    "n_features": 10,
+    "n_samples_train": 3392,
+    "n_samples_test": 848,
+    "target_column": "risco_hipertensao"
+  },
+  "feature_importance": {
+    "methods_available": [
+      "intrinsic",
+      "permutation"
+    ],
+    "top_features": {
+      "intrinsic": {
+        "pressao_sistolica": 0.7677384563461039,
+        "pressao_diastolica": 0.08836613393441183,
+        "pressao_arterial_media": 0.06933881795658954,
+        "indice_vulnerabilidade": 0.01986647508668419,
+        "produto_freq_pressao": 0.015194272142396624,
+        "idade_pressao_int": 0.013929697619318377,
+        "tripla_interacao": 0.011059126840653745,
+        "pressao_pulso": 0.010412507500411979,
+        "score_risco_cv": 0.0035357076580294017,
+        "categoria_hipertensao": 0.0005588049154004402
+      },
+      "permutation": {
+        "pressao_diastolica": 0.03891509433962266,
+        "pressao_sistolica": 0.032547169811320796,
+        "pressao_arterial_media": 0.012971698113207576,
+        "idade_pressao_int": 0.0028301886792452937,
+        "indice_vulnerabilidade": 0.001650943396226423,
+        "produto_freq_pressao": 0.0009433962264151052,
+        "score_risco_cv": -0.0002358490566037652,
+        "categoria_hipertensao": -0.0007075471698112957,
+        "pressao_pulso": -0.0014150943396226134,
+        "tripla_interacao": -0.0018867924528301883
+      }
+    }
+  },
+  "partial_dependence": {
+    "features_analyzed": [
+      "pressao_sistolica",
+      "pressao_diastolica",
+      "pressao_arterial_media",
+      "indice_vulnerabilidade",
+      "produto_freq_pressao",
+      "idade_pressao_int"
+    ],
+    "summary": {
+      "pressao_sistolica": {
+        "trend": "positive",
+        "change_percent": 107.21775631973547
+      },
+      "pressao_diastolica": {
+        "trend": "positive",
+        "change_percent": 111.85593671211946
+      },
+      "pressao_arterial_media": {
+        "trend": "positive",
+        "change_percent": 57.537086187074415
+      },
+      "indice_vulnerabilidade": {
+        "trend": "positive",
+        "change_percent": 29.512680332914247
+      },
+      "produto_freq_pressao": {
+        "trend": "positive",
+        "change_percent": 22.274861981286193
+      },
+      "idade_pressao_int": {
+        "trend": "positive",
+        "change_percent": 27.35952763455548
+      }
+    }
+  },
+  "performance_metrics": {
+    "accuracy": 0.8867924528301887,
+    "precision": 0.797153024911032,
+    "recall": 0.8517110266159695,
+    "f1_score": 0.8235294117647058,
+    "auc_roc": 0.9521822495206527
+  },
+  "shap_analysis": {
+    "available": false,
+    "results": {}
+  },
+  "generation_timestamp": "2025-11-17T13:49:49.543475",
+  "clinical_analysis": {
+    "threshold_recommendations": {
+      "screening": {
+        "threshold": 0.3,
+        "sensitivity": 0.9163498098859315,
+        "specificity": 0.8837606837606837,
+        "use_case": "Initial screening - minimize false negatives"
+      },
+      "confirmation": {
+        "threshold": 0.8,
+        "sensitivity": 0.6045627376425855,
+        "specificity": 0.9623931623931624,
+        "use_case": "Diagnostic confirmation - minimize false positives"
+      },
+      "balanced": {
+        "threshold": 0.3,
+        "sensitivity": 0.9163498098859315,
+        "specificity": 0.8837606837606837,
+        "use_case": "General clinical use - balanced accuracy"
+      }
+    },
+    "model_performance": {
+      "best_auc": 0.9521822495206527,
+      "best_f1": 0.8235294117647058,
+      "model_type": "GradientBoostingClassifier"
+    },
+    "clinical_category_ranking": {
+      "Pressão Arterial": {
+        "mean_importance": 0.23396397893437934,
+        "max_importance": 0.7677384563461039,
+        "n_features": 4,
+        "top_feature": "pressao_sistolica",
+        "top_score": 0.7677384563461039
+      },
+      "Demografia": {
+        "mean_importance": 0.016898086353001284,
+        "max_importance": 0.01986647508668419,
+        "n_features": 2,
+        "top_feature": "indice_vulnerabilidade",
+        "top_score": 0.01986647508668419
+      },
+      "Features Engineered": {
+        "mean_importance": 0.011059126840653745,
+        "max_importance": 0.011059126840653745,
+        "n_features": 1,
+        "top_feature": "tripla_interacao",
+        "top_score": 0.011059126840653745
+      },
+      "Risco Cardiovascular": {
+        "mean_importance": 0.0035357076580294017,
+        "max_importance": 0.0035357076580294017,
+        "n_features": 1,
+        "top_feature": "score_risco_cv",
+        "top_score": 0.0035357076580294017
+      }
+    }
+  },
+  "medical_report_summary": {
+    "total_patients": 848,
+    "hypertension_prevalence": 31.014150943396224,
+    "mean_age": 1.6805429245283017,
+    "metabolic_syndrome_prevalence": 0
+  }
+}

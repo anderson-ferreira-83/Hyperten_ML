@@ -1,0 +1,64 @@
+{
+  "comparison_summary": {
+    "best_scaler": "MinMaxScaler",
+    "best_f1_score": 0.9237391088307436,
+    "best_f1_std": 0.01752112510127977,
+    "recommendation": "MinMaxScaler (melhor performance geral)"
+  },
+  "all_results": [
+    {
+      "scaler": "StandardScaler",
+      "f1_mean": 0.9235695069630083,
+      "f1_std": 0.018492451078004547,
+      "cv_scores": [
+        0.901595744680851,
+        0.9161290322580645,
+        0.9104665825977302,
+        0.9378960709759189,
+        0.9517601043024772
+      ],
+      "mean_of_means": -4.1214595089593516e-17,
+      "mean_of_stds": 1.0001316049225937,
+      "range_mean": 7.187107169853944,
+      "min_value": -3.100207485233882,
+      "max_value": 14.196019225327767,
+      "scaling_quality": "Excelente"
+    },
+    {
+      "scaler": "RobustScaler",
+      "f1_mean": 0.9234990863033623,
+      "f1_std": 0.018023818578171612,
+      "cv_scores": [
+        0.9013333333333333,
+        0.9161290322580645,
+        0.9116161616161617,
+        0.9378960709759189,
+        0.9505208333333334
+      ],
+      "mean_of_means": 0.1692962965803538,
+      "mean_of_stds": 0.6698739939721642,
+      "range_mean": 5.856708599965688,
+      "min_value": -2.5141341329044886,
+      "max_value": 22.69903959993767,
+      "scaling_quality": "Excelente"
+    },
+    {
+      "scaler": "MinMaxScaler",
+      "f1_mean": 0.9237391088307436,
+      "f1_std": 0.01752112510127977,
+      "cv_scores": [
+        0.9027962716378163,
+        0.9159120310478654,
+        0.9116161616161617,
+        0.9390862944162437,
+        0.9492847854356307
+      ],
+      "mean_of_means": 0.27245094849410817,
+      "mean_of_stds": 0.19540695621485046,
+      "range_mean": 1.0,
+      "min_value": 0.0,
+      "max_value": 1.0,
+      "scaling_quality": "Excelente"
+    }
+  ]
+}

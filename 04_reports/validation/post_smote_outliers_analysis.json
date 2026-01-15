@@ -1,0 +1,118 @@
+{
+  "summary": {
+    "total_original_outliers": 595,
+    "total_synthetic_outliers": 459,
+    "quality_assessment": "EXCELENTE",
+    "features_ok_percentage": 91.66666666666666
+  },
+  "by_feature": [
+    {
+      "feature": "sexo",
+      "outliers_original": 0,
+      "outliers_sintetico": 0,
+      "pct_original": 0.0,
+      "pct_sintetico": 0.0,
+      "diferenca_pct": 0.0,
+      "status": "OK"
+    },
+    {
+      "feature": "idade",
+      "outliers_original": 0,
+      "outliers_sintetico": 0,
+      "pct_original": 0.0,
+      "pct_sintetico": 0.0,
+      "diferenca_pct": 0.0,
+      "status": "OK"
+    },
+    {
+      "feature": "fumante_atualmente",
+      "outliers_original": 0,
+      "outliers_sintetico": 0,
+      "pct_original": 0.0,
+      "pct_sintetico": 0.0,
+      "diferenca_pct": 0.0,
+      "status": "OK"
+    },
+    {
+      "feature": "cigarros_por_dia",
+      "outliers_original": 7,
+      "outliers_sintetico": 2,
+      "pct_original": 0.2539912917271408,
+      "pct_sintetico": 0.19157088122605362,
+      "diferenca_pct": -0.06242041050108718,
+      "status": "OK"
+    },
+    {
+      "feature": "medicamento_pressao",
+      "outliers_original": 82,
+      "outliers_sintetico": 162,
+      "pct_original": 2.9753265602322205,
+      "pct_sintetico": 15.517241379310345,
+      "diferenca_pct": 12.541914819078125,
+      "status": "CRÍTICO"
+    },
+    {
+      "feature": "diabetes",
+      "outliers_original": 65,
+      "outliers_sintetico": 44,
+      "pct_original": 2.358490566037736,
+      "pct_sintetico": 4.21455938697318,
+      "diferenca_pct": 1.8560688209354441,
+      "status": "OK"
+    },
+    {
+      "feature": "colesterol_total",
+      "outliers_original": 39,
+      "outliers_sintetico": 25,
+      "pct_original": 1.4150943396226416,
+      "pct_sintetico": 2.3946360153256707,
+      "diferenca_pct": 0.9795416757030291,
+      "status": "OK"
+    },
+    {
+      "feature": "pressao_sistolica",
+      "outliers_original": 85,
+      "outliers_sintetico": 69,
+      "pct_original": 3.0841799709724236,
+      "pct_sintetico": 6.609195402298851,
+      "diferenca_pct": 3.5250154313264273,
+      "status": "OK"
+    },
+    {
+      "feature": "pressao_diastolica",
+      "outliers_original": 54,
+      "outliers_sintetico": 35,
+      "pct_original": 1.9593613933236573,
+      "pct_sintetico": 3.3524904214559386,
+      "diferenca_pct": 1.3931290281322812,
+      "status": "OK"
+    },
+    {
+      "feature": "imc",
+      "outliers_original": 61,
+      "outliers_sintetico": 40,
+      "pct_original": 2.2133526850507983,
+      "pct_sintetico": 3.8314176245210727,
+      "diferenca_pct": 1.6180649394702744,
+      "status": "OK"
+    },
+    {
+      "feature": "frequencia_cardiaca",
+      "outliers_original": 62,
+      "outliers_sintetico": 23,
+      "pct_original": 2.2496371552975325,
+      "pct_sintetico": 2.203065134099617,
+      "diferenca_pct": -0.0465720211979157,
+      "status": "OK"
+    },
+    {
+      "feature": "glicose",
+      "outliers_original": 140,
+      "outliers_sintetico": 59,
+      "pct_original": 5.079825834542816,
+      "pct_sintetico": 5.6513409961685825,
+      "diferenca_pct": 0.5715151616257668,
+      "status": "OK"
+    }
+  ]
+}

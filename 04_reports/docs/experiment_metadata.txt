@@ -1,0 +1,179 @@
+METADADOS DO EXPERIMENTO - TCC HIPERTENSÃO ML (VERSÃO OTIMIZADA)
+===============================================================================
+
+Data/Hora Criação: 2025-01-17 10:30:00
+Projeto: TCC - Predição de Hipertensão com Machine Learning
+Versão: v3.0_Otimizada
+Domínio: Medical_Hypertension_Risk_Prediction
+Autores: Tiago Dias, Nicolas Vagnes, Marcelo Colpani, Rubens Collin, Anderson H. R. Ferreira
+
+DATASET INFORMAÇÕES:
+==================
+Fonte: Kaggle - Hypertension Risk Model Dataset
+URL: https://www.kaggle.com/datasets/khan1803115/hypertension-risk-model-main/data
+Total de Amostras: 4,240
+Distribuição Target:
+  - Baixo Risco (0): 2,923 (68.9%)
+  - Alto Risco (1): 1,317 (31.1%)
+Features Originais: 13
+Features Engenheiradas: 38 (médicas especializadas)
+Valores Ausentes: 540 (tratados com imputação)
+
+ESTRUTURA OTIMIZADA DE DIRETÓRIOS:
+=================================
+- 1_EDA/: Análise Exploratória de Dados Hierárquica
+  - 1_1_visualization/: Visualizações dos dados originais médicos
+  - 1_2_distributions/: Distribuições por categoria clínica
+  - 1_3_correlations/: Análises de correlação e interdependência
+  - 2_medical_analysis/: Análises médicas especializadas (AHA/ACC)
+  - 3_feature_optimization/: Otimização de features médicas
+
+- 02_notebooks/06_model_metrics/: Resultados de Machine Learning Estruturados
+  - 1_LogisticRegression/: Regressão Logística
+    ├── Medical_Features/: Features baseadas em conhecimento médico
+    ├── Statistical_Features/: Features estatísticas tradicionais
+    ├── Hybrid_Features/: Combinação otimizada médica + estatística
+    └── All_Features/: Todas as features disponíveis
+  - 2_RandomForest/: Random Forest (mesma estrutura)
+  - 3_GradientBoosting/: Gradient Boosting (melhor modelo atual)
+  - 4_XGBoost/: XGBoost
+  - 5_EnsembleMethods/: Métodos de Ensemble
+    ├── Voting_Classifier/: Votação majoritária
+    ├── Stacking_Classifier/: Stacking avançado
+    └── Bagging_Classifier/: Bagging otimizado
+  - 6_analysis_metrics/: Análises comparativas e visualizações
+
+- 3_CLINICAL_VALIDATION/: Validação Clínica Especializada
+  - threshold_optimization/: Otimização de thresholds clínicos
+  - clinical_scenarios/: Cenários clínicos (screening, diagnóstico, confirmação)
+  - medical_interpretability/: Interpretabilidade para profissionais da saúde
+
+METODOLOGIA DE DESENVOLVIMENTO:
+==============================
+1. Feature Engineering Médica: Baseada em diretrizes AHA/ACC 2017
+2. Validação Clínica: Métricas médicas (sensibilidade, especificidade, VPP, VPN)
+3. Interpretabilidade: SHAP, Feature Importance, Análise médica
+4. Ensemble Methods: Combinação otimizada de múltiplos algoritmos
+5. Thresholds Clínicos: Otimizados para diferentes contextos de uso
+
+MODELOS IMPLEMENTADOS:
+=====================
+- Logistic Regression: Interpretabilidade linear
+- Random Forest: Robustez e feature importance
+- Gradient Boosting: Melhor performance atual (AUC: 0.952)
+- XGBoost: Otimização avançada
+- Ensemble Methods: Combinação para máxima performance
+
+FEATURE ENGINEERING MÉDICA:
+===========================
+Features Derivadas Médicas:
+- Pressão Arterial Média (PAM)
+- Pressão de Pulso
+- Scores de Risco Cardiovascular (Framingham-style)
+- Índices de Síndrome Metabólica
+- Interações Age-Adjusted
+- Categorização por Diretrizes AHA/ACC
+
+Categorias Clínicas:
+- Pressão Arterial: 8 features especializadas
+- Antropométricas: 5 features derivadas
+- Biomarcadores: 6 features clínicas
+- Demografia: 4 features ajustadas por idade
+- Risco Cardiovascular: 6 scores compostos
+
+RESULTADOS PRINCIPAIS:
+=====================
+Melhor Modelo: GradientBoostingClassifier
+Performance Clínica:
+  - AUC-ROC: 0.952 (Excelente discriminação)
+  - F1-Score: 0.824
+  - Sensibilidade: 85.2% (Screening)
+  - Especificidade: 90.3% (Confirmação)
+  - VPP: 79.7%
+  - VPN: 93.1%
+
+Thresholds Clínicos Otimizados:
+- Screening (alta sensibilidade): ≥0.3 (Sens: 91.6%, Spec: 88.4%)
+- Diagnóstico Balanceado: ≥0.5 (Sens: 85.2%, Spec: 90.3%)
+- Confirmação (alta especificidade): ≥0.8 (Sens: 60.5%, Spec: 96.2%)
+
+VALIDAÇÃO MÉDICA:
+================
+- Baseado em diretrizes AHA/ACC 2017 para hipertensão
+- Features clinicamente validadas
+- Interpretabilidade focada em uso médico real
+- Cenários clínicos testados (triagem, diagnóstico, confirmação)
+- Explicações individuais para casos clínicos
+
+ARQUIVOS PRINCIPAIS GERADOS:
+============================
+Notebooks Especializados:
+- 01_exploratory_analysis.ipynb: EDA médica completa
+- 02_data_preprocessing.ipynb: Pipeline de pré-processamento
+- 03_feature_engineering.ipynb: Features médicas especializadas
+- 04_model_training.ipynb: Treinamento e otimização
+- 05_interpretability_reports.ipynb: Interpretabilidade clínica
+
+Módulos Python Reutilizáveis:
+- src/data/: Processamento e feature engineering
+- src/models/: Algoritmos e ensemble methods
+- src/evaluation/: Análise médica e visualização
+- src/analysis/: Interpretabilidade avançada
+
+Relatórios Finais:
+- executive_summary.md: Resumo executivo para gestão
+- technical_report.md: Relatório técnico detalhado
+- interpretability_report.json: Análises de interpretabilidade
+
+CONFIGURAÇÕES DE REPRODUTIBILIDADE:
+==================================
+Random State: 42
+Test Size: 20%
+Cross-Validation: 5-fold estratificada
+SMOTE para balanceamento: Habilitado
+Scaling: StandardScaler
+
+Versões de Bibliotecas:
+- Python: 3.8+
+- Scikit-learn: 1.3+
+- Pandas: 1.5+
+- NumPy: 1.21+
+- Matplotlib: 3.5+
+- Seaborn: 0.12+
+
+PRÓXIMOS PASSOS PLANEJADOS:
+==========================
+Fase 2: Otimização Avançada
+- Implementar otimização de proporções de dados
+- Validação externa com novos datasets
+- Integração com sistemas clínicos
+
+Fase 3: Deploy e Monitoramento
+- Deploy em ambiente de produção
+- Monitoramento contínuo de performance
+- Feedback loop com profissionais médicos
+
+VALIDAÇÃO ACADÊMICA:
+===================
+Adequado para:
+- Apresentação de TCC
+- Publicação em conferências médicas
+- Aplicação clínica piloto
+- Baseline para pesquisas futuras
+
+DISCLAIMER MÉDICO:
+=================
+Este modelo é desenvolvido para fins educacionais e de pesquisa.
+As predições NÃO substituem avaliação médica profissional.
+Sempre consulte um médico qualificado para diagnóstico e tratamento.
+
+CONTATO TÉCNICO:
+===============
+Desenvolvimento: Equipe TCC CEUNSP Salto
+Metodologia: Machine Learning com Feature Engineering Médica
+Validação: Baseada em diretrizes médicas estabelecidas (AHA/ACC 2017)
+
+==========================================
+Metadados gerados automaticamente em: 2025-01-17 10:30:00
+Versão do sistema: TCC_Hipertensao_ML_v3.0_Otimizada
+==========================================

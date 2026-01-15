@@ -1,0 +1,139 @@
+{
+  "feature_engineering_date": "2025-11-17T10:47:07.952789",
+  "original_features": 12,
+  "created_features": 25,
+  "total_features_after_engineering": 37,
+  "selected_features": 10,
+  "created_feature_names": [
+    "pressao_arterial_media",
+    "pressao_pulso",
+    "pressao_ratio",
+    "categoria_hipertensao",
+    "categoria_imc",
+    "imc_normalizado",
+    "superficie_corporal",
+    "idade_pressao_int",
+    "idade_imc_int",
+    "decada_idade",
+    "idade_normalizada",
+    "idade_sexo_int",
+    "produto_freq_pressao",
+    "fc_normalizada",
+    "reserva_cronotropica",
+    "eficiencia_cardiaca",
+    "score_risco_cv",
+    "sindrome_metabolica",
+    "colesterol_categoria",
+    "colesterol_normalizado",
+    "glicose_categoria",
+    "glicose_normalizada",
+    "tripla_interacao",
+    "risco_multiplo",
+    "indice_vulnerabilidade"
+  ],
+  "selected_feature_names": [
+    "score_risco_cv",
+    "produto_freq_pressao",
+    "pressao_diastolica",
+    "tripla_interacao",
+    "indice_vulnerabilidade",
+    "categoria_hipertensao",
+    "pressao_pulso",
+    "pressao_sistolica",
+    "idade_pressao_int",
+    "pressao_arterial_media"
+  ],
+  "feature_categories": {
+    "Original": [
+      "sexo",
+      "fumante_atualmente",
+      "cigarros_por_dia",
+      "diabetes",
+      "colesterol_total",
+      "imc",
+      "frequencia_cardiaca",
+      "glicose",
+      "imc_normalizado",
+      "fc_normalizada",
+      "score_risco_cv",
+      "colesterol_categoria",
+      "colesterol_normalizado",
+      "glicose_categoria",
+      "glicose_normalizada",
+      "risco_multiplo"
+    ],
+    "Pressão Arterial": [
+      "medicamento_pressao",
+      "pressao_sistolica",
+      "pressao_diastolica",
+      "pressao_arterial_media",
+      "pressao_pulso",
+      "pressao_ratio",
+      "categoria_hipertensao",
+      "idade_pressao_int",
+      "produto_freq_pressao"
+    ],
+    "Interação Idade": [
+      "idade",
+      "idade_imc_int",
+      "decada_idade",
+      "idade_normalizada",
+      "idade_sexo_int",
+      "indice_vulnerabilidade"
+    ],
+    "Antropométrica": [
+      "categoria_imc",
+      "superficie_corporal"
+    ],
+    "Cardíaca": [
+      "reserva_cronotropica",
+      "eficiencia_cardiaca"
+    ],
+    "Risco Cardiovascular": [
+      "sindrome_metabolica"
+    ],
+    "Interação Complexa": [
+      "tripla_interacao"
+    ]
+  },
+  "selection_pipeline": [
+    [
+      "Inicial",
+      37
+    ],
+    [
+      "Baixa Variância",
+      36
+    ],
+    [
+      "Correlação + Médicas",
+      36
+    ],
+    [
+      "Final",
+      10
+    ]
+  ],
+  "top_features_by_correlation": {
+    "pressao_sistolica": 0.6966558825325887,
+    "pressao_arterial_media": 0.6931189896794253,
+    "indice_vulnerabilidade": 0.6276237269854785,
+    "pressao_diastolica": 0.6158401996052022,
+    "idade_pressao_int": 0.6009385572348004,
+    "tripla_interacao": 0.5939031585391589,
+    "categoria_hipertensao": 0.5876548546382223,
+    "score_risco_cv": 0.5856243387768558,
+    "produto_freq_pressao": 0.5526517056953608,
+    "pressao_pulso": 0.545502217989187
+  },
+  "medical_features_in_top_features": [
+    "pressao_arterial_media",
+    "indice_vulnerabilidade",
+    "idade_pressao_int",
+    "tripla_interacao",
+    "categoria_hipertensao",
+    "score_risco_cv",
+    "produto_freq_pressao",
+    "pressao_pulso"
+  ]
+}

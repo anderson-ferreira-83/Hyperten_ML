@@ -1,0 +1,17 @@
+{
+  "features": [
+    "sexo",
+    "idade",
+    "fumante_atualmente",
+    "cigarros_por_dia",
+    "medicamento_pressao",
+    "diabetes",
+    "colesterol_total",
+    "pressao_sistolica",
+    "pressao_diastolica",
+    "imc",
+    "frequencia_cardiaca",
+    "glicose"
+  ],
+  "target": "risco_hipertensao"
+}

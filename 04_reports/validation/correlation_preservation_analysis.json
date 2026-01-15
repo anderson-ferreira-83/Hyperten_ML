@@ -1,0 +1,62 @@
+{
+  "summary": {
+    "average_difference": 0.013102600694765418,
+    "max_difference": 0.0553079872856543,
+    "std_difference": 0.011249828560126428,
+    "quality_assessment": "EXCELENTE",
+    "important_correlations_preserved_rate": 100.0,
+    "final_status": "APROVADO"
+  },
+  "important_correlations": [
+    {
+      "par": "sexo-cigarros_por_dia",
+      "original": 0.32358788792637544,
+      "pos_smote": 0.346500499063797,
+      "diferenca": 0.022912611137421546,
+      "preservada": true
+    },
+    {
+      "par": "idade-pressao_sistolica",
+      "original": 0.39077987741569625,
+      "pos_smote": 0.4118085462572603,
+      "diferenca": 0.02102866884156407,
+      "preservada": true
+    },
+    {
+      "par": "fumante_atualmente-cigarros_por_dia",
+      "original": 0.7623818406112235,
+      "pos_smote": 0.773740033402549,
+      "diferenca": 0.01135819279132555,
+      "preservada": true
+    },
+    {
+      "par": "diabetes-glicose",
+      "original": 0.6267922531958919,
+      "pos_smote": 0.6452116424448094,
+      "diferenca": 0.018419389248917506,
+      "preservada": true
+    },
+    {
+      "par": "pressao_sistolica-pressao_diastolica",
+      "original": 0.7878496518935135,
+      "pos_smote": 0.7929692604203759,
+      "diferenca": 0.005119608526862329,
+      "preservada": true
+    },
+    {
+      "par": "pressao_sistolica-imc",
+      "original": 0.33025821484614437,
+      "pos_smote": 0.33054167677074625,
+      "diferenca": 0.0002834619246018799,
+      "preservada": true
+    },
+    {
+      "par": "pressao_diastolica-imc",
+      "original": 0.37606599141780234,
+      "pos_smote": 0.3779638081843366,
+      "diferenca": 0.0018978167665342771,
+      "preservada": true
+    }
+  ],
+  "significant_changes": []
+}

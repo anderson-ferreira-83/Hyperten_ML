@@ -1,0 +1,43 @@
+{
+  "preprocessing_info": {
+    "test_size_chosen": 0.35,
+    "best_proportion": "65/35",
+    "f2_score": 0.8740938080343836,
+    "recall": 0.8928416485900217,
+    "false_negatives": 49
+  },
+  "data_shapes": {
+    "original": [
+      4240,
+      13
+    ],
+    "X_train_balanced": [
+      3800,
+      12
+    ],
+    "X_test": [
+      1484,
+      12
+    ]
+  },
+  "target_distribution": {
+    "original": {
+      "0": 2923,
+      "1": 1317
+    },
+    "train_balanced": {
+      "0": 1900,
+      "1": 1900
+    },
+    "test": {
+      "0": 1023,
+      "1": 461
+    }
+  },
+  "improvements": [
+    "Multiple train/test proportions tested",
+    "SMOTE applied correctly (only on train)",
+    "No data leakage",
+    "Automatic validations passed"
+  ]
+}

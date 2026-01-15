@@ -1,0 +1,95 @@
+# Configuração de Experimentos
+
+# Dados
+data:
+  file_name: "Hypertension-risk-model-main.csv"
+  target_column: "risco_hipertensao"
+  
+  # Mapeamento de colunas (inglês -> português)
+  column_mapping:
+    male: "sexo"
+    age: "idade"
+    currentSmoker: "fumante_atualmente"
+    cigsPerDay: "cigarros_por_dia"
+    BPMeds: "medicamento_pressao"
+    diabetes: "diabetes"
+    totChol: "colesterol_total"
+    sysBP: "pressao_sistolica"
+    diaBP: "pressao_diastolica"
+    BMI: "imc"
+    heartRate: "frequencia_cardiaca"
+    glucose: "glicose"
+    Risk: "risco_hipertensao"
+
+# Pré-processamento
+preprocessing:
+  # Tratamento de valores ausentes
+  missing_values:
+    strategy: "median"  # ou "mean", "mode"
+    categorical_strategy: "mode"
+  
+  # Outliers
+  outliers:
+    method: "iqr"  # ou "zscore", "isolation_forest"
+    threshold: 1.5
+  
+  # Normalização
+  scaling:
+    method: "standard"  # ou "minmax", "robust"
+
+# Feature Engineering
+feature_engineering:
+  # Criar features derivadas
+  derived_features:
+    - "pressao_arterial_media"  # (sistolica + 2*diastolica) / 3
+    - "razao_pressao"           # sistolica / diastolica
+    - "categoria_imc"           # categorias de IMC
+    - "risco_cardiovascular"    # combinação de fatores
+  
+  # Binning de variáveis
+  binning:
+    idade:
+      bins: [30, 40, 50, 60, 70]
+      labels: ["jovem", "adulto", "meia_idade", "idoso"]
+    imc:
+      bins: [18.5, 25, 30, 35]
+      labels: ["normal", "sobrepeso", "obesidade_1", "obesidade_2"]
+
+# Validação e Avaliação
+evaluation:
+  # Métricas principais
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1_score"
+    - "f2_score"
+    - "roc_auc"
+    - "average_precision"
+  
+  # Validação cruzada
+  cross_validation:
+    method: "stratified_kfold"
+    n_splits: 5
+    shuffle: true
+    random_state: 42
+  
+  # Threshold optimization
+  threshold_optimization:
+    method: "youden_index"  # ou "f1_max", "precision_recall"
+    
+# Interpretabilidade
+interpretability:
+  shap:
+    explainer_type: "tree"  # ou "linear", "kernel"
+    sample_size: 1000
+  
+  lime:
+    sample_size: 100
+    
+# Resultados
+results:
+  save_models: true
+  save_figures: true
+  figure_format: "svg"  # ou "png", "pdf"
+  figure_dpi: 300

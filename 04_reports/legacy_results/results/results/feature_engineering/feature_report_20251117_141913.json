@@ -1,0 +1,21 @@
+{
+  "original_features": 11,
+  "engineered_features": 13,
+  "created_features": 2,
+  "new_features_list": [
+    "score_framingham_simpl",
+    "score_metabolico"
+  ],
+  "feature_categories": {
+    "blood_pressure": 0,
+    "cardiovascular_risk": 2,
+    "interactions": 0,
+    "polynomials": 0,
+    "categories": 0
+  },
+  "top_correlations": {
+    "score_framingham_simpl": NaN,
+    "score_metabolico": NaN
+  },
+  "timestamp": "2025-11-17T14:19:13.152425"
+}

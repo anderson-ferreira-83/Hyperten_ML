@@ -1,0 +1,10 @@
+score_risco_cv
+produto_freq_pressao
+pressao_diastolica
+tripla_interacao
+indice_vulnerabilidade
+categoria_hipertensao
+pressao_pulso
+pressao_sistolica
+idade_pressao_int
+pressao_arterial_media

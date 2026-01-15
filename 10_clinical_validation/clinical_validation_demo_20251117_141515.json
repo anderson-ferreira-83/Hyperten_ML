@@ -1,0 +1,138 @@
+{
+  "timestamp": "2025-11-17T14:15:15.673958",
+  "demo_info": {
+    "mode": "demonstration",
+    "data_source": "real",
+    "samples": 4240,
+    "features": [
+      "score_risco_cv",
+      "produto_freq_pressao",
+      "pressao_diastolica",
+      "tripla_interacao",
+      "indice_vulnerabilidade",
+      "categoria_hipertensao",
+      "pressao_pulso",
+      "pressao_sistolica",
+      "idade_pressao_int",
+      "pressao_arterial_media"
+    ]
+  },
+  "validations": {
+    "medical": {
+      "correlations": {
+        "Pressão Sistólica": {
+          "feature_used": "pressao_sistolica",
+          "correlation": 0.545369856261066,
+          "expected_positive": true,
+          "meets_expectation": "True"
+        },
+        "Pressão Diastólica": {
+          "feature_used": "pressao_diastolica",
+          "correlation": 0.42019813312323717,
+          "expected_positive": true,
+          "meets_expectation": "True"
+        },
+        "Pressão Arterial Média": {
+          "feature_used": "pressao_arterial_media",
+          "correlation": 0.5085528259139279,
+          "expected_positive": true,
+          "meets_expectation": "True"
+        },
+        "Idade": {
+          "feature_used": "indice_vulnerabilidade",
+          "correlation": 0.5103301958998412,
+          "expected_positive": true,
+          "meets_expectation": "True"
+        },
+        "Score de Risco": {
+          "feature_used": "score_risco_cv",
+          "correlation": 0.5263031670433792,
+          "expected_positive": true,
+          "meets_expectation": "True"
+        }
+      },
+      "consistency_score": 1.0,
+      "interpretation": "Excelente consistência com conhecimento médico"
+    },
+    "thresholds": {
+      "scenarios": {
+        "screening": {
+          "threshold": 0.25,
+          "description": "Triagem - Maximizar Sensibilidade",
+          "sensitivity": 0.42596810933940776,
+          "specificity": 0.8778652069791311,
+          "accuracy": 0.7375,
+          "precision": 0.6111111111111112,
+          "confusion_matrix": {
+            "tp": 561,
+            "fp": 357,
+            "tn": 2566,
+            "fn": 756
+          }
+        },
+        "balanced": {
+          "threshold": 0.5,
+          "description": "Diagnóstico Balanceado",
+          "sensitivity": 0.009111617312072893,
+          "specificity": 0.9996578857338351,
+          "accuracy": 0.6919811320754717,
+          "precision": 0.9230769230769231,
+          "confusion_matrix": {
+            "tp": 12,
+            "fp": 1,
+            "tn": 2922,
+            "fn": 1305
+          }
+        },
+        "confirmation": {
+          "threshold": 0.75,
+          "description": "Confirmação - Maximizar Especificidade",
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "accuracy": 0.6893867924528302,
+          "precision": 0.0,
+          "confusion_matrix": {
+            "tp": 0,
+            "fp": 0,
+            "tn": 2923,
+            "fn": 1317
+          }
+        }
+      }
+    },
+    "proportions": {
+      "current_prevalence": 0.3106132075471698,
+      "scenarios": {
+        "screening": {
+          "target_prevalence": 0.05,
+          "description": "Triagem populacional de baixa prevalência",
+          "prevalence_difference": 0.2606132075471698,
+          "estimated_performance": 0.8436320754716982,
+          "recommendation": "Cenário moderado - recalibração recomendada"
+        },
+        "general_population": {
+          "target_prevalence": 0.3106132075471698,
+          "description": "População geral (prevalência atual)",
+          "prevalence_difference": 0.0,
+          "estimated_performance": 1.0,
+          "recommendation": "Cenário ideal - uso direto recomendado"
+        },
+        "high_risk_cohort": {
+          "target_prevalence": 0.6,
+          "description": "Coorte de alto risco",
+          "prevalence_difference": 0.28938679245283017,
+          "estimated_performance": 0.8263679245283019,
+          "recommendation": "Cenário moderado - recalibração recomendada"
+        }
+      }
+    }
+  },
+  "summary": {
+    "Validação Médica": "✅ Excelente (1.000)",
+    "Threshold Triagem": "Sens: 42.6% (threshold: 0.250)",
+    "Threshold Confirmação": "Spec: 100.0% (threshold: 0.750)",
+    "Prevalência Atual": "31.1%",
+    "Performance Estimada": "100.0%",
+    "Status Sistema": "✅ Todas validações executadas"
+  }
+}

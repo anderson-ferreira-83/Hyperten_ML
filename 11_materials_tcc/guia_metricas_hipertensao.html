@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Métricas - Predição de Hipertensão</title>
+    <style>
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            body {
+                background: white !important;
+                font-size: 11pt;
+                line-height: 1.4;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 15pt;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5;
+            color: #000000;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #333333;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 22pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+            color: #1a1a1a;
+        }
+
+        .header h2 {
+            font-size: 14pt;
+            font-weight: normal;
+            color: #555555;
+            margin: 10px 0;
+        }
+
+        .metadata {
+            background: #f8f8f8;
+            border-left: 4px solid #2c5aa0;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 11pt;
+        }
+
+        h2 {
+            font-size: 16pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 2px solid #2c5aa0;
+            padding-bottom: 8px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+
+        h3 {
+            font-size: 13pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #2a2a2a;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #3a3a3a;
+        }
+
+        p {
+            text-align: justify;
+            margin-bottom: 12px;
+            font-size: 11pt;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        ul, ol {
+            margin-left: 40px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            border: 1px solid #cccccc;
+            border-left: 4px solid #2c5aa0;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 9pt;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .highlight-box {
+            background: #fff9e6;
+            border: 1px solid #daa520;
+            border-left: 5px solid #daa520;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .clinical-box {
+            background: #e8f4f8;
+            border: 1px solid #2c5aa0;
+            border-left: 5px solid #2c5aa0;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .warning-box {
+            background: #fff0f0;
+            border: 1px solid #c62828;
+            border-left: 5px solid #c62828;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border: 1px solid #2e7d32;
+            border-left: 5px solid #2e7d32;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border: 1px solid #1976d2;
+            border-left: 5px solid #1976d2;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 10pt;
+        }
+
+        table th {
+            background: #2c5aa0;
+            color: #ffffff;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        table td {
+            border: 1px solid #cccccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .confusion-matrix {
+            max-width: 600px;
+            margin: 30px auto;
+            border: 2px solid #333;
+        }
+
+        .confusion-matrix td {
+            text-align: center;
+            font-weight: bold;
+            padding: 15px;
+            font-size: 11pt;
+        }
+
+        .confusion-matrix .true-negative {
+            background: #c8e6c9;
+        }
+
+        .confusion-matrix .false-positive {
+            background: #ffccbc;
+        }
+
+        .confusion-matrix .false-negative {
+            background: #ffccbc;
+        }
+
+        .confusion-matrix .true-positive {
+            background: #c8e6c9;
+        }
+
+        .confusion-matrix .header-cell {
+            background: #666666;
+            color: white;
+            font-weight: bold;
+        }
+
+        .formula {
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Times New Roman', serif;
+            font-size: 11pt;
+            text-align: center;
+        }
+
+        .metric-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            background: #fafafa;
+        }
+
+        .metric-title {
+            font-weight: bold;
+            font-size: 12pt;
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #333333;
+            text-align: center;
+        }
+
+        .signature-line {
+            width: 300px;
+            border-top: 1px solid #000000;
+            margin: 50px auto 10px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 14pt;
+            }
+
+            table {
+                font-size: 9pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Guia de Métricas de Avaliação</h1>
+            <h2>Modelo de Predição de Hipertensão</h2>
+            <p style="margin-top: 15px; font-size: 11pt;">
+                <strong>Problema:</strong> Classificação Binária - Risco de Hipertensão<br>
+                <strong>Contexto:</strong> Aplicação Clínica/Médica<br>
+                <strong>Orientador:</strong> Prof. Dr. Anderson Henrique Rodrigues Ferreira
+            </p>
+        </div>
+
+        <div class="metadata">
+            <p><strong>Objetivo deste documento:</strong> Fornecer compreensão profunda sobre as métricas de avaliação mais adequadas para o problema de predição de hipertensão, incluindo explicação detalhada da matriz de confusão e suas implicações clínicas.</p>
+        </div>
+
+        <div class="section">
+            <h2>I. Contexto do Problema</h2>
+
+            <h3>1.1. Caracterização do Problema</h3>
+            
+            <p>O problema abordado neste TCC é um <strong>problema de classificação binária</strong> com características específicas que influenciam diretamente a escolha das métricas de avaliação:</p>
+
+            <div class="clinical-box">
+                <h4>Características do Problema:</h4>
+                <ul>
+                    <li><strong>Tipo:</strong> Classificação Binária (0 = Sem Risco, 1 = Com Risco de Hipertensão)</li>
+                    <li><strong>Contexto:</strong> Aplicação Médica/Clínica (alta responsabilidade)</li>
+                    <li><strong>Objetivo:</strong> Identificar pessoas com risco de desenvolver hipertensão</li>
+                    <li><strong>Implicação de Erros:</strong> Falsos negativos (não detectar risco real) podem ter consequências graves para a saúde do paciente</li>
+                    <li><strong>Desbalanceamento:</strong> Dataset original apresenta desbalanceamento entre classes (mais pessoas sem risco)</li>
+                </ul>
+            </div>
+
+            <h3>1.2. Por Que o Contexto Importa</h3>
+
+            <p>Em problemas de classificação médica, <strong>nem todos os erros têm o mesmo custo</strong>. Considere os dois tipos de erro possíveis:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo de Erro</th>
+                        <th>Descrição</th>
+                        <th>Consequência Clínica</th>
+                        <th>Gravidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Falso Positivo (FP)</strong></td>
+                        <td>Modelo prevê risco, mas pessoa não tem risco real</td>
+                        <td>
+                            - Exames complementares desnecessários<br>
+                            - Ansiedade do paciente<br>
+                            - Custo financeiro adicional<br>
+                            - Uso desnecessário de recursos de saúde
+                        </td>
+                        <td style="background: #fff3cd;">MODERADA</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Falso Negativo (FN)</strong></td>
+                        <td>Modelo prevê sem risco, mas pessoa tem risco real</td>
+                        <td>
+                            - Paciente não recebe acompanhamento preventivo<br>
+                            - Desenvolvimento de hipertensão não detectado<br>
+                            - Complicações cardiovasculares não prevenidas<br>
+                            - Possível agravamento do quadro clínico
+                        </td>
+                        <td style="background: #f8d7da;">ALTA</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <h4>IMPORTANTE: Assimetria de Custo dos Erros</h4>
+                <p>Para o problema de predição de hipertensão, <strong>Falsos Negativos são mais graves</strong> que Falsos Positivos. Isto porque:</p>
+                <ul>
+                    <li>Não detectar um risco real pode resultar em complicações de saúde sérias</li>
+                    <li>Um falso positivo gera custos e desconforto, mas não coloca a vida em risco</li>
+                    <li>É preferível errar "por excesso de cautela" em medicina preventiva</li>
+                </ul>
+                <p><strong>Implicação:</strong> As métricas de avaliação devem priorizar a <strong>capacidade de detectar casos positivos (Recall/Sensibilidade)</strong>.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>II. Matriz de Confusão: Fundamento de Todas as Métricas</h2>
+
+            <h3>2.1. O Que É a Matriz de Confusão</h3>
+
+            <p>A matriz de confusão é uma tabela que resume o desempenho de um modelo de classificação comparando as predições com os valores reais. Para um problema de classificação binária, ela possui 4 elementos fundamentais:</p>
+
+            <table class="confusion-matrix">
+                <tr>
+                    <td colspan="2" rowspan="2" style="border: none; background: white;"></td>
+                    <td colspan="2" class="header-cell">Predição do Modelo</td>
+                </tr>
+                <tr>
+                    <td class="header-cell">Negativo (0)</td>
+                    <td class="header-cell">Positivo (1)</td>
+                </tr>
+                <tr>
+                    <td rowspan="2" class="header-cell">Valor<br>Real</td>
+                    <td class="header-cell">Negativo (0)</td>
+                    <td class="true-negative">
+                        <strong>Verdadeiro Negativo</strong><br>
+                        (True Negative - TN)<br><br>
+                        Correto<br>
+                        Modelo previu: Sem risco<br>
+                        Realidade: Sem risco
+                    </td>
+                    <td class="false-positive">
+                        <strong>Falso Positivo</strong><br>
+                        (False Positive - FP)<br><br>
+                        Erro Tipo I<br>
+                        Modelo previu: Com risco<br>
+                        Realidade: Sem risco
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header-cell">Positivo (1)</td>
+                    <td class="false-negative">
+                        <strong>Falso Negativo</strong><br>
+                        (False Negative - FN)<br><br>
+                        Erro Tipo II<br>
+                        Modelo previu: Sem risco<br>
+                        Realidade: Com risco
+                    </td>
+                    <td class="true-positive">
+                        <strong>Verdadeiro Positivo</strong><br>
+                        (True Positive - TP)<br><br>
+                        Correto<br>
+                        Modelo previu: Com risco<br>
+                        Realidade: Com risco
+                    </td>
+                </tr>
+            </table>
+
+            <h3>2.2. Interpretação Detalhada de Cada Elemento</h3>
+
+            <div class="metric-card">
+                <div class="metric-title">1. Verdadeiros Negativos (TN) - True Negatives</div>
+                <p><strong>Definição:</strong> Número de casos corretamente identificados como negativos (sem risco).</p>
+                <p><strong>Interpretação Clínica:</strong> Pacientes que o modelo previu corretamente como NÃO tendo risco de hipertensão, e que realmente não têm.</p>
+                <p><strong>Exemplo:</strong> Modelo prevê que João não tem risco de hipertensão → João realmente não desenvolve hipertensão.</p>
+                <p><strong>Importância:</strong> Indica a capacidade do modelo de não gerar alarmes falsos para pessoas saudáveis.</p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">2. Verdadeiros Positivos (TP) - True Positives</div>
+                <p><strong>Definição:</strong> Número de casos corretamente identificados como positivos (com risco).</p>
+                <p><strong>Interpretação Clínica:</strong> Pacientes que o modelo previu corretamente como tendo risco de hipertensão, e que realmente têm.</p>
+                <p><strong>Exemplo:</strong> Modelo prevê que Maria tem risco de hipertensão → Maria realmente desenvolve hipertensão.</p>
+                <p><strong>Importância:</strong> Indica a capacidade do modelo de detectar casos que precisam de intervenção preventiva. <strong>CRÍTICO em medicina preventiva.</strong></p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">3. Falsos Positivos (FP) - False Positives (Erro Tipo I)</div>
+                <p><strong>Definição:</strong> Número de casos incorretamente identificados como positivos.</p>
+                <p><strong>Interpretação Clínica:</strong> Pacientes que o modelo previu como tendo risco, mas que na realidade NÃO têm risco.</p>
+                <p><strong>Exemplo:</strong> Modelo prevê que Carlos tem risco de hipertensão → Carlos NÃO desenvolve hipertensão.</p>
+                <p><strong>Consequências:</strong></p>
+                <ul>
+                    <li>Exames complementares desnecessários</li>
+                    <li>Ansiedade e preocupação para o paciente</li>
+                    <li>Custos financeiros adicionais</li>
+                    <li>Sobrecarga do sistema de saúde</li>
+                </ul>
+                <p><strong>Gravidade:</strong> Moderada (inconveniente, mas não coloca vida em risco)</p>
+            </div>
+
+            <div class="metric-card" style="border: 2px solid #c62828;">
+                <div class="metric-title" style="color: #c62828;">4. Falsos Negativos (FN) - False Negatives (Erro Tipo II)</div>
+                <p><strong>Definição:</strong> Número de casos incorretamente identificados como negativos.</p>
+                <p><strong>Interpretação Clínica:</strong> Pacientes que o modelo previu como NÃO tendo risco, mas que na realidade TÊM risco.</p>
+                <p><strong>Exemplo:</strong> Modelo prevê que Ana não tem risco de hipertensão → Ana desenvolve hipertensão.</p>
+                <p><strong>Consequências:</strong></p>
+                <ul>
+                    <li>Paciente não recebe acompanhamento preventivo adequado</li>
+                    <li>Perda da janela de intervenção precoce</li>
+                    <li>Desenvolvimento de hipertensão não monitorado</li>
+                    <li>Risco de complicações cardiovasculares graves (AVC, infarto)</li>
+                    <li>Possível agravamento do quadro clínico</li>
+                </ul>
+                <p><strong>Gravidade:</strong> <strong style="color: #c62828;">ALTA</strong> (pode resultar em complicações graves de saúde)</p>
+                <p style="background: #fff0f0; padding: 10px; border-left: 4px solid #c62828; margin-top: 10px;">
+                    <strong>ATENÇÃO:</strong> Em medicina preventiva, Falsos Negativos são o erro mais grave. Para hipertensão, não detectar um risco real pode ter consequências severas a longo prazo.
+                </p>
+            </div>
+
+            <h3>2.3. Exemplo Numérico Completo</h3>
+
+            <div class="info-box">
+                <h4>Exemplo Prático: Análise de 1000 Pacientes</h4>
+                <p>Suponha que o modelo foi testado em 1000 pacientes:</p>
+                
+                <table style="max-width: 700px; margin: 15px auto;">
+                    <thead>
+                        <tr>
+                            <th>Elemento</th>
+                            <th>Valor</th>
+                            <th>Interpretação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Verdadeiros Negativos (TN)</strong></td>
+                            <td>650</td>
+                            <td>650 pessoas corretamente identificadas como sem risco</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Verdadeiros Positivos (TP)</strong></td>
+                            <td>280</td>
+                            <td>280 pessoas corretamente identificadas com risco</td>
+                        </tr>
+                        <tr style="background: #fff3cd;">
+                            <td><strong>Falsos Positivos (FP)</strong></td>
+                            <td>50</td>
+                            <td>50 pessoas sem risco foram incorretamente classificadas como tendo risco</td>
+                        </tr>
+                        <tr style="background: #f8d7da;">
+                            <td><strong>Falsos Negativos (FN)</strong></td>
+                            <td>20</td>
+                            <td>20 pessoas com risco foram incorretamente classificadas como sem risco</td>
+                        </tr>
+                        <tr style="font-weight: bold; background: #e8f5e9;">
+                            <td><strong>TOTAL</strong></td>
+                            <td>1000</td>
+                            <td>Acertos: 930 (93%) | Erros: 70 (7%)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><strong>Matriz de Confusão correspondente:</strong></p>
+                <pre style="font-family: 'Courier New', monospace; background: #f5f5f5; padding: 15px; border: 1px solid #ddd;">
+                        Predição
+                    Neg (0)  Pos (1)
+Real  Neg (0)  [  650  |   50  ]  = 700 pessoas sem risco real
+      Pos (1)  [   20  |  280  ]  = 300 pessoas com risco real
+                  ───────────────
+                   670      330
+</pre>
+
+                <p><strong>Análise Clínica:</strong></p>
+                <ul>
+                    <li><strong>Preocupação principal:</strong> 20 pessoas com risco real não foram identificadas (FN = 20)</li>
+                    <li><strong>Preocupação secundária:</strong> 50 pessoas sem risco foram desnecessariamente alarmadas (FP = 50)</li>
+                    <li><strong>Sucesso:</strong> 930 classificações corretas (93% de acurácia)</li>
+                </ul>
+            </div>
+
+            <h3>2.4. Código Python para Gerar e Visualizar Matriz de Confusão</h3>
+
+            <div class="code-block">
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+
+def analisar_matriz_confusao(y_true, y_pred, labels=['Sem Risco', 'Com Risco']):
+    """
+    Análise completa da matriz de confusão com interpretação clínica
+    
+    Parâmetros:
+    -----------
+    y_true : array, valores reais
+    y_pred : array, valores preditos
+    labels : list, nomes das classes
+    """
+    print("\n" + "="*70)
+    print("ANÁLISE DETALHADA DA MATRIZ DE CONFUSÃO")
+    print("="*70)
+    
+    # Calcular matriz de confusão
+    cm = confusion_matrix(y_true, y_pred)
+    tn, fp, fn, tp = cm.ravel()
+    
+    # Total de casos
+    total = tn + fp + fn + tp
+    
+    print(f"\nTotal de casos analisados: {total}")
+    print("\n" + "-"*70)
+    print("ELEMENTOS DA MATRIZ DE CONFUSÃO:")
+    print("-"*70)
+    
+    print(f"\n1. Verdadeiros Negativos (TN): {tn}")
+    print(f"   Interpretação: {tn} pacientes corretamente identificados como SEM risco")
+    print(f"   Percentual: {tn/total*100:.2f}% do total")
+    
+    print(f"\n2. Verdadeiros Positivos (TP): {tp}")
+    print(f"   Interpretação: {tp} pacientes corretamente identificados COM risco")
+    print(f"   Percentual: {tp/total*100:.2f}% do total")
+    
+    print(f"\n3. Falsos Positivos (FP): {fp}")
+    print(f"   Interpretação: {fp} pacientes SEM risco foram incorretamente")
+    print(f"                  classificados como tendo risco")
+    print(f"   Percentual: {fp/total*100:.2f}% do total")
+    print(f"   Consequência: Exames desnecessários, ansiedade do paciente")
+    
+    print(f"\n4. Falsos Negativos (FN): {fn}")
+    print(f"   Interpretação: {fn} pacientes COM risco foram incorretamente")
+    print(f"                  classificados como sem risco")
+    print(f"   Percentual: {fn/total*100:.2f}% do total")
+    print(f"   Consequência: Pacientes não receberão acompanhamento preventivo")
+    print(f"   GRAVIDADE: ALTA - Erro mais crítico em medicina preventiva")
+    
+    # Estatísticas gerais
+    print("\n" + "-"*70)
+    print("ESTATÍSTICAS GERAIS:")
+    print("-"*70)
+    print(f"\nAcertos totais: {tn + tp} ({(tn + tp)/total*100:.2f}%)")
+    print(f"Erros totais: {fp + fn} ({(fp + fn)/total*100:.2f}%)")
+    
+    # Análise por classe
+    print("\n" + "-"*70)
+    print("DISTRIBUIÇÃO POR CLASSE REAL:")
+    print("-"*70)
+    
+    total_negativos = tn + fp
+    total_positivos = fn + tp
+    
+    print(f"\nClasse Negativa (Sem Risco):")
+    print(f"  Total real: {total_negativos}")
+    print(f"  Corretamente classificados (TN): {tn} ({tn/total_negativos*100:.2f}%)")
+    print(f"  Incorretamente classificados (FP): {fp} ({fp/total_negativos*100:.2f}%)")
+    
+    print(f"\nClasse Positiva (Com Risco):")
+    print(f"  Total real: {total_positivos}")
+    print(f"  Corretamente classificados (TP): {tp} ({tp/total_positivos*100:.2f}%)")
+    print(f"  Incorretamente classificados (FN): {fn} ({fn/total_positivos*100:.2f}%)")
+    
+    # Visualização
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    
+    # Plot 1: Matriz de confusão com valores absolutos
+    disp1 = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
+    disp1.plot(ax=axes[0], cmap='Blues', values_format='d')
+    axes[0].set_title('Matriz de Confusão\n(Valores Absolutos)', 
+                     fontsize=13, fontweight='bold')
+    
+    # Plot 2: Matriz de confusão com percentuais
+    cm_percent = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis] * 100
+    disp2 = ConfusionMatrixDisplay(confusion_matrix=cm_percent, display_labels=labels)
+    disp2.plot(ax=axes[1], cmap='Greens', values_format='.1f')
+    axes[1].set_title('Matriz de Confusão\n(Percentuais por Linha)', 
+                     fontsize=13, fontweight='bold')
+    
+    # Adicionar anotações
+    for ax in axes:
+        ax.set_xlabel('Predição', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Valor Real', fontsize=11, fontweight='bold')
+    
+    plt.tight_layout()
+    plt.savefig('matriz_confusao_completa.png', dpi=300, bbox_inches='tight')
+    plt.show()
+    
+    print("\n" + "="*70)
+    print("Visualização salva em: matriz_confusao_completa.png")
+    print("="*70)
+    
+    return {
+        'tn': tn, 'fp': fp, 'fn': fn, 'tp': tp,
+        'total': total,
+        'confusion_matrix': cm
+    }
+
+# Exemplo de uso com seus dados
+resultados_cm = analisar_matriz_confusao(y_test, y_pred)
+</div>
+        </div>
+
+        <div class="section">
+            <h2>III. Métricas Derivadas da Matriz de Confusão</h2>
+
+            <p>Todas as métricas de avaliação são calculadas a partir dos 4 elementos da matriz de confusão. A seguir, apresentamos as principais métricas, suas fórmulas, interpretações e relevância para o problema de hipertensão.</p>
+
+            <h3>3.1. Acurácia (Accuracy)</h3>
+
+            <div class="metric-card">
+                <div class="metric-title">Acurácia</div>
+                
+                <div class="formula">
+                    <strong>Acurácia = (TP + TN) / (TP + TN + FP + FN)</strong><br><br>
+                    Proporção de predições corretas sobre o total de predições
+                </div>
+
+                <p><strong>Interpretação:</strong> Percentual de acerto geral do modelo (tanto positivos quanto negativos).</p>
+                
+                <p><strong>Exemplo:</strong> Acurácia = 0.93 significa que 93% das predições estão corretas.</p>
+
+                <p><strong>Quando usar:</strong> Quando as classes estão balanceadas e o custo dos erros é similar.</p>
+
+                <div class="warning-box">
+                    <h4>LIMITAÇÃO para Predição de Hipertensão:</h4>
+                    <p>A acurácia é uma métrica <strong>enganosa</strong> para problemas médicos desbalanceados. Considere:</p>
+                    <ul>
+                        <li>Se 90% das pessoas não têm risco, um modelo que sempre prevê "sem risco" terá 90% de acurácia</li>
+                        <li>Este modelo é inútil clinicamente, pois não detecta nenhum caso de risco (TP = 0)</li>
+                        <li>A acurácia não diferencia entre FP e FN, tratando ambos igualmente</li>
+                    </ul>
+                    <p><strong>Conclusão:</strong> Acurácia NÃO deve ser a métrica principal para este problema.</p>
+                </div>
+
+                <div class="code-block">
+from sklearn.metrics import accuracy_score
+
+# Calcular acurácia
+acuracia = accuracy_score(y_test, y_pred)
+print(f"Acurácia: {acuracia:.4f} ({acuracia*100:.2f}%)")
+
+# Ou manualmente:
+acuracia_manual = (tp + tn) / (tp + tn + fp + fn)
+print(f"Acurácia (manual): {acuracia_manual:.4f}")
+</div>
+            </div>
+
+            <h3>3.2. Sensibilidade / Recall / Taxa de Verdadeiros Positivos</h3>
+
+            <div class="metric-card" style="border: 2px solid #2e7d32;">
+                <div class="metric-title" style="color: #2e7d32;">Sensibilidade (Recall) - MÉTRICA CRÍTICA</div>
+                
+                <div class="formula">
+                    <strong>Sensibilidade = TP / (TP + FN)</strong><br><br>
+                    Proporção de casos positivos que foram corretamente identificados
+                </div>
+
+                <p><strong>Interpretação:</strong> De todos os pacientes que realmente têm risco de hipertensão, qual percentual o modelo conseguiu detectar?</p>
+                
+                <p><strong>Exemplo:</strong> Sensibilidade = 0.93 significa que o modelo detectou 93% dos casos com risco real.</p>
+
+                <p><strong>Sinônimos:</strong> Recall, True Positive Rate (TPR), Taxa de Detecção</p>
+
+                <div class="success-box">
+                    <h4>POR QUE É A MÉTRICA MAIS IMPORTANTE PARA HIPERTENSÃO:</h4>
+                    <ul>
+                        <li><strong>Foco em detectar casos positivos:</strong> O objetivo principal é não deixar passar nenhum paciente com risco</li>
+                        <li><strong>Minimiza Falsos Negativos:</strong> Alta sensibilidade = poucos FN = poucos casos de risco não detectados</li>
+                        <li><strong>Medicina Preventiva:</strong> É melhor um falso alarme do que não detectar um risco real</li>
+                        <li><strong>Custo de FN é alto:</strong> Não detectar hipertensão pode levar a complicações graves</li>
+                    </ul>
+                </div>
+
+                <p><strong>Valores Desejáveis:</strong></p>
+                <ul>
+                    <li>Sensibilidade > 0.90 (90%): Excelente - detecta 90% dos casos de risco</li>
+                    <li>Sensibilidade 0.80-0.90: Bom - mas 10-20% dos casos são perdidos</li>
+                    <li>Sensibilidade < 0.80: Insuficiente para aplicação clínica</li>
+                </ul>
+
+                <p><strong>Trade-off:</strong> Aumentar sensibilidade geralmente aumenta também os falsos positivos (diminui precisão).</p>
+
+                <div class="code-block">
+from sklearn.metrics import recall_score
+
+# Calcular sensibilidade
+sensibilidade = recall_score(y_test, y_pred)
+print(f"Sensibilidade (Recall): {sensibilidade:.4f} ({sensibilidade*100:.2f}%)")
+print(f"Interpretação: O modelo detectou {sensibilidade*100:.1f}% dos casos com risco real")
+
+# Ou manualmente:
+sensibilidade_manual = tp / (tp + fn)
+print(f"Sensibilidade (manual): {sensibilidade_manual:.4f}")
+
+# Calcular quantos casos foram perdidos
+casos_perdidos = fn
+total_positivos = tp + fn
+print(f"\nCasos de risco perdidos (FN): {casos_perdidos}")
+print(f"Total de casos com risco: {total_positivos}")
+print(f"Taxa de detecção: {tp}/{total_positivos} = {sensibilidade:.1%}")
+</div>
+            </div>
+
+            <h3>3.3. Especificidade / Taxa de Verdadeiros Negativos</h3>
+
+            <div class="metric-card">
+                <div class="metric-title">Especificidade</div>
+                
+                <div class="formula">
+                    <strong>Especificidade = TN / (TN + FP)</strong><br><br>
+                    Proporção de casos negativos que foram corretamente identificados
+                </div>
+
+                <p><strong>Interpretação:</strong> De todos os pacientes que realmente NÃO têm risco de hipertensão, qual percentual o modelo classificou corretamente como sem risco?</p>
+                
+                <p><strong>Exemplo:</strong> Especificidade = 0.93 significa que 93% das pessoas sem risco foram corretamente identificadas.</p>
+
+                <p><strong>Relação com Falsos Positivos:</strong> Alta especificidade = poucos falsos alarmes</p>
+
+                <p><strong>Importância para Hipertensão:</strong> Moderada. É importante para não sobrecarregar o sistema de saúde com falsos positivos, mas é menos crítica que a sensibilidade.</p>
+
+                <div class="info-box">
+                    <h4>Balanceamento Sensibilidade-Especificidade:</h4>
+                    <p>Idealmente, queremos:</p>
+                    <ul>
+                        <li><strong>Alta Sensibilidade:</strong> Detectar a maioria dos casos de risco (prioridade)</li>
+                        <li><strong>Alta Especificidade:</strong> Não criar muitos falsos alarmes (desejável)</li>
+                    </ul>
+                    <p>Porém, há um trade-off: geralmente, melhorar uma métrica piora a outra. Para hipertensão, priorizamos sensibilidade.</p>
+                </div>
+
+                <div class="code-block">
+from sklearn.metrics import confusion_matrix
+import numpy as np
+
+# Calcular especificidade
+cm = confusion_matrix(y_test, y_pred)
+tn, fp, fn, tp = cm.ravel()
+
+especificidade = tn / (tn + fp)
+print(f"Especificidade: {especificidade:.4f} ({especificidade*100:.2f}%)")
+print(f"Interpretação: O modelo identificou corretamente {especificidade*100:.1f}% das pessoas sem risco")
+
+# Falsos positivos
+print(f"\nFalsos positivos (FP): {fp}")
+print(f"Total sem risco real: {tn + fp}")
+print(f"Taxa de falsos alarmes: {fp/(tn+fp):.1%}")
+</div>
+            </div>
+
+            <h3>3.4. Precisão (Precision) / Valor Preditivo Positivo (VPP)</h3>
+
+            <div class="metric-card">
+                <div class="metric-title">Precisão (Precision)</div>
+                
+                <div class="formula">
+                    <strong>Precisão = TP / (TP + FP)</strong><br><br>
+                    Proporção de predições positivas que estavam corretas
+                </div>
+
+                <p><strong>Interpretação:</strong> De todos os pacientes que o modelo previu como tendo risco, qual percentual realmente tem risco?</p>
+                
+                <p><strong>Exemplo:</strong> Precisão = 0.85 significa que 85% dos casos previstos como "com risco" realmente têm risco.</p>
+
+                <p><strong>Perspectiva Clínica:</strong> Responde à pergunta "Se o modelo disse que o paciente tem risco, qual a probabilidade de estar correto?"</p>
+
+                <p><strong>Importância para Hipertensão:</strong> Moderada. Precisão baixa significa muitos falsos alarmes, o que pode:</p>
+                <ul>
+                    <li>Sobrecarregar o sistema de saúde</li>
+                    <li>Causar ansiedade desnecessária</li>
+                    <li>Gerar custos com exames complementares</li>
+                </ul>
+
+                <p><strong>Porém:</strong> É mais aceitável ter baixa precisão (mais falsos positivos) do que baixa sensibilidade (falsos negativos).</p>
+
+                <div class="code-block">
+from sklearn.metrics import precision_score
+
+# Calcular precisão
+precisao = precision_score(y_test, y_pred)
+print(f"Precisão: {precisao:.4f} ({precisao*100:.2f}%)")
+print(f"Interpretação: Quando o modelo prevê risco, está correto {precisao*100:.1f}% das vezes")
+
+# Ou manualmente:
+precisao_manual = tp / (tp + fp)
+print(f"Precisão (manual): {precisao_manual:.4f}")
+
+# Análise de falsos positivos
+print(f"\nDe {tp + fp} predições de risco:")
+print(f"  - {tp} estavam corretas (verdadeiros positivos)")
+print(f"  - {fp} eram falsos alarmes (falsos positivos)")
+print(f"  - Taxa de acerto: {precisao:.1%}")
+</div>
+            </div>
+
+            <h3>3.5. F1-Score (Média Harmônica entre Precisão e Recall)</h3>
+
+            <div class="metric-card">
+                <div class="metric-title">F1-Score</div>
+                
+                <div class="formula">
+                    <strong>F1-Score = 2 × (Precisão × Recall) / (Precisão + Recall)</strong><br><br>
+                    Média harmônica entre Precisão e Sensibilidade
+                </div>
+
+                <p><strong>Interpretação:</strong> Métrica única que balanceia Precisão e Recall. Útil quando queremos um único número que considere ambos.</p>
+                
+                <p><strong>Características:</strong></p>
+                <ul>
+                    <li>Varia de 0 a 1 (quanto maior, melhor)</li>
+                    <li>F1 = 1 apenas se Precisão = Recall = 1 (modelo perfeito)</li>
+                    <li>É influenciado mais pelo valor mais baixo entre Precisão e Recall</li>
+                    <li>Penaliza desbalanceamentos entre as duas métricas</li>
+                </ul>
+
+                <p><strong>Quando usar:</strong> Quando precisão e recall são igualmente importantes, ou quando queremos um único score de comparação.</p>
+
+                <p><strong>Limitação para Hipertensão:</strong> Trata Precisão e Recall com mesma importância, mas sabemos que Recall é mais crítico. Para isso, existe o F-beta Score.</p>
+
+                <div class="code-block">
+from sklearn.metrics import f1_score
+
+# Calcular F1-Score
+f1 = f1_score(y_test, y_pred)
+print(f"F1-Score: {f1:.4f}")
+
+# Ou manualmente:
+precisao = tp / (tp + fp)
+recall = tp / (tp + fn)
+f1_manual = 2 * (precisao * recall) / (precisao + recall)
+print(f"F1-Score (manual): {f1_manual:.4f}")
+
+print(f"\nComponentes:")
+print(f"  Precisão: {precisao:.4f}")
+print(f"  Recall: {recall:.4f}")
+print(f"  F1-Score: {f1:.4f}")
+</div>
+            </div>
+
+            <h3>3.6. F-beta Score (Peso Ajustável entre Precisão e Recall)</h3>
+
+            <div class="metric-card" style="border: 2px solid #2c5aa0;">
+                <div class="metric-title" style="color: #2c5aa0;">F-beta Score - RECOMENDADO para Hipertensão</div>
+                
+                <div class="formula">
+                    <strong>F-beta = (1 + β²) × (Precisão × Recall) / (β² × Precisão + Recall)</strong><br><br>
+                    onde β controla o peso relativo de Recall em relação a Precisão
+                </div>
+
+                <p><strong>Interpretação:</strong> Versão ajustável do F1-Score que permite dar mais peso a Recall ou Precisão.</p>
+                
+                <p><strong>Valores de β:</strong></p>
+                <ul>
+                    <li><strong>β = 1:</strong> F1-Score (peso igual)</li>
+                    <li><strong>β = 2:</strong> Recall tem 2× mais peso que Precisão (RECOMENDADO para hipertensão)</li>
+                    <li><strong>β = 0.5:</strong> Precisão tem 2× mais peso que Recall</li>
+                </ul>
+
+                <div class="success-box">
+                    <h4>RECOMENDAÇÃO para Predição de Hipertensão:</h4>
+                    <p><strong>Usar F2-Score (β = 2)</strong></p>
+                    <p><strong>Justificativa:</strong></p>
+                    <ul>
+                        <li>Dá o dobro de importância para Recall (detectar casos positivos)</li>
+                        <li>Reflete a prioridade clínica de minimizar Falsos Negativos</li>
+                        <li>Ainda considera Precisão, evitando excesso de falsos positivos</li>
+                        <li>Métrica única que respeita a assimetria de custos dos erros</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+from sklearn.metrics import fbeta_score
+
+# Calcular F2-Score (beta=2, prioriza Recall)
+f2 = fbeta_score(y_test, y_pred, beta=2)
+print(f"F2-Score: {f2:.4f}")
+print("Interpretação: Métrica que dá 2× mais peso para Recall (detecção de casos)")
+
+# Comparar com F1-Score
+f1 = f1_score(y_test, y_pred)
+print(f"\nComparação:")
+print(f"  F1-Score (peso igual): {f1:.4f}")
+print(f"  F2-Score (prioriza Recall): {f2:.4f}")
+
+# Se F2 > F1: modelo é melhor em detectar positivos
+# Se F2 < F1: modelo tem boa precisão mas perde casos positivos
+if f2 > f1:
+    print("  → F2 > F1: Modelo é bom em detectar casos de risco (desejável)")
+elif f2 < f1:
+    print("  → F2 < F1: Modelo tem precisão alta mas pode perder casos")
+
+# Calcular manualmente
+precisao = tp / (tp + fp)
+recall = tp / (tp + fn)
+beta = 2
+f_beta = (1 + beta**2) * (precisao * recall) / ((beta**2 * precisao) + recall)
+print(f"\nF{beta}-Score (manual): {f_beta:.4f}")
+</div>
+            </div>
+
+            <h3>3.7. ROC-AUC (Area Under the ROC Curve)</h3>
+
+            <div class="metric-card">
+                <div class="metric-title">ROC-AUC</div>
+                
+                <p><strong>O que é ROC:</strong> Receiver Operating Characteristic - gráfico que mostra a relação entre Taxa de Verdadeiros Positivos (Sensibilidade) e Taxa de Falsos Positivos (1 - Especificidade) para diferentes thresholds.</p>
+
+                <p><strong>O que é AUC:</strong> Area Under the Curve - área sob a curva ROC. Varia de 0 a 1.</p>
+
+                <div class="formula">
+                    <strong>Interpretação dos valores de AUC:</strong><br><br>
+                    AUC = 1.0: Classificador perfeito<br>
+                    AUC = 0.9-1.0: Excelente<br>
+                    AUC = 0.8-0.9: Bom<br>
+                    AUC = 0.7-0.8: Aceitável<br>
+                    AUC = 0.5-0.7: Fraco<br>
+                    AUC = 0.5: Equivalente a chute aleatório
+                </div>
+
+                <p><strong>Vantagens:</strong></p>
+                <ul>
+                    <li>Independente do threshold escolhido</li>
+                    <li>Robusta a desbalanceamento de classes</li>
+                    <li>Boa para comparar modelos diferentes</li>
+                </ul>
+
+                <p><strong>Interpretação Intuitiva:</strong> Probabilidade de que o modelo atribua score maior para um caso positivo aleatório do que para um caso negativo aleatório.</p>
+
+                <p><strong>Limitação:</strong> Não diferencia entre tipos de erro (FP vs FN). Para aplicações médicas, métricas específicas como Recall são mais informativas.</p>
+
+                <div class="code-block">
+from sklearn.metrics import roc_auc_score, roc_curve
+import matplotlib.pyplot as plt
+
+# Calcular ROC-AUC
+# Precisa das probabilidades, não só das classes preditas
+y_proba = modelo.predict_proba(X_test)[:, 1]  # Probabilidade da classe positiva
+roc_auc = roc_auc_score(y_test, y_proba)
+
+print(f"ROC-AUC: {roc_auc:.4f}")
+
+# Interpretação
+if roc_auc >= 0.9:
+    interpretacao = "Excelente"
+elif roc_auc >= 0.8:
+    interpretacao = "Bom"
+elif roc_auc >= 0.7:
+    interpretacao = "Aceitável"
+else:
+    interpretacao = "Insuficiente"
+
+print(f"Classificação: {interpretacao}")
+
+# Plotar curva ROC
+fpr, tpr, thresholds = roc_curve(y_test, y_proba)
+
+plt.figure(figsize=(8, 6))
+plt.plot(fpr, tpr, color='darkorange', lw=2, 
+         label=f'ROC curve (AUC = {roc_auc:.2f})')
+plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--', 
+         label='Chance (AUC = 0.50)')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('Taxa de Falsos Positivos (1 - Especificidade)', fontsize=12)
+plt.ylabel('Taxa de Verdadeiros Positivos (Sensibilidade)', fontsize=12)
+plt.title('Curva ROC - Predição de Hipertensão', fontsize=14, fontweight='bold')
+plt.legend(loc="lower right")
+plt.grid(alpha=0.3)
+plt.savefig('curva_roc.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+print("\nCurva ROC salva em: curva_roc.png")
+</div>
+            </div>
+
+            <h3>3.8. Valor Preditivo Negativo (VPN)</h3>
+
+            <div class="metric-card">
+                <div class="metric-title">Valor Preditivo Negativo (VPN)</div>
+                
+                <div class="formula">
+                    <strong>VPN = TN / (TN + FN)</strong><br><br>
+                    Proporção de predições negativas que estavam corretas
+                </div>
+
+                <p><strong>Interpretação:</strong> De todos os pacientes que o modelo classificou como sem risco, qual percentual realmente não tem risco?</p>
+                
+                <p><strong>Perspectiva Clínica:</strong> Responde à pergunta "Se o modelo disse que o paciente NÃO tem risco, qual a confiabilidade dessa informação?"</p>
+
+                <p><strong>Importância:</strong> Alta para decisões de não-intervenção. Um VPN alto significa que podemos confiar quando o modelo diz que não há risco.</p>
+
+                <div class="code-block">
+# Calcular VPN
+cm = confusion_matrix(y_test, y_pred)
+tn, fp, fn, tp = cm.ravel()
+
+vpn = tn / (tn + fn)
+print(f"Valor Preditivo Negativo (VPN): {vpn:.4f} ({vpn*100:.2f}%)")
+print(f"Interpretação: Quando o modelo prevê 'sem risco', está correto {vpn*100:.1f}% das vezes")
+
+print(f"\nDe {tn + fn} predições de 'sem risco':")
+print(f"  - {tn} estavam corretas (verdadeiros negativos)")
+print(f"  - {fn} eram erradas - paciente tinha risco (falsos negativos)")
+print(f"  - Confiabilidade: {vpn:.1%}")
+</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>IV. Hierarquia de Métricas para Predição de Hipertensão</h2>
+
+            <div class="success-box">
+                <h3>Métricas Recomendadas (em ordem de importância):</h3>
+
+                <h4>1. PRIORIDADE MÁXIMA: Sensibilidade (Recall)</h4>
+                <p><strong>Meta:</strong> ≥ 90%</p>
+                <p><strong>Justificativa:</strong> Minimizar Falsos Negativos é crítico. Não detectar um caso de risco pode ter consequências graves.</p>
+                <p><strong>Como melhorar:</strong></p>
+                <ul>
+                    <li>Ajustar threshold de decisão para valor menor (ex: 0.3 em vez de 0.5)</li>
+                    <li>Usar técnicas de balanceamento (SMOTE, class weights)</li>
+                    <li>Avaliar F2-Score durante tuning de hiperparâmetros</li>
+                </ul>
+
+                <h4>2. PRIORIDADE ALTA: F2-Score</h4>
+                <p><strong>Meta:</strong> ≥ 0.85</p>
+                <p><strong>Justificativa:</strong> Métrica única que prioriza Recall mas ainda considera Precisão.</p>
+                <p><strong>Uso:</strong> Métrica principal para comparar modelos e para GridSearch/RandomSearch.</p>
+
+                <h4>3. PRIORIDADE ALTA: Especificidade</h4>
+                <p><strong>Meta:</strong> ≥ 80%</p>
+                <p><strong>Justificativa:</strong> Evitar sobrecarga do sistema de saúde com falsos alarmes.</p>
+                <p><strong>Balanceamento:</strong> Não pode ser sacrificada excessivamente para aumentar Sensibilidade.</p>
+
+                <h4>4. PRIORIDADE MÉDIA: ROC-AUC</h4>
+                <p><strong>Meta:</strong> ≥ 0.85</p>
+                <p><strong>Justificativa:</strong> Boa métrica geral de capacidade discriminativa do modelo.</p>
+                <p><strong>Uso:</strong> Comparação de modelos, verificação de consistência.</p>
+
+                <h4>5. PRIORIDADE MÉDIA: Precisão (VPP)</h4>
+                <p><strong>Meta:</strong> ≥ 70%</p>
+                <p><strong>Justificativa:</strong> Importante, mas menos crítica que Recall. Baixa precisão gera custos, mas não coloca vidas em risco.</p>
+
+                <h4>6. PRIORIDADE BAIXA: Acurácia</h4>
+                <p><strong>Por quê?</strong> Pode ser enganosa em datasets desbalanceados. Não deve ser usada como métrica principal.</p>
+                <p><strong>Uso:</strong> Apenas como métrica complementar, nunca isolada.</p>
+            </div>
+
+            <h3>4.1. Tabela Resumo de Métricas</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Métrica</th>
+                        <th>Fórmula</th>
+                        <th>Foco</th>
+                        <th>Prioridade</th>
+                        <th>Meta</th>
+                        <th>Uso Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #c8e6c9;">
+                        <td><strong>Sensibilidade (Recall)</strong></td>
+                        <td>TP / (TP + FN)</td>
+                        <td>Detectar positivos</td>
+                        <td>MÁXIMA</td>
+                        <td>≥ 90%</td>
+                        <td>Minimizar FN</td>
+                    </tr>
+                    <tr style="background: #c8e6c9;">
+                        <td><strong>F2-Score</strong></td>
+                        <td>(1+4)×P×R/(4×P+R)</td>
+                        <td>Balance com ênfase em Recall</td>
+                        <td>ALTA</td>
+                        <td>≥ 0.85</td>
+                        <td>Métrica única principal</td>
+                    </tr>
+                    <tr style="background: #e8f5e9;">
+                        <td><strong>Especificidade</strong></td>
+                        <td>TN / (TN + FP)</td>
+                        <td>Identificar negativos</td>
+                        <td>ALTA</td>
+                        <td>≥ 80%</td>
+                        <td>Minimizar FP</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ROC-AUC</strong></td>
+                        <td>Área sob curva ROC</td>
+                        <td>Capacidade discriminativa geral</td>
+                        <td>MÉDIA</td>
+                        <td>≥ 0.85</td>
+                        <td>Comparação de modelos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Precisão (VPP)</strong></td>
+                        <td>TP / (TP + FP)</td>
+                        <td>Confiança em previsões positivas</td>
+                        <td>MÉDIA</td>
+                        <td>≥ 70%</td>
+                        <td>Avaliar FP</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VPN</strong></td>
+                        <td>TN / (TN + FN)</td>
+                        <td>Confiança em previsões negativas</td>
+                        <td>MÉDIA</td>
+                        <td>≥ 95%</td>
+                        <td>Avaliar segurança de não-intervenção</td>
+                    </tr>
+                    <tr>
+                        <td><strong>F1-Score</strong></td>
+                        <td>2×P×R/(P+R)</td>
+                        <td>Balance igual P e R</td>
+                        <td>BAIXA</td>
+                        <td>-</td>
+                        <td>Referência, não principal</td>
+                    </tr>
+                    <tr style="background: #ffebee;">
+                        <td><strong>Acurácia</strong></td>
+                        <td>(TP+TN)/Total</td>
+                        <td>Acerto geral</td>
+                        <td>BAIXA</td>
+                        <td>-</td>
+                        <td>Apenas complementar</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>4.2. Código para Calcular Todas as Métricas</h3>
+
+            <div class="code-block">
+from sklearn.metrics import (
+    confusion_matrix, accuracy_score, precision_score, 
+    recall_score, f1_score, fbeta_score, roc_auc_score
+)
+import pandas as pd
+
+def avaliar_modelo_completo(y_true, y_pred, y_proba=None):
+    """
+    Avalia modelo com todas as métricas relevantes para predição de hipertensão
+    Prioriza métricas de acordo com contexto clínico
+    """
+    print("\n" + "="*70)
+    print("AVALIAÇÃO COMPLETA DO MODELO - PREDIÇÃO DE HIPERTENSÃO")
+    print("="*70)
+    
+    # Calcular matriz de confusão
+    cm = confusion_matrix(y_true, y_pred)
+    tn, fp, fn, tp = cm.ravel()
+    
+    # Calcular todas as métricas
+    acuracia = accuracy_score(y_true, y_pred)
+    sensibilidade = recall_score(y_true, y_pred)  # = recall
+    especificidade = tn / (tn + fp)
+    precisao = precision_score(y_true, y_pred)
+    vpn = tn / (tn + fn)
+    f1 = f1_score(y_true, y_pred)
+    f2 = fbeta_score(y_true, y_pred, beta=2)
+    
+    # ROC-AUC (se probabilidades disponíveis)
+    if y_proba is not None:
+        roc_auc = roc_auc_score(y_true, y_proba)
+    else:
+        roc_auc = None
+    
+    # Criar DataFrame com resultados
+    resultados = {
+        'Métrica': [
+            'SENSIBILIDADE (Recall)',
+            'F2-Score',
+            'Especificidade',
+            'ROC-AUC',
+            'Precisão (VPP)',
+            'VPN',
+            'F1-Score',
+            'Acurácia'
+        ],
+        'Valor': [
+            sensibilidade,
+            f2,
+            especificidade,
+            roc_auc if roc_auc else '-',
+            precisao,
+            vpn,
+            f1,
+            acuracia
+        ],
+        'Prioridade': [
+            'MÁXIMA',
+            'ALTA',
+            'ALTA',
+            'MÉDIA',
+            'MÉDIA',
+            'MÉDIA',
+            'BAIXA',
+            'BAIXA'
+        ],
+        'Status': []
+    }
+    
+    # Avaliar se atinge metas
+    metas = {
+        'SENSIBILIDADE (Recall)': 0.90,
+        'F2-Score': 0.85,
+        'Especificidade': 0.80,
+        'ROC-AUC': 0.85,
+        'Precisão (VPP)': 0.70,
+        'VPN': 0.95,
+        'F1-Score': None,
+        'Acurácia': None
+    }
+    
+    for metrica in resultados['Métrica']:
+        valor = resultados['Valor'][resultados['Métrica'].index(metrica)]
+        meta = metas.get(metrica)
+        
+        if meta and valor != '-':
+            if valor >= meta:
+                resultados['Status'].append('ATINGIU META')
+            elif valor >= meta * 0.9:
+                resultados['Status'].append('PRÓXIMO')
+            else:
+                resultados['Status'].append('ABAIXO DA META')
+        else:
+            resultados['Status'].append('-')
+    
+    df_resultados = pd.DataFrame(resultados)
+    
+    # Exibir resultados
+    print("\n" + "-"*70)
+    print("MATRIZ DE CONFUSÃO:")
+    print("-"*70)
+    print(f"\nVerdadeiros Negativos (TN): {tn}")
+    print(f"Falsos Positivos (FP): {fp}")
+    print(f"Falsos Negativos (FN): {fn}")
+    print(f"Verdadeiros Positivos (TP): {tp}")
+    
+    print("\n" + "-"*70)
+    print("MÉTRICAS DE AVALIAÇÃO (ORDENADAS POR PRIORIDADE):")
+    print("-"*70)
+    print(df_resultados.to_string(index=False))
+    
+    # Análise crítica
+    print("\n" + "="*70)
+    print("ANÁLISE CRÍTICA:")
+    print("="*70)
+    
+    if sensibilidade >= 0.90:
+        print(f"\n✓ SENSIBILIDADE EXCELENTE ({sensibilidade:.1%})")
+        print(f"  → Modelo detecta {sensibilidade:.1%} dos casos com risco")
+        print(f"  → Apenas {fn} casos de risco foram perdidos (FN)")
+    elif sensibilidade >= 0.80:
+        print(f"\n⚠ SENSIBILIDADE BOA MAS PODE MELHORAR ({sensibilidade:.1%})")
+        print(f"  → {fn} casos de risco não foram detectados")
+        print(f"  → Recomendação: Ajustar threshold ou usar class_weight")
+    else:
+        print(f"\n✗ SENSIBILIDADE INSUFICIENTE ({sensibilidade:.1%})")
+        print(f"  → {fn} casos de risco perdidos - CRÍTICO")
+        print(f"  → Modelo inadequado para uso clínico sem melhorias")
+    
+    if especificidade >= 0.80:
+        print(f"\n✓ ESPECIFICIDADE ADEQUADA ({especificidade:.1%})")
+        print(f"  → {fp} falsos positivos - carga aceitável")
+    else:
+        print(f"\n⚠ ESPECIFICIDADE BAIXA ({especificidade:.1%})")
+        print(f"  → {fp} falsos positivos - pode sobrecarregar sistema")
+    
+    if f2 >= 0.85:
+        print(f"\n✓ F2-SCORE EXCELENTE ({f2:.3f})")
+        print(f"  → Bom balanço priorizando detecção de casos")
+    else:
+        print(f"\n⚠ F2-SCORE ABAIXO DO IDEAL ({f2:.3f})")
+    
+    # Recomendações
+    print("\n" + "="*70)
+    print("RECOMENDAÇÕES:")
+    print("="*70)
+    
+    if sensibilidade < 0.90 or especificidade < 0.80:
+        print("\n1. AJUSTE DE THRESHOLD:")
+        print("   - Testar thresholds entre 0.2 e 0.5")
+        print("   - Priorizar threshold que maximize Recall mantendo Especificidade > 0.80")
+        
+        print("\n2. TÉCNICAS DE BALANCEAMENTO:")
+        print("   - Verificar se SMOTE foi aplicado")
+        print("   - Testar class_weight='balanced' no modelo")
+        
+        print("\n3. FEATURE ENGINEERING:")
+        print("   - Analisar feature importance")
+        print("   - Criar features de interação")
+    
+    if sensibilidade >= 0.90 and especificidade >= 0.80 and f2 >= 0.85:
+        print("\n✓ MODELO ADEQUADO PARA APLICAÇÃO CLÍNICA")
+        print("  Todas as métricas críticas atingiram as metas")
+    
+    return df_resultados
+
+# Usar a função
+y_proba = modelo.predict_proba(X_test)[:, 1]
+resultados_avaliacao = avaliar_modelo_completo(y_test, y_pred, y_proba)
+
+# Salvar resultados
+resultados_avaliacao.to_csv('avaliacao_metricas_hipertensao.csv', index=False)
+print("\n\nResultados salvos em: avaliacao_metricas_hipertensao.csv")
+</div>
+        </div>
+
+        <div class="section">
+            <h2>V. Ajuste de Threshold de Decisão</h2>
+
+            <h3>5.1. O Que É o Threshold</h3>
+
+            <p>Por padrão, modelos de classificação usam threshold = 0.5:</p>
+            <ul>
+                <li>Se P(risco) ≥ 0.5 → Classifica como "Com Risco"</li>
+                <li>Se P(risco) < 0.5 → Classifica como "Sem Risco"</li>
+            </ul>
+
+            <p><strong>Porém:</strong> Este threshold pode não ser ótimo para o problema de hipertensão!</p>
+
+            <div class="clinical-box">
+                <h4>Por Que Ajustar o Threshold?</h4>
+                <ul>
+                    <li><strong>Priorizar Sensibilidade:</strong> Threshold mais baixo (ex: 0.3) aumenta detecção de casos</li>
+                    <li><strong>Controlar Trade-off:</strong> Podemos aceitar mais FP para reduzir FN</li>
+                    <li><strong>Contexto Clínico:</strong> É preferível "errar para o lado da cautela"</li>
+                </ul>
+            </div>
+
+            <h3>5.2. Como Encontrar o Threshold Ótimo</h3>
+
+            <div class="code-block">
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.metrics import precision_recall_curve, roc_curve
+
+def encontrar_threshold_otimo(y_true, y_proba, criterio='f2', plot=True):
+    """
+    Encontra threshold ótimo para maximizar métrica escolhida
+    
+    Parâmetros:
+    -----------
+    y_true : array, valores reais
+    y_proba : array, probabilidades preditas
+    criterio : str, 'f2' (default), 'recall', 'precision', 'f1', 'youden'
+    plot : bool, se True gera gráficos
+    """
+    print("\n" + "="*70)
+    print(f"ANÁLISE DE THRESHOLD ÓTIMO - Critério: {criterio.upper()}")
+    print("="*70)
+    
+    # Calcular métricas para diferentes thresholds
+    thresholds = np.arange(0.1, 0.9, 0.01)
+    resultados = []
+    
+    for thresh in thresholds:
+        y_pred_temp = (y_proba >= thresh).astype(int)
+        
+        cm = confusion_matrix(y_true, y_pred_temp)
+        tn, fp, fn, tp = cm.ravel()
+        
+        if (tp + fn) > 0 and (tp + fp) > 0:  # Evitar divisão por zero
+            sensibilidade = tp / (tp + fn)
+            especificidade = tn / (tn + fp)
+            precisao = tp / (tp + fp)
+            
+            # F1-Score
+            if precisao + sensibilidade > 0:
+                f1 = 2 * (precisao * sensibilidade) / (precisao + sensibilidade)
+            else:
+                f1 = 0
+            
+            # F2-Score (prioriza Recall)
+            if (4 * precisao + sensibilidade) > 0:
+                f2 = 5 * (precisao * sensibilidade) / (4 * precisao + sensibilidade)
+            else:
+                f2 = 0
+            
+            # Youden Index (Sensibilidade + Especificidade - 1)
+            youden = sensibilidade + especificidade - 1
+            
+            resultados.append({
+                'threshold': thresh,
+                'sensibilidade': sensibilidade,
+                'especificidade': especificidade,
+                'precisao': precisao,
+                'f1': f1,
+                'f2': f2,
+                'youden': youden,
+                'tp': tp,
+                'tn': tn,
+                'fp': fp,
+                'fn': fn
+            })
+    
+    df_thresholds = pd.DataFrame(resultados)
+    
+    # Encontrar threshold ótimo baseado no critério
+    if criterio == 'f2':
+        idx_otimo = df_thresholds['f2'].idxmax()
+        metrica_otima = 'f2'
+    elif criterio == 'recall' or criterio == 'sensibilidade':
+        # Máxima sensibilidade mantendo especificidade > 0.70
+        df_filtrado = df_thresholds[df_thresholds['especificidade'] >= 0.70]
+        if len(df_filtrado) > 0:
+            idx_otimo = df_filtrado['sensibilidade'].idxmax()
+        else:
+            idx_otimo = df_thresholds['sensibilidade'].idxmax()
+        metrica_otima = 'sensibilidade'
+    elif criterio == 'youden':
+        idx_otimo = df_thresholds['youden'].idxmax()
+        metrica_otima = 'youden'
+    else:  # f1
+        idx_otimo = df_thresholds['f1'].idxmax()
+        metrica_otima = 'f1'
+    
+    resultado_otimo = df_thresholds.iloc[idx_otimo]
+    
+    # Imprimir resultados
+    print(f"\nTHRESHOLD ÓTIMO: {resultado_otimo['threshold']:.2f}")
+    print(f"\nMétricas com threshold ótimo:")
+    print(f"  Sensibilidade: {resultado_otimo['sensibilidade']:.4f} ({resultado_otimo['sensibilidade']*100:.1f}%)")
+    print(f"  Especificidade: {resultado_otimo['especificidade']:.4f} ({resultado_otimo['especificidade']*100:.1f}%)")
+    print(f"  Precisão: {resultado_otimo['precisao']:.4f}")
+    print(f"  F1-Score: {resultado_otimo['f1']:.4f}")
+    print(f"  F2-Score: {resultado_otimo['f2']:.4f}")
+    
+    print(f"\nMatriz de Confusão:")
+    print(f"  TN: {int(resultado_otimo['tn'])}  |  FP: {int(resultado_otimo['fp'])}")
+    print(f"  FN: {int(resultado_otimo['fn'])}  |  TP: {int(resultado_otimo['tp'])}")
+    
+    # Comparar com threshold padrão (0.5)
+    resultado_05 = df_thresholds[df_thresholds['threshold'] == 0.50].iloc[0]
+    
+    print(f"\n" + "-"*70)
+    print("COMPARAÇÃO: Threshold 0.50 (padrão) vs Threshold Ótimo")
+    print("-"*70)
+    
+    print(f"\nThreshold 0.50:")
+    print(f"  Sensibilidade: {resultado_05['sensibilidade']:.4f}")
+    print(f"  Especificidade: {resultado_05['especificidade']:.4f}")
+    print(f"  F2-Score: {resultado_05['f2']:.4f}")
+    print(f"  FN: {int(resultado_05['fn'])}")
+    
+    print(f"\nThreshold {resultado_otimo['threshold']:.2f} (ótimo):")
+    print(f"  Sensibilidade: {resultado_otimo['sensibilidade']:.4f} (Δ: {resultado_otimo['sensibilidade']-resultado_05['sensibilidade']:+.4f})")
+    print(f"  Especificidade: {resultado_otimo['especificidade']:.4f} (Δ: {resultado_otimo['especificidade']-resultado_05['especificidade']:+.4f})")
+    print(f"  F2-Score: {resultado_otimo['f2']:.4f} (Δ: {resultado_otimo['f2']-resultado_05['f2']:+.4f})")
+    print(f"  FN: {int(resultado_otimo['fn'])} (Δ: {int(resultado_otimo['fn']-resultado_05['fn'])})")
+    
+    # Plotar gráficos
+    if plot:
+        fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+        
+        # Plot 1: Sensibilidade e Especificidade vs Threshold
+        ax1 = axes[0, 0]
+        ax1.plot(df_thresholds['threshold'], df_thresholds['sensibilidade'], 
+                label='Sensibilidade (Recall)', linewidth=2, color='green')
+        ax1.plot(df_thresholds['threshold'], df_thresholds['especificidade'], 
+                label='Especificidade', linewidth=2, color='blue')
+        ax1.axvline(resultado_otimo['threshold'], color='red', linestyle='--', 
+                   label=f'Threshold Ótimo ({resultado_otimo["threshold"]:.2f})')
+        ax1.axvline(0.5, color='gray', linestyle=':', alpha=0.5, label='Threshold Padrão (0.50)')
+        ax1.set_xlabel('Threshold', fontsize=11)
+        ax1.set_ylabel('Métrica', fontsize=11)
+        ax1.set_title('Sensibilidade e Especificidade vs Threshold', fontsize=12, fontweight='bold')
+        ax1.legend()
+        ax1.grid(alpha=0.3)
+        
+        # Plot 2: F1 e F2 vs Threshold
+        ax2 = axes[0, 1]
+        ax2.plot(df_thresholds['threshold'], df_thresholds['f1'], 
+                label='F1-Score', linewidth=2, color='orange')
+        ax2.plot(df_thresholds['threshold'], df_thresholds['f2'], 
+                label='F2-Score (prioriza Recall)', linewidth=2, color='purple')
+        ax2.axvline(resultado_otimo['threshold'], color='red', linestyle='--', 
+                   label=f'Threshold Ótimo ({resultado_otimo["threshold"]:.2f})')
+        ax2.axvline(0.5, color='gray', linestyle=':', alpha=0.5)
+        ax2.set_xlabel('Threshold', fontsize=11)
+        ax2.set_ylabel('Score', fontsize=11)
+        ax2.set_title('F1-Score e F2-Score vs Threshold', fontsize=12, fontweight='bold')
+        ax2.legend()
+        ax2.grid(alpha=0.3)
+        
+        # Plot 3: FP e FN vs Threshold
+        ax3 = axes[1, 0]
+        ax3.plot(df_thresholds['threshold'], df_thresholds['fp'], 
+                label='Falsos Positivos (FP)', linewidth=2, color='orange')
+        ax3.plot(df_thresholds['threshold'], df_thresholds['fn'], 
+                label='Falsos Negativos (FN)', linewidth=2, color='red')
+        ax3.axvline(resultado_otimo['threshold'], color='red', linestyle='--')
+        ax3.axvline(0.5, color='gray', linestyle=':', alpha=0.5)
+        ax3.set_xlabel('Threshold', fontsize=11)
+        ax3.set_ylabel('Número de Erros', fontsize=11)
+        ax3.set_title('Falsos Positivos e Falsos Negativos vs Threshold', fontsize=12, fontweight='bold')
+        ax3.legend()
+        ax3.grid(alpha=0.3)
+        
+        # Plot 4: Trade-off Sensibilidade-Precisão
+        ax4 = axes[1, 1]
+        ax4.plot(df_thresholds['sensibilidade'], df_thresholds['precisao'], 
+                linewidth=2, color='purple')
+        # Marcar ponto ótimo
+        ax4.scatter(resultado_otimo['sensibilidade'], resultado_otimo['precisao'], 
+                   s=200, color='red', marker='*', zorder=5,
+                   label=f'Ótimo (thresh={resultado_otimo["threshold"]:.2f})')
+        # Marcar ponto padrão
+        ax4.scatter(resultado_05['sensibilidade'], resultado_05['precisao'], 
+                   s=100, color='gray', marker='o', zorder=5,
+                   label='Padrão (thresh=0.50)')
+        ax4.set_xlabel('Sensibilidade (Recall)', fontsize=11)
+        ax4.set_ylabel('Precisão', fontsize=11)
+        ax4.set_title('Trade-off Sensibilidade-Precisão', fontsize=12, fontweight='bold')
+        ax4.legend()
+        ax4.grid(alpha=0.3)
+        
+        plt.suptitle('Análise Completa de Threshold - Predição de Hipertensão', 
+                    fontsize=14, fontweight='bold', y=0.995)
+        plt.tight_layout()
+        plt.savefig('analise_threshold.png', dpi=300, bbox_inches='tight')
+        plt.show()
+        
+        print("\nVisualizações salvas em: analise_threshold.png")
+    
+    return resultado_otimo['threshold'], df_thresholds
+
+# Usar a função
+y_proba = modelo.predict_proba(X_test)[:, 1]
+threshold_otimo, df_analise = encontrar_threshold_otimo(
+    y_test, 
+    y_proba, 
+    criterio='f2',  # Prioriza F2-Score
+    plot=True
+)
+
+# Aplicar threshold ótimo
+y_pred_otimo = (y_proba >= threshold_otimo).astype(int)
+
+# Reavaliar com threshold ótimo
+print("\n" + "="*70)
+print("REAVALIAÇÃO COM THRESHOLD ÓTIMO")
+print("="*70)
+resultados_otimo = avaliar_modelo_completo(y_test, y_pred_otimo, y_proba)
+</div>
+        </div>
+
+        <div class="section">
+            <h2>VI. Checklist de Avaliação</h2>
+
+            <div class="success-box">
+                <h3>Checklist para Avaliação de Modelos de Predição de Hipertensão</h3>
+
+                <h4>1. Métricas Críticas Calculadas:</h4>
+                <ul style="list-style-type: none;">
+                    <li>☐ Matriz de Confusão completa (TN, FP, FN, TP)</li>
+                    <li>☐ Sensibilidade (Recall) - Meta: ≥ 90%</li>
+                    <li>☐ Especificidade - Meta: ≥ 80%</li>
+                    <li>☐ F2-Score - Meta: ≥ 0.85</li>
+                    <li>☐ ROC-AUC - Meta: ≥ 0.85</li>
+                    <li>☐ Precisão (VPP)</li>
+                    <li>☐ VPN</li>
+                </ul>
+
+                <h4>2. Análise de Threshold:</h4>
+                <ul style="list-style-type: none;">
+                    <li>☐ Testou diferentes thresholds (0.1 a 0.9)</li>
+                    <li>☐ Identificou threshold que maximiza F2-Score</li>
+                    <li>☐ Verificou impacto na Sensibilidade e Especificidade</li>
+                    <li>☐ Analisou trade-off FP vs FN</li>
+                    <li>☐ Documentou threshold escolhido e justificativa</li>
+                </ul>
+
+                <h4>3. Visualizações Geradas:</h4>
+                <ul style="list-style-type: none;">
+                    <li>☐ Matriz de Confusão (valores absolutos e percentuais)</li>
+                    <li>☐ Curva ROC</li>
+                    <li>☐ Gráficos de métricas vs threshold</li>
+                    <li>☐ Análise de FP e FN vs threshold</li>
+                    <li>☐ Trade-off Sensibilidade-Precisão</li>
+                </ul>
+
+                <h4>4. Interpretação Clínica:</h4>
+                <ul style="list-style-type: none;">
+                    <li>☐ Analisou quantos casos de risco foram perdidos (FN)</li>
+                    <li>☐ Avaliou impacto de falsos positivos (FP)</li>
+                    <li>☐ Verificou se modelo atende requisitos clínicos</li>
+                    <li>☐ Documentou limitações e riscos</li>
+                </ul>
+
+                <h4>5. Comparação de Modelos:</h4>
+                <ul style="list-style-type: none;">
+                    <li>☐ Comparou múltiplos algoritmos</li>
+                    <li>☐ Usou F2-Score como métrica principal de comparação</li>
+                    <li>☐ Verificou consistência de todas as métricas</li>
+                    <li>☐ Selecionou modelo com melhor balanço</li>
+                </ul>
+
+                <h4>6. Documentação:</h4>
+                <ul style="list-style-type: none;">
+                    <li>☐ Salvou todos os resultados em arquivos</li>
+                    <li>☐ Incluiu tabelas de métricas no TCC</li>
+                    <li>☐ Adicionou gráficos de alta resolução (300 dpi)</li>
+                    <li>☐ Justificou escolha de métricas e thresholds</li>
+                    <li>☐ Discutiu implicações clínicas dos resultados</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>VII. Exemplo de Apresentação no TCC</h2>
+
+            <p>Sugerimos estruturar a seção de avaliação do TCC da seguinte forma:</p>
+
+            <div class="code-block" style="white-space: pre-wrap; font-family: 'Times New Roman', serif; font-size: 11pt;">
+<strong>5. RESULTADOS E AVALIAÇÃO DO MODELO</strong>
+
+<strong>5.1. Métricas de Avaliação</strong>
+
+Para avaliar o desempenho do modelo de predição de hipertensão, utilizou-se um 
+conjunto de métricas apropriadas para o contexto clínico do problema. Como se trata 
+de uma aplicação médica, priorizou-se métricas que minimizam o risco de não detectar 
+casos de risco (Falsos Negativos), visto que este erro tem consequências mais graves 
+que identificar erroneamente um caso sem risco (Falso Positivo).
+
+<strong>5.1.1. Matriz de Confusão</strong>
+
+A matriz de confusão (Tabela X) resume o desempenho do modelo melhor modelo 
+(Random Forest com threshold otimizado) no conjunto de teste:
+
+[INSERIR TABELA COM MATRIZ DE CONFUSÃO]
+
+Observa-se que o modelo obteve:
+- Verdadeiros Negativos (TN): 650 casos corretamente identificados como sem risco
+- Verdadeiros Positivos (TP): 280 casos corretamente identificados com risco
+- Falsos Positivos (FP): 50 casos sem risco classificados incorretamente
+- Falsos Negativos (FN): 20 casos com risco não detectados
+
+<strong>5.1.2. Métricas Principais</strong>
+
+A Tabela Y apresenta todas as métricas calculadas, ordenadas por prioridade de acordo 
+com o contexto clínico:
+
+[INSERIR TABELA COM TODAS AS MÉTRICAS]
+
+<strong>Sensibilidade (Recall):</strong> O modelo atingiu 93.3% de sensibilidade, o que significa 
+que detectou 93.3% dos casos com risco real de hipertensão. Esta é a métrica mais 
+importante para o problema, pois indica a capacidade de identificar pacientes que 
+necessitam de acompanhamento preventivo.
+
+<strong>Especificidade:</strong> A especificidade de 92.9% indica que o modelo identificou 
+corretamente 92.9% dos casos sem risco, minimizando falsos alarmes.
+
+<strong>F2-Score:</strong> O F2-Score de 0.91 reflete o bom balanço do modelo, com ênfase na 
+detecção de casos positivos. Esta métrica foi utilizada como critério principal para 
+comparação entre diferentes algoritmos e para otimização de hiperparâmetros.
+
+<strong>5.2. Otimização do Threshold de Decisão</strong>
+
+Realizou-se análise sistemática para identificar o threshold de decisão ótimo, testando 
+valores entre 0.1 e 0.9. O threshold padrão de 0.50 foi comparado com o threshold que 
+maximiza o F2-Score.
+
+[INSERIR FIGURA: Gráfico de métricas vs threshold]
+
+Identificou-se que o threshold ótimo de 0.42 oferece melhor balanço entre sensibilidade 
+e especificidade, resultando em:
+- Aumento de 5.2% na sensibilidade (de 88.1% para 93.3%)
+- Redução de 8 Falsos Negativos (de 28 para 20)
+- Aumento aceitável de 15 Falsos Positivos (de 35 para 50)
+
+<strong>Justificativa da Escolha:</strong> Em medicina preventiva, o custo de não detectar um caso 
+de risco (Falso Negativo) é significativamente maior que o custo de um falso alarme 
+(Falso Positivo). Portanto, optou-se pelo threshold que prioriza a detecção de casos 
+positivos, mesmo aceitando um pequeno aumento nos falsos positivos.
+
+<strong>5.3. Implicações Clínicas</strong>
+
+Os resultados obtidos indicam que o modelo é adequado para aplicação em contexto de 
+triagem e prevenção de hipertensão:
+
+1. <strong>Alta Sensibilidade (93.3%):</strong> O modelo detecta a grande maioria dos casos de 
+risco, permitindo intervenção preventiva precoce.
+
+2. <strong>Falsos Negativos Minimizados:</strong> Apenas 20 de 300 casos de risco (6.7%) não 
+foram detectados, representando limitação aceitável considerando o contexto de triagem.
+
+3. <strong>Especificidade Adequada (92.9%):</strong> A taxa de falsos positivos (7.1%) é 
+controlada, evitando sobrecarga excessiva do sistema de saúde.
+
+4. <strong>Aplicabilidade:</strong> O modelo pode ser utilizado como ferramenta de apoio à 
+decisão clínica, auxiliando profissionais de saúde a priorizar pacientes que necessitam 
+de acompanhamento mais rigoroso.
+</div>
+        </div>
+
+        <div class="footer">
+            <div class="signature-line"></div>
+            <p><strong>Prof. Dr. Anderson Henrique Rodrigues Ferreira</strong></p>
+            <p>Orientador</p>
+            <p>CEUNSP - Centro Universitário Nossa Senhora do Patrocínio</p>
+            <p>anderson.ferreira@ceunsp.edu.br</p>
+            <p style="margin-top: 20px; font-size: 10pt; color: #666;">
+                <em>Documento gerado em 26 de outubro de 2025 • Versão 1.0</em>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

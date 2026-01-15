@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Predicao de Risco de Hipertensao</title>
+  <link rel="stylesheet" href="/static/styles.min.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1 class="title">Predicao de Risco de Hipertensao</h1>
+        <p class="subtitle">Inferencia clinica com modelo Gradient Boosting</p>
+      </div>
+      <div class="badge">API /predict</div>
+    </header>
+
+    <section class="card">
+      <h2>Entrada do paciente</h2>
+      <form id="predict-form">
+        <div class="grid">
+          <div>
+            <label for="sexo">Sexo (0=feminino, 1=masculino)</label>
+            <select id="sexo" name="sexo">
+              <option value="0">0 - Feminino</option>
+              <option value="1">1 - Masculino</option>
+            </select>
+          </div>
+          <div>
+            <label for="idade">Idade</label>
+            <input id="idade" name="idade" type="number" step="1" min="0" required />
+          </div>
+          <div>
+            <label for="fumante_atualmente">Fumante atualmente</label>
+            <select id="fumante_atualmente" name="fumante_atualmente">
+              <option value="0">0 - Nao</option>
+              <option value="1">1 - Sim</option>
+            </select>
+          </div>
+          <div>
+            <label for="cigarros_por_dia">Cigarros por dia <span class="info" data-tooltip="Valores tipicos no dataset: 0–70.">i</span></label>
+            <input id="cigarros_por_dia" name="cigarros_por_dia" type="number" step="1" min="0" max="70" />
+            <div class="hint">Faixa observada no dataset: 0–70</div>
+          </div>
+          <div>
+            <label for="medicamento_pressao">Medicamento de pressao</label>
+            <select id="medicamento_pressao" name="medicamento_pressao">
+              <option value="0">0 - Nao</option>
+              <option value="1">1 - Sim</option>
+            </select>
+          </div>
+          <div>
+            <label for="diabetes">Diabetes</label>
+            <select id="diabetes" name="diabetes">
+              <option value="0">0 - Nao</option>
+              <option value="1">1 - Sim</option>
+            </select>
+          </div>
+          <div>
+            <label for="colesterol_total">Colesterol total <span class="info" data-tooltip="Valores tipicos no dataset: 107–696.">i</span></label>
+            <input id="colesterol_total" name="colesterol_total" type="number" step="0.1" min="107" max="696" required />
+            <div class="hint">Faixa observada no dataset: 107–696</div>
+          </div>
+          <div>
+            <label for="pressao_sistolica">Pressao sistolica <span class="info" data-tooltip="Valores tipicos no dataset: 83.5–295.">i</span></label>
+            <input id="pressao_sistolica" name="pressao_sistolica" type="number" step="0.1" min="83.5" max="295" required />
+            <div class="hint">Faixa observada no dataset: 83.5–295</div>
+          </div>
+          <div>
+            <label for="pressao_diastolica">Pressao diastolica <span class="info" data-tooltip="Valores tipicos no dataset: 48–142.5.">i</span></label>
+            <input id="pressao_diastolica" name="pressao_diastolica" type="number" step="0.1" min="48" max="142.5" required />
+            <div class="hint">Faixa observada no dataset: 48–142.5</div>
+          </div>
+          <div>
+            <label for="imc">IMC <span class="info" data-tooltip="Valores tipicos no dataset: 15.54–56.8.">i</span></label>
+            <input id="imc" name="imc" type="number" step="0.1" min="15.54" max="56.8" required />
+            <div class="hint">Faixa observada no dataset: 15.54–56.8</div>
+          </div>
+          <div>
+            <label for="frequencia_cardiaca">Frequencia cardiaca <span class="info" data-tooltip="Valores tipicos no dataset: 44–143.">i</span></label>
+            <input id="frequencia_cardiaca" name="frequencia_cardiaca" type="number" step="0.1" min="44" max="143" required />
+            <div class="hint">Faixa observada no dataset: 44–143</div>
+          </div>
+          <div>
+            <label for="glicose">Glicose <span class="info" data-tooltip="Valores tipicos no dataset: 40–394.">i</span></label>
+            <input id="glicose" name="glicose" type="number" step="0.1" min="40" max="394" required />
+            <div class="hint">Faixa observada no dataset: 40–394</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit">Calcular risco</button>
+          <button type="button" class="ghost" id="fill-demo">Preencher exemplo</button>
+        </div>
+      </form>
+      <p class="note">Esta ferramenta e um apoio a decisao. Nao substitui avaliacao medica.</p>
+    </section>
+
+    <section class="card result" id="result">
+      <h2>Resultado</h2>
+      <div class="score" id="score">--</div>
+      <div class="muted" id="details">Aguardando calculo...</div>
+      <div class="muted" id="risk"></div>
+    </section>
+  </div>
+
+  <script src="/static/app.min.js"></script>
+</body>
+</html>

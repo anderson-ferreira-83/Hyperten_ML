@@ -1,0 +1,73 @@
+
+RELATÓRIO DE FEATURE ENGINEERING MÉDICO AVANÇADO
+===============================================
+
+Data/Hora: 2025-11-17 14:19:13
+Metodologia: Baseada no projeto A1_A2
+Versão: Simplificada sem dependências externas
+
+RESUMO GERAL:
+============
+Features originais: 11
+Features após engineering: 13
+Novas features criadas: 2
+Aumento percentual: 18.2%
+
+CATEGORIAS DE FEATURES CRIADAS:
+==============================
+- Blood Pressure: 0 features
+- Cardiovascular Risk: 2 features
+- Interactions: 0 features
+- Polynomials: 0 features
+- Categories: 0 features
+
+NOVAS FEATURES CRIADAS:
+======================
+ 1. score_framingham_simpl
+ 2. score_metabolico
+
+TOP CORRELAÇÕES COM TARGET:
+==========================
+ 1. score_framingham_simpl: nan
+ 2. score_metabolico: nan
+
+METODOLOGIA MÉDICA APLICADA:
+===========================
+✅ Features de Pressão Arterial Avançadas:
+   - MAP (Mean Arterial Pressure) calculada
+   - Pressão de pulso e índices derivados
+   - Categorização AHA/ACC 2017
+   - Detecção de hipertensão sistólica isolada
+
+✅ Features de Risco Cardiovascular:
+   - Estratificação por faixas etárias
+   - Scores de risco metabólico
+   - Categorização de BMI médica
+
+✅ Features de Interação Clínica:
+   - Razões clinicamente relevantes
+   - Interações idade-pressão arterial
+   - Interações BMI-pressão arterial
+
+✅ Scores Compostos Médicos:
+   - Score de Framingham simplificado
+   - Score metabólico composto
+   - Features polinomiais selecionadas
+
+BENEFÍCIOS ALCANÇADOS:
+=====================
+✅ Aplicação de conhecimento médico especializado
+✅ Features baseadas em diretrizes clínicas
+✅ Expansão inteligente do espaço de features
+✅ Seleção automática de features relevantes
+✅ Preparação para modelos de alta performance
+
+ARQUIVOS GERADOS:
+================
+- medical_features_final_20251117_141913.csv
+- feature_report_20251117_141913.json  
+- feature_summary_20251117_141913.txt
+
+===============================================
+Sistema TCC Hipertensão ML v3.0 - Feature Engineering
+===============================================

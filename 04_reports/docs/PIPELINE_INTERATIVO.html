@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pipeline Interativo - TCC Hipertensao</title>
+    <style>
+      :root {
+        --bg: #f7f7f8;
+        --paper: #ffffff;
+        --ink: #111827;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --accent: #0f172a;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      header {
+        padding: 20px 28px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      h1 {
+        margin: 0;
+        font-size: 20px;
+      }
+      p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      main {
+        padding: 20px 24px 40px;
+      }
+      .card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 16px;
+      }
+      .toolbar {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+      button {
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        border-radius: 6px;
+        padding: 8px 10px;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      button:hover {
+        border-color: var(--accent);
+      }
+      #diagram {
+        width: 100%;
+        min-height: 600px;
+        overflow: hidden;
+        background: #fff;
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+      }
+      .hint {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Pipeline Interativo</h1>
+      <p>Use o mouse para arrastar e zoom. Botao direito nao e necessario.</p>
+    </header>
+
+    <main>
+      <div class="card">
+        <div class="toolbar">
+          <button id="zoom-in">Zoom +</button>
+          <button id="zoom-out">Zoom -</button>
+          <button id="reset">Reset</button>
+        </div>
+        <div class="mermaid" id="diagram">
+flowchart TB
+  A[Dados brutos<br/>00_data/raw/Hypertension-risk-model-main.csv] --> B[Notebook 01 - EDA]
+  B --> R1[Relatorios EDA<br/>04_reports/eda]
+  A --> C[Notebook 02 - Pre-processamento]
+  C --> D[00_data/processed/*.npy<br/>metadata.json]
+  C --> R2[Relatorios preprocessamento<br/>04_reports/preprocessing]
+  C --> R3[Validacoes<br/>04_reports/validation]
+  C --> O[SMOTE<br/>balanceamento]
+
+  D --> E[Notebook 03 - Treinamento]
+  E --> M1[Modelos treinados<br/>03_models/trained]
+  E --> R4[Relatorios modelagem<br/>04_reports/modeling]
+  E --> P[Validacao<br/>Stratified K-Fold]
+
+  M1 --> F[Notebook 04 - Analise e Otimizacao]
+  F --> M2[Modelos finais<br/>03_models/final]
+  F --> R5[Visualizacoes<br/>04_reports/visualizations]
+  F --> R6[Relatorios executivos<br/>04_reports/executive]
+  F --> R7[Comparacao modelos<br/>04_reports/model_comparison]
+  F --> Q[Metricas-chave<br/>Recall, F2, ROC-AUC, FN/FP]
+  F --> R[Threshold<br/>decisao clinica]
+
+  M2 --> G[Notebook 05 - Interpretabilidade]
+  G --> R8[Relatorios interpretabilidade<br/>04_reports/interpretability]
+
+  M2 --> H[Empacotamento de inferencia]
+  D --> H
+  R8 --> H
+  H --> I[Artefatos oficiais<br/>05_artifacts/gb_v1]
+
+  I --> J[API FastAPI<br/>06_api/main.py]
+  I --> K[UI Web<br/>07_web/]
+  J --> L[Inferencia local/API]
+  K --> L
+  J --> M[Deploy API<br/>Lambda + API Gateway]
+  K --> N[Deploy UI<br/>S3 + CloudFront]
+        </div>
+        <div class="hint">Dica: arraste para mover, use o scroll para zoom.</div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true, theme: "default" });
+      window.addEventListener("load", () => {
+        const svg = document.querySelector("#diagram svg");
+        if (!svg) return;
+        const panZoom = svgPanZoom(svg, {
+          zoomEnabled: true,
+          controlIconsEnabled: false,
+          fit: true,
+          center: true
+        });
+
+        document.getElementById("zoom-in").addEventListener("click", () => panZoom.zoomIn());
+        document.getElementById("zoom-out").addEventListener("click", () => panZoom.zoomOut());
+        document.getElementById("reset").addEventListener("click", () => panZoom.resetZoom());
+      });
+    </script>
+  </body>
+</html>
