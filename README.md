@@ -1,5 +1,18 @@
 # TCC - Predição de Hipertensão com Machine Learning
 
+## Autores
+
+**Orientador e Desenvolvedor:**
+- Prof. Dr. Anderson Henrique Rodrigues Ferreira
+- CEUNSP - Centro Universitário Nossa Senhora do Patrocínio
+- anderson.ferreira@ceunsp.edu.br
+
+**Alunos Desenvolvedores:**
+- Marcelo V Duarte Colpani
+- Nicolas Souza
+- Rubens Jose Collin
+- Tiago Dias Borges
+
 ## Visão Geral do Projeto
 
 Este projeto implementa um **sistema completo de aprendizado de máquina para predição de risco de hipertensão**, desenvolvido como Trabalho de Conclusão de Curso (TCC). O trabalho aborda um problema crítico de saúde pública utilizando técnicas avançadas de ciência de dados, com foco em **interpretabilidade clínica**, **validações metodológicas robustas** e **pipeline de inferência pronto para produção**.
@@ -143,9 +156,10 @@ Este repositório implementa um pipeline completo de ML para predição de risco
 
 ## Modelo oficial de inferencia
 
-- Algoritmo: Gradient Boosting  
-- Parametros: `n_estimators=100`, `learning_rate=0.05`, `max_depth=3`  
-- Artefatos: `05_artifacts/gb_v1/`
+- Algoritmo: Random Forest (otimizado)
+- Parametros principais: `n_estimators=210`, `max_depth=24`, `min_samples_leaf=3`, `max_features='log2'`, `class_weight='balanced_subsample'`
+- Performance: Recall=92.0%, F2-Score=0.89, AUC-ROC=0.95
+- Artefatos: `05_artifacts/rf_v1/`
 
 ## Bases metodologicas (SMOTE, validacao e metricas)
 
