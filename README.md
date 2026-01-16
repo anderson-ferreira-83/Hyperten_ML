@@ -1,10 +1,10 @@
 # TCC - Predição de Hipertensão com Machine Learning
 
-## 📋 Visão Geral do Projeto
+## Visão Geral do Projeto
 
 Este projeto implementa um **sistema completo de aprendizado de máquina para predição de risco de hipertensão**, desenvolvido como Trabalho de Conclusão de Curso (TCC). O trabalho aborda um problema crítico de saúde pública utilizando técnicas avançadas de ciência de dados, com foco em **interpretabilidade clínica**, **validações metodológicas robustas** e **pipeline de inferência pronto para produção**.
 
-### 🎯 O Problema
+### O Problema
 
 A hipertensão arterial é uma das principais causas de morbimortalidade cardiovascular no mundo, afetando aproximadamente 1,28 bilhão de adultos globalmente. A detecção precoce de indivíduos em risco é fundamental para intervenções preventivas eficazes. No entanto, o rastreamento populacional enfrenta desafios:
 
@@ -13,7 +13,7 @@ A hipertensão arterial é uma das principais causas de morbimortalidade cardiov
 - **Necessidade de priorização** de pacientes com maior risco
 - **Assimetria no custo dos erros**: não detectar um caso de risco (falso negativo) tem consequências mais graves que gerar um alarme falso (falso positivo)
 
-### 💡 A Solução
+### A Solução
 
 Este trabalho desenvolve um **modelo preditivo baseado em dados clínicos e demográficos** que auxilia na identificação precoce de indivíduos em risco de hipertensão. O diferencial está em:
 
@@ -25,7 +25,7 @@ Este trabalho desenvolve um **modelo preditivo baseado em dados clínicos e demo
 
 4. **Reprodutibilidade**: Documentação completa, artefatos versionados e pipeline padronizado que permite replicação e auditoria dos resultados
 
-### 📊 Dataset
+### Dataset
 
 - **Fonte**: [Kaggle - Hypertension Risk Model](https://www.kaggle.com/datasets/khan1803115/hypertension-risk-model-main/data)
 - **Tamanho**: 4.240 pacientes
@@ -35,7 +35,7 @@ Este trabalho desenvolve um **modelo preditivo baseado em dados clínicos e demo
 
 **Variáveis incluídas**: sexo, idade, status de fumante, cigarros/dia, uso de medicamentos para pressão, diabetes, colesterol total, pressão sistólica, pressão diastólica, IMC, frequência cardíaca e glicose.
 
-### 🏆 Principais Resultados
+### Principais Resultados
 
 O modelo final (Random Forest otimizado) alcançou:
 
@@ -50,7 +50,7 @@ O modelo final (Random Forest otimizado) alcançou:
 
 **Significado Clínico**: De cada 100 pacientes com risco real de hipertensão, o modelo identifica corretamente 92, permitindo intervenção preventiva precoce. A taxa de falsos negativos (8%) é considerada aceitável para um sistema de triagem, enquanto a especificidade de 89.8% evita sobrecarga excessiva do sistema de saúde com falsos alarmes.
 
-### 🔬 Diferenciais Metodológicos
+### Diferenciais Metodológicos
 
 1. **Validação Anti-Leakage**: SMOTE aplicado exclusivamente no conjunto de treino e, durante validação cruzada, dentro do pipeline de cada fold, evitando superestimação de desempenho
 
@@ -64,7 +64,7 @@ O modelo final (Random Forest otimizado) alcançou:
 
 6. **Interpretabilidade Completa**: SHAP values, feature importance intrínseca e por permutação, análise de limiares clínicos e categorias de importância médica
 
-### 📚 Fundamentação Teórica
+### Fundamentação Teórica
 
 Os guias metodológicos em `11_materials_tcc/` fundamentam as escolhas técnicas:
 
@@ -76,7 +76,7 @@ Esses materiais garantem que cada decisão metodológica está alinhada com o es
 
 ---
 
-## 🚀 Estrutura do Projeto
+## Estrutura do Projeto
 
 Este repositório implementa um pipeline completo de ML para predição de risco de hipertensão, com foco em interpretabilidade clínica, validações robustas e inferência pronta para API.
 
