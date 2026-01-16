@@ -1,6 +1,84 @@
-# TCC - Predicao de Hipertensao com Machine Learning
+# TCC - Predição de Hipertensão com Machine Learning
 
-Este repositorio implementa um pipeline completo de ML para predicao de risco de hipertensao, com foco em interpretabilidade clinica, validacoes robustas e inferencia pronta para API.
+## 📋 Visão Geral do Projeto
+
+Este projeto implementa um **sistema completo de aprendizado de máquina para predição de risco de hipertensão**, desenvolvido como Trabalho de Conclusão de Curso (TCC). O trabalho aborda um problema crítico de saúde pública utilizando técnicas avançadas de ciência de dados, com foco em **interpretabilidade clínica**, **validações metodológicas robustas** e **pipeline de inferência pronto para produção**.
+
+### 🎯 O Problema
+
+A hipertensão arterial é uma das principais causas de morbimortalidade cardiovascular no mundo, afetando aproximadamente 1,28 bilhão de adultos globalmente. A detecção precoce de indivíduos em risco é fundamental para intervenções preventivas eficazes. No entanto, o rastreamento populacional enfrenta desafios:
+
+- **Custo elevado** de avaliações médicas em larga escala
+- **Recursos limitados** no sistema de saúde para acompanhamento universal
+- **Necessidade de priorização** de pacientes com maior risco
+- **Assimetria no custo dos erros**: não detectar um caso de risco (falso negativo) tem consequências mais graves que gerar um alarme falso (falso positivo)
+
+### 💡 A Solução
+
+Este trabalho desenvolve um **modelo preditivo baseado em dados clínicos e demográficos** que auxilia na identificação precoce de indivíduos em risco de hipertensão. O diferencial está em:
+
+1. **Metodologia Rigorosa**: Pipeline completo seguindo melhores práticas de ML em saúde, com validação cruzada estratificada e tratamento correto de desbalanceamento de classes (SMOTE aplicado apenas no treino, dentro do pipeline de CV para evitar data leakage)
+
+2. **Foco Clínico**: Priorização de métricas clinicamente relevantes (Recall e F2-Score) que minimizam falsos negativos, refletindo o custo real dos erros em aplicações médicas
+
+3. **Interpretabilidade**: Análises de feature importance, SHAP values e Partial Dependence Plots que permitem compreender quais fatores influenciam as predições, essencial para confiança clínica
+
+4. **Reprodutibilidade**: Documentação completa, artefatos versionados e pipeline padronizado que permite replicação e auditoria dos resultados
+
+### 📊 Dataset
+
+- **Fonte**: [Kaggle - Hypertension Risk Model](https://www.kaggle.com/datasets/khan1803115/hypertension-risk-model-main/data)
+- **Tamanho**: 4.240 pacientes
+- **Features**: 12 variáveis (demográficas, clínicas e biomarcadores)
+- **Target**: Risco de hipertensão (classificação binária: 0 = baixo risco, 1 = alto risco)
+- **Desbalanceamento**: Dataset desbalanceado, com menor proporção de casos de alto risco (característica típica de dados médicos)
+
+**Variáveis incluídas**: sexo, idade, status de fumante, cigarros/dia, uso de medicamentos para pressão, diabetes, colesterol total, pressão sistólica, pressão diastólica, IMC, frequência cardíaca e glicose.
+
+### 🏆 Principais Resultados
+
+O modelo final (Random Forest otimizado) alcançou:
+
+| Métrica | Valor | Interpretação Clínica |
+|---------|-------|----------------------|
+| **Recall (Sensibilidade)** | **92.0%** | Detecta 92% dos casos de risco real |
+| **F2-Score** | **0.89** | Excelente balanço priorizando detecção de casos |
+| **AUC-ROC** | **0.95** | Excelente capacidade discriminativa |
+| **Especificidade** | **89.8%** | Minimiza falsos alarmes (89.8% das pessoas sem risco são corretamente identificadas) |
+| **Falsos Negativos** | **37 casos** | Apenas 8% dos casos de risco não foram detectados |
+| **Falsos Positivos** | **104 casos** | Taxa controlada de alarmes falsos |
+
+**Significado Clínico**: De cada 100 pacientes com risco real de hipertensão, o modelo identifica corretamente 92, permitindo intervenção preventiva precoce. A taxa de falsos negativos (8%) é considerada aceitável para um sistema de triagem, enquanto a especificidade de 89.8% evita sobrecarga excessiva do sistema de saúde com falsos alarmes.
+
+### 🔬 Diferenciais Metodológicos
+
+1. **Validação Anti-Leakage**: SMOTE aplicado exclusivamente no conjunto de treino e, durante validação cruzada, dentro do pipeline de cada fold, evitando superestimação de desempenho
+
+2. **Teste de Proporções**: Avaliação sistemática de diferentes proporções treino/teste (60/40, 70/30, 75/25, 80/20) com múltiplas repetições para identificar o split mais estável
+
+3. **Métricas Orientadas ao Contexto**: Uso de F2-Score como métrica principal (dá 2× mais peso ao Recall em relação à Precision), refletindo a prioridade clínica de minimizar falsos negativos
+
+4. **Otimização de Threshold**: Análise de diferentes limiares de decisão para contextos clínicos específicos (triagem de alta sensibilidade vs. confirmação de alta especificidade)
+
+5. **Feature Engineering Médico**: Criação de features derivadas baseadas em conhecimento médico especializado (MAP, pressão de pulso, categorização AHA/ACC 2017, índices de risco cardiovascular)
+
+6. **Interpretabilidade Completa**: SHAP values, feature importance intrínseca e por permutação, análise de limiares clínicos e categorias de importância médica
+
+### 📚 Fundamentação Teórica
+
+Os guias metodológicos em `11_materials_tcc/` fundamentam as escolhas técnicas:
+
+- **`guia_metricas_hipertensao.html`**: Justificativa clínica da priorização de Recall e F2-Score, explicação detalhada da matriz de confusão no contexto médico, e análise do custo assimétrico dos erros (FN vs FP)
+
+- **`tutorial_tecnicas_avancadas_orientador_bw.html`**: Sequência metodológica rigorosa (SMOTE → testes de proporção → K-Fold → Stratified K-Fold → pipeline final), comparação SMOTE vs RandomOverSampler, e protocolos de validação robusta
+
+Esses materiais garantem que cada decisão metodológica está alinhada com o estado da arte em ML aplicado à saúde.
+
+---
+
+## 🚀 Estrutura do Projeto
+
+Este repositório implementa um pipeline completo de ML para predição de risco de hipertensão, com foco em interpretabilidade clínica, validações robustas e inferência pronta para API.
 
 ## Estrutura (nova organizacao)
 
