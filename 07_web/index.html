@@ -11,7 +11,7 @@
     <header>
       <div>
         <h1 class="title">Predicao de Risco de Hipertensao</h1>
-        <p class="subtitle">Inferencia clinica com modelo Gradient Boosting</p>
+        <p class="subtitle">Inferencia clinica com modelo selecionado automaticamente</p>
       </div>
       <div class="badge">API /predict</div>
     </header>
@@ -101,10 +101,11 @@
       <h2>Resultado</h2>
       <div class="score" id="score">--</div>
       <div class="muted" id="details">Aguardando calculo...</div>
+      <div class="muted" id="model-info">Modelo: --</div>
       <div class="muted" id="risk"></div>
     </section>
   </div>
 
-  <script src="/static/app.min.js"></script>
+  <script src="/static/app.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 from typing import Optional, Dict, Any
 
@@ -11,12 +12,12 @@ from starlette.responses import Response
 from pydantic import BaseModel, Field
 
 ROOT = Path(__file__).resolve().parents[1]
-ARTIFACTS_DIR = ROOT / '05_artifacts' / 'gb_v1'
-
-PIPELINE_PATH = ARTIFACTS_DIR / 'pipeline.pkl'
-FEATURES_PATH = ARTIFACTS_DIR / 'features.json'
-THRESHOLDS_PATH = ARTIFACTS_DIR / 'thresholds.json'
-METADATA_PATH = ARTIFACTS_DIR / 'metadata.json'
+ARTIFACTS_BASE = ROOT / '05_artifacts'
+DEFAULT_ARTIFACT_KEY = 'gb_v1'
+MODEL_SUMMARY_CANDIDATES = [
+    ROOT / '02_notebooks' / '06_model_metrics' / '6_analysis_metrics' / 'model_training_summary.json',
+    ROOT / '04_reports' / 'modeling' / 'model_training_summary.json',
+]
 
 app = FastAPI(title='Hypertension Risk Inference', version='1.0.0')
 
@@ -25,6 +26,80 @@ features = None
 thresholds = None
 metadata = None
 html_index = None
+artifacts_dir = None
+selected_model = None
+selected_summary_path = None
+requested_model = None
+
+
+def _normalize_model_name(value: Optional[str]) -> Optional[str]:
+    if not value:
+        return None
+    return ''.join(ch for ch in value.lower().strip() if ch.isalnum())
+
+
+def _load_best_model_name() -> tuple[Optional[str], Optional[Path]]:
+    candidates = [p for p in MODEL_SUMMARY_CANDIDATES if p.exists()]
+    if not candidates:
+        return None, None
+    candidates.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+    summary_path = candidates[0]
+    with open(summary_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    if isinstance(data.get('best_model'), dict):
+        return data['best_model'].get('name'), summary_path
+    if isinstance(data.get('experiment_info'), dict):
+        return data['experiment_info'].get('best_model'), summary_path
+    return None, summary_path
+
+
+def _build_artifact_map() -> Dict[str, Path]:
+    mapping = {}
+    if not ARTIFACTS_BASE.exists():
+        return mapping
+    for item in ARTIFACTS_BASE.iterdir():
+        if not item.is_dir():
+            continue
+        metadata_path = item / 'metadata.json'
+        model_name = None
+        if metadata_path.exists():
+            with open(metadata_path, 'r', encoding='utf-8') as f:
+                meta = json.load(f)
+            model_name = meta.get('model')
+            if isinstance(model_name, str):
+                if 'RandomForest' in model_name:
+                    model_name = 'Random Forest'
+                elif 'GradientBoosting' in model_name:
+                    model_name = 'Gradient Boosting'
+        for key in filter(None, [_normalize_model_name(model_name), _normalize_model_name(item.name)]):
+            mapping[key] = item
+    return mapping
+
+
+def _resolve_artifacts_dir() -> tuple[Path, Optional[str], Optional[Path], Optional[str]]:
+    artifact_map = _build_artifact_map()
+    best_model_name, summary_path = _load_best_model_name()
+    if best_model_name:
+        key = _normalize_model_name(best_model_name)
+        if key in artifact_map:
+            return artifact_map[key], best_model_name, summary_path, best_model_name
+
+    env_key = os.getenv('MODEL_KEY')
+    if env_key:
+        env_dir = ARTIFACTS_BASE / env_key
+        if env_dir.exists():
+            return env_dir, env_key, summary_path, best_model_name
+
+    default_dir = ARTIFACTS_BASE / DEFAULT_ARTIFACT_KEY
+    if default_dir.exists():
+        return default_dir, DEFAULT_ARTIFACT_KEY, summary_path, best_model_name
+
+    if artifact_map:
+        first_dir = next(iter(artifact_map.values()))
+        return first_dir, first_dir.name, summary_path, best_model_name
+
+    raise RuntimeError(f'No artifacts found under {ARTIFACTS_BASE}')
 
 
 class PredictionInput(BaseModel):
@@ -55,25 +130,31 @@ class CacheControlStaticFiles(StaticFiles):
 
 @app.on_event('startup')
 def load_artifacts() -> None:
-    global pipeline, features, thresholds, metadata, html_index
+    global pipeline, features, thresholds, metadata, html_index, artifacts_dir, selected_model, selected_summary_path, requested_model
 
-    if not PIPELINE_PATH.exists():
-        raise RuntimeError(f'Pipeline not found: {PIPELINE_PATH}')
-    if not FEATURES_PATH.exists():
-        raise RuntimeError(f'Features not found: {FEATURES_PATH}')
+    artifacts_dir, selected_model, selected_summary_path, requested_model = _resolve_artifacts_dir()
+    pipeline_path = artifacts_dir / 'pipeline.pkl'
+    features_path = artifacts_dir / 'features.json'
+    thresholds_path = artifacts_dir / 'thresholds.json'
+    metadata_path = artifacts_dir / 'metadata.json'
 
-    pipeline = joblib.load(PIPELINE_PATH)
+    if not pipeline_path.exists():
+        raise RuntimeError(f'Pipeline not found: {pipeline_path}')
+    if not features_path.exists():
+        raise RuntimeError(f'Features not found: {features_path}')
 
-    with open(FEATURES_PATH, 'r', encoding='utf-8') as f:
+    pipeline = joblib.load(pipeline_path)
+
+    with open(features_path, 'r', encoding='utf-8') as f:
         features_data = json.load(f)
     features = features_data.get('features')
 
-    if THRESHOLDS_PATH.exists():
-        with open(THRESHOLDS_PATH, 'r', encoding='utf-8') as f:
+    if thresholds_path.exists():
+        with open(thresholds_path, 'r', encoding='utf-8') as f:
             thresholds = json.load(f)
 
-    if METADATA_PATH.exists():
-        with open(METADATA_PATH, 'r', encoding='utf-8') as f:
+    if metadata_path.exists():
+        with open(metadata_path, 'r', encoding='utf-8') as f:
             metadata = json.load(f)
 
     web_index_path = ROOT / '07_web' / 'index.html'
@@ -91,7 +172,10 @@ def health() -> Dict[str, Any]:
         'status': 'ok',
         'pipeline_loaded': pipeline is not None,
         'features_count': len(features) if features else 0,
-        'artifacts_dir': str(ARTIFACTS_DIR),
+        'artifacts_dir': str(artifacts_dir) if artifacts_dir else None,
+        'selected_model': selected_model,
+        'requested_model': requested_model,
+        'model_summary_path': str(selected_summary_path) if selected_summary_path else None,
     }
 
 
@@ -153,4 +237,6 @@ def predict(payload: PredictionInput, threshold_key: str = Query('balanced')) ->
         'missing_features': missing,
         'model': metadata.get('model') if metadata else None,
         'model_version': metadata.get('model_version') if metadata else None,
+        'model_selected': selected_model,
+        'model_requested': requested_model,
     }

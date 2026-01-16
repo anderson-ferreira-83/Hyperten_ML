@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 
 import joblib
@@ -6,26 +7,102 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
-ARTIFACTS_DIR = ROOT / '05_artifacts' / 'gb_v1'
+ARTIFACTS_BASE = ROOT / '05_artifacts'
+DEFAULT_ARTIFACT_KEY = 'gb_v1'
+MODEL_SUMMARY_CANDIDATES = [
+    ROOT / '02_notebooks' / '06_model_metrics' / '6_analysis_metrics' / 'model_training_summary.json',
+    ROOT / '04_reports' / 'modeling' / 'model_training_summary.json',
+]
 
-PIPELINE_PATH = ARTIFACTS_DIR / 'pipeline.pkl'
-FEATURES_PATH = ARTIFACTS_DIR / 'features.json'
-THRESHOLDS_PATH = ARTIFACTS_DIR / 'thresholds.json'
+
+def _normalize_model_name(value):
+    if not value:
+        return None
+    return ''.join(ch for ch in value.lower().strip() if ch.isalnum())
+
+
+def _load_best_model_name():
+    candidates = [p for p in MODEL_SUMMARY_CANDIDATES if p.exists()]
+    if not candidates:
+        return None, None
+    candidates.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+    summary_path = candidates[0]
+    with open(summary_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    if isinstance(data.get('best_model'), dict):
+        return data['best_model'].get('name'), summary_path
+    if isinstance(data.get('experiment_info'), dict):
+        return data['experiment_info'].get('best_model'), summary_path
+    return None, summary_path
+
+
+def _build_artifact_map():
+    mapping = {}
+    if not ARTIFACTS_BASE.exists():
+        return mapping
+    for item in ARTIFACTS_BASE.iterdir():
+        if not item.is_dir():
+            continue
+        metadata_path = item / 'metadata.json'
+        model_name = None
+        if metadata_path.exists():
+            with open(metadata_path, 'r', encoding='utf-8') as f:
+                meta = json.load(f)
+            model_name = meta.get('model')
+            if isinstance(model_name, str):
+                if 'RandomForest' in model_name:
+                    model_name = 'Random Forest'
+                elif 'GradientBoosting' in model_name:
+                    model_name = 'Gradient Boosting'
+        for key in filter(None, [_normalize_model_name(model_name), _normalize_model_name(item.name)]):
+            mapping[key] = item
+    return mapping
+
+
+def _resolve_artifacts_dir():
+    artifact_map = _build_artifact_map()
+    best_model_name, summary_path = _load_best_model_name()
+    if best_model_name:
+        key = _normalize_model_name(best_model_name)
+        if key in artifact_map:
+            return artifact_map[key], best_model_name, summary_path
+
+    env_key = os.getenv('MODEL_KEY')
+    if env_key:
+        env_dir = ARTIFACTS_BASE / env_key
+        if env_dir.exists():
+            return env_dir, env_key, summary_path
+
+    default_dir = ARTIFACTS_BASE / DEFAULT_ARTIFACT_KEY
+    if default_dir.exists():
+        return default_dir, DEFAULT_ARTIFACT_KEY, summary_path
+
+    if artifact_map:
+        first_dir = next(iter(artifact_map.values()))
+        return first_dir, first_dir.name, summary_path
+
+    raise FileNotFoundError(f'No artifacts found under {ARTIFACTS_BASE}')
 
 
 def load_artifacts():
-    if not PIPELINE_PATH.exists():
-        raise FileNotFoundError(f'Pipeline not found: {PIPELINE_PATH}')
-    if not FEATURES_PATH.exists():
-        raise FileNotFoundError(f'Features not found: {FEATURES_PATH}')
+    artifacts_dir, selected_model, summary_path = _resolve_artifacts_dir()
+    pipeline_path = artifacts_dir / 'pipeline.pkl'
+    features_path = artifacts_dir / 'features.json'
+    thresholds_path = artifacts_dir / 'thresholds.json'
 
-    pipeline = joblib.load(PIPELINE_PATH)
-    with open(FEATURES_PATH, 'r', encoding='utf-8') as f:
+    if not pipeline_path.exists():
+        raise FileNotFoundError(f'Pipeline not found: {pipeline_path}')
+    if not features_path.exists():
+        raise FileNotFoundError(f'Features not found: {features_path}')
+
+    pipeline = joblib.load(pipeline_path)
+    with open(features_path, 'r', encoding='utf-8') as f:
         features_data = json.load(f)
 
     thresholds = None
-    if THRESHOLDS_PATH.exists():
-        with open(THRESHOLDS_PATH, 'r', encoding='utf-8') as f:
+    if thresholds_path.exists():
+        with open(thresholds_path, 'r', encoding='utf-8') as f:
             thresholds = json.load(f)
 
     return pipeline, features_data['features'], thresholds

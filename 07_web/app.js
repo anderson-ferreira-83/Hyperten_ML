@@ -3,6 +3,7 @@ const API_URL = '/predict?threshold_key=balanced';
 const form = document.getElementById('predict-form');
 const scoreEl = document.getElementById('score');
 const detailsEl = document.getElementById('details');
+const modelEl = document.getElementById('model-info');
 const riskEl = document.getElementById('risk');
 const smokerEl = document.getElementById('fumante_atualmente');
 const cigsEl = document.getElementById('cigarros_por_dia');
@@ -51,6 +52,7 @@ form.addEventListener('submit', async (e) => {
 
   scoreEl.textContent = '...';
   detailsEl.textContent = 'Calculando...';
+  if (modelEl) modelEl.textContent = 'Modelo: ...';
   riskEl.textContent = '';
 
   const rangeErrors = [];
@@ -110,13 +112,16 @@ form.addEventListener('submit', async (e) => {
     const payload = await res.json();
     const prob = payload.probability ?? 0;
     const label = payload.prediction === 1 ? 'Alto risco' : 'Baixo risco';
+    const modelName = payload.model_selected || payload.model || 'Nao informado';
 
     scoreEl.textContent = `${(prob * 100).toFixed(1)}%`;
     detailsEl.textContent = `Threshold: ${payload.threshold} | Perfil: ${payload.threshold_profile}`;
+    if (modelEl) modelEl.textContent = `Modelo: ${modelName}`;
     riskEl.textContent = label;
   } catch (err) {
     scoreEl.textContent = '--';
     detailsEl.textContent = err.message;
+    if (modelEl) modelEl.textContent = 'Modelo: --';
     riskEl.textContent = '';
   }
 });
