@@ -1,0 +1,35 @@
+# Dockerfile otimizado para AWS Lambda
+# Usa a imagem base oficial da AWS para Python 3.11
+FROM public.ecr.aws/lambda/python:3.11
+
+# Copiar requirements
+COPY requirements.txt ${LAMBDA_TASK_ROOT}/
+
+# Criar requirements mínimo para produção
+RUN echo "fastapi>=0.110.0" > requirements_prod.txt && \
+    echo "uvicorn>=0.25.0" >> requirements_prod.txt && \
+    echo "pandas>=1.5.0" >> requirements_prod.txt && \
+    echo "numpy>=1.21.0" >> requirements_prod.txt && \
+    echo "scikit-learn>=1.1.0" >> requirements_prod.txt && \
+    echo "joblib>=1.1.0" >> requirements_prod.txt && \
+    echo "pydantic>=2.0.0" >> requirements_prod.txt && \
+    echo "mangum>=0.17.0" >> requirements_prod.txt
+
+# Instalar dependências de produção
+RUN pip install --no-cache-dir -r requirements_prod.txt --target "${LAMBDA_TASK_ROOT}"
+
+# Copiar código da API e artefatos do modelo
+COPY 06_api ${LAMBDA_TASK_ROOT}/06_api
+COPY 05_artifacts ${LAMBDA_TASK_ROOT}/05_artifacts
+COPY 07_web ${LAMBDA_TASK_ROOT}/07_web
+COPY 08_src ${LAMBDA_TASK_ROOT}/08_src
+
+# Criar handler Lambda com Mangum
+RUN echo 'import sys' > ${LAMBDA_TASK_ROOT}/lambda_handler.py && \
+    echo 'sys.path.insert(0, "/var/task/06_api")' >> ${LAMBDA_TASK_ROOT}/lambda_handler.py && \
+    echo 'from mangum import Mangum' >> ${LAMBDA_TASK_ROOT}/lambda_handler.py && \
+    echo 'from main import app' >> ${LAMBDA_TASK_ROOT}/lambda_handler.py && \
+    echo 'handler = Mangum(app, lifespan="off")' >> ${LAMBDA_TASK_ROOT}/lambda_handler.py
+
+# Lambda handler
+CMD [ "lambda_handler.handler" ]

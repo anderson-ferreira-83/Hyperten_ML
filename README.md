@@ -95,18 +95,19 @@ Este repositório implementa um pipeline completo de ML para predição de risco
 
 ## Estrutura (nova organizacao)
 
-- `00_data/` dados brutos e processados  
-- `01_eda/` materiais de EDA  
-- `02_notebooks/` notebooks (01..05)  
-- `03_models/` modelos treinados e finais  
-- `04_reports/` relatorios, validacoes e visualizacoes  
-- `05_artifacts/` pipeline oficial de inferencia  
-- `06_api/` API FastAPI  
-- `07_web/` interface web (HTML/CSS/JS)  
-- `08_src/` codigo fonte modular  
-- `09_config/` configuracoes  
-- `10_clinical_validation/` scripts de validacao clinica  
-- `11_materials_tcc/` materiais do TCC  
+- `00_data/` dados brutos e processados
+- `01_eda/` materiais de EDA
+- `02_notebooks/` notebooks (01..05)
+- `03_models/` modelos treinados e finais
+- `04_reports/` relatorios, validacoes e visualizacoes
+- `05_artifacts/` pipeline oficial de inferencia
+- `06_api/` API FastAPI
+- `07_web/` interface web (HTML/CSS/JS)
+- `08_src/` codigo fonte modular
+- `09_config/` configuracoes
+- `10_clinical_validation/` scripts de validacao clinica
+- `11_materials_tcc/` materiais do TCC
+- `12_deploy_aws/` scripts e documentacao para deploy na AWS
 - `99_legacy/` arquivos historicos/soltos
 
 ## Pipeline completo (do notebook a inferencia)
@@ -222,6 +223,51 @@ pytest -q
 
 Abrir UI:
 - http://127.0.0.1:8000/app
+
+## Deploy na AWS (Producao)
+
+Para fazer o deploy da aplicacao na AWS (Lambda + API Gateway + S3 + CloudFront):
+
+📁 **Todos os arquivos de deploy estao em**: [12_deploy_aws/](12_deploy_aws/)
+
+### Guias Disponiveis
+
+- 🚀 **Inicio Rapido**: [12_deploy_aws/DEPLOY_RESUMO.md](12_deploy_aws/DEPLOY_RESUMO.md) - 5 passos (~30 min)
+- 📖 **Guia Completo**: [12_deploy_aws/GUIA_DEPLOY_RAPIDO.md](12_deploy_aws/GUIA_DEPLOY_RAPIDO.md) - Passo a passo detalhado (~90 min)
+- ✅ **Checklist**: [12_deploy_aws/CHECKLIST_DEPLOY.md](12_deploy_aws/CHECKLIST_DEPLOY.md) - Validacao durante deploy
+- 📑 **Indice**: [12_deploy_aws/DEPLOY_INDICE.md](12_deploy_aws/DEPLOY_INDICE.md) - Navegacao entre arquivos
+
+### Deploy em 3 Comandos
+
+```bash
+# 1. Entre no diretorio de deploy
+cd 12_deploy_aws
+
+# 2. Configure suas credenciais AWS
+cp deploy_config.example.sh deploy_config.sh
+nano deploy_config.sh  # Edite: AWS_REGION, AWS_ACCOUNT_ID, S3_BUCKET_NAME
+
+# 3. Execute o script de deploy
+./deploy_aws.sh
+```
+
+### Conteudo do Diretorio 12_deploy_aws/
+
+- `Dockerfile` - Imagem Docker otimizada para Lambda
+- `.dockerignore` - Otimizacao do build
+- `deploy_config.example.sh` - Template de configuracao
+- `deploy_aws.sh` - Script automatizado (menu interativo)
+- `test_local.sh` - Validacao antes do deploy
+- `DEPLOY_RESUMO.md` - Guia rapido
+- `GUIA_DEPLOY_RAPIDO.md` - Tutorial completo
+- `CHECKLIST_DEPLOY.md` - Lista de validacao
+- `DEPLOY_INDICE.md` - Indice de navegacao
+- `ARQUIVOS_CRIADOS.md` - Inventario completo
+
+### Documentacao Tecnica Adicional
+
+- [04_reports/docs/DEPLOY_AWS.md](04_reports/docs/DEPLOY_AWS.md) - Documentacao tecnica detalhada
+- [04_reports/docs/PASSO_API_GATEWAY.md](04_reports/docs/PASSO_API_GATEWAY.md) - Configuracao do API Gateway
 
 ## Documentacao do pipeline
 
