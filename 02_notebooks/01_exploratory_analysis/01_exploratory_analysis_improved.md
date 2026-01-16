@@ -2,6 +2,19 @@
 
 Este documento explica, de forma didatica e objetiva, cada subsecao do notebook `01_exploratory_analysis_improved.ipynb`. O foco e descrever o que foi feito, por que foi feito e como interpretar cada analise.
 
+## Diagrama de Blocos
+
+```mermaid
+flowchart TD
+  A[Setup e imports] --> B[Carregamento de dados]
+  B --> C[Traducao e definicao de target]
+  C --> D[Diagnostico de missing values]
+  D --> E[Analises descritivas e distribuicoes]
+  E --> F[Correlacoes e testes estatisticos]
+  F --> G[VIF e multicolinearidade]
+  G --> H[Resumo executivo e artefatos]
+```
+
 ## 1. Setup e Importacoes
 
 - Define caminhos do projeto com `get_project_root()` procurando a pasta `data` em diretorios acima do `cwd`. Isso torna o notebook portavel.

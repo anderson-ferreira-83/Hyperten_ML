@@ -2,6 +2,19 @@
 
 Este documento descreve, de forma didatica e objetiva, cada subsecao do notebook `02_data_preprocessing_improved.ipynb`. O foco e explicar o pipeline de pre-processamento e as validacoes aplicadas.
 
+## Diagrama de Blocos
+
+```mermaid
+flowchart TD
+  A[Setup e imports] --> B[Carregar dados brutos]
+  B --> C[Traducao e validacao de colunas]
+  C --> D[Imputacao de missing values]
+  D --> E[Split treino/teste]
+  E --> F[SMOTE apenas no treino]
+  F --> G[Escalonamento]
+  G --> H[Salvar arrays e metadados]
+```
+
 ## 1. Setup e Importacoes
 
 - Define caminhos do projeto e constantes globais (pastas de dados, modelos e resultados).

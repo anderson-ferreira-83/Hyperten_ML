@@ -2,6 +2,19 @@
 
 Este documento descreve, de forma didatica e objetiva, cada subsecao do notebook `03_model_training_imrpoved.ipynb`. O foco e explicar o processo de treinamento, validacao e salvamento dos resultados.
 
+## Diagrama de Blocos
+
+```mermaid
+flowchart TD
+  A[Setup e imports] --> B[Carregar dados preprocessados]
+  B --> C[Definir metricas]
+  C --> D[Configurar modelos]
+  D --> E[Treinar com validacao cruzada]
+  E --> F[Avaliar no teste]
+  F --> G[Selecionar melhor modelo]
+  G --> H[Salvar modelos e relatorio]
+```
+
 ## 1. Setup e Importacoes
 
 - Define caminhos do projeto e constantes para dados e resultados.

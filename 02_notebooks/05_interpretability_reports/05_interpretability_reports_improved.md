@@ -2,6 +2,19 @@
 
 Este documento descreve, de forma didatica e objetiva, cada subsecao do notebook `05_interpretability_reports_improved.ipynb`. O foco e explicar as tecnicas de interpretabilidade e a geracao de relatorios finais.
 
+## Diagrama de Blocos
+
+```mermaid
+flowchart TD
+  A[Setup e imports] --> B[Carregar dados e modelo]
+  B --> C[Escalonar e preparar dados]
+  C --> D[Inicializar interpretador]
+  D --> E[Feature importance]
+  E --> F[SHAP e partial dependence]
+  F --> G[Analise clinica de thresholds]
+  G --> H[Relatorio final e figuras]
+```
+
 ## 1. Setup e importacoes
 
 - Define caminhos do projeto e constantes globais.

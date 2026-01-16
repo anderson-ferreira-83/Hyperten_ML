@@ -1,5 +1,17 @@
 # RELATÓRIO FINAL - Notebook 03 CORRIGIDO
 
+## Diagrama de Blocos
+
+```mermaid
+flowchart TD
+  A[Executar notebook corrigido] --> B[Calcular metricas]
+  B --> C[Selecionar melhor modelo]
+  C --> D[Avaliar criterios de sucesso]
+  D --> E[Reportar problemas e correcoes]
+  E --> F[Salvar relatorio final]
+```
+
+
 ## EXECUÇÃO BEM-SUCEDIDA!
 
 **Data/Hora**: 2026-01-14 18:01:00  

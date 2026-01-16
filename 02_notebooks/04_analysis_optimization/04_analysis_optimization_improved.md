@@ -2,6 +2,19 @@
 
 Este documento descreve, de forma didatica e objetiva, cada subsecao do notebook `04_analysis_optimization_improved.ipynb`. O foco e explicar as analises, comparacoes e etapas de otimizacao de modelos.
 
+## Diagrama de Blocos
+
+```mermaid
+flowchart TD
+  A[Setup e visual style] --> B[Carregar dados e modelos]
+  B --> C[Retreino comparativo]
+  C --> D[Comparacoes visuais de performance]
+  D --> E[Curvas ROC/PR e matrizes]
+  E --> F[Analise de erros e thresholds]
+  F --> G[Feature importance]
+  G --> H[Salvar figuras e relatorios]
+```
+
 ## 1. Setup e importacoes
 
 - Importa bibliotecas de ML, metricas, validacao cruzada e busca de hiperparametros.

@@ -1,6 +1,6 @@
 {
   "basic_info": {
-    "timestamp": "2026-01-15T17:53:26.913404",
+    "timestamp": "2026-01-16T00:40:13.954056",
     "model_type": "RandomForestClassifier",
     "n_features": 12,
     "n_samples_train": 2756,
@@ -9,26 +9,71 @@
   },
   "feature_importance": {
     "methods_available": [
-      "correlation"
+      "intrinsic",
+      "permutation"
     ],
     "top_features": {
-      "correlation": {
-        "pressao_sistolica": 0.6916498950758709,
-        "pressao_diastolica": 0.6037176690971183,
-        "idade": 0.30382972886060966,
-        "imc": 0.2990791315217128,
-        "medicamento_pressao": 0.2608952323953218,
-        "colesterol_total": 0.16820006934910614,
-        "frequencia_cardiaca": 0.14414845132412432,
-        "fumante_atualmente": 0.10075355044684599,
-        "glicose": 0.08355982385098679,
-        "diabetes": 0.07653248065031254
+      "intrinsic": {
+        "pressao_sistolica": 0.4370195148101961,
+        "pressao_diastolica": 0.26783232401777685,
+        "imc": 0.06045471123855544,
+        "idade": 0.058451627516879635,
+        "colesterol_total": 0.036089864370189,
+        "frequencia_cardiaca": 0.031473533947177765,
+        "glicose": 0.029589195549213246,
+        "medicamento_pressao": 0.029514218581225597,
+        "sexo": 0.019366109445369192,
+        "cigarros_por_dia": 0.018253593992001216
+      },
+      "permutation": {
+        "medicamento_pressao": 0.03719676549865229,
+        "sexo": 0.0,
+        "idade": 0.0,
+        "fumante_atualmente": 0.0,
+        "cigarros_por_dia": 0.0,
+        "diabetes": 0.0,
+        "colesterol_total": 0.0,
+        "pressao_sistolica": 0.0,
+        "pressao_diastolica": 0.0,
+        "imc": 0.0
       }
     }
   },
   "partial_dependence": {
-    "features_analyzed": [],
-    "summary": {}
+    "features_analyzed": [
+      "pressao_sistolica",
+      "pressao_diastolica",
+      "imc",
+      "idade",
+      "colesterol_total",
+      "frequencia_cardiaca"
+    ],
+    "summary": {
+      "pressao_sistolica": {
+        "trend": "positive",
+        "change_percent": 109.86913680434995
+      },
+      "pressao_diastolica": {
+        "trend": "positive",
+        "change_percent": 66.29183223873476
+      },
+      "imc": {
+        "trend": "positive",
+        "change_percent": 21.267210107418574
+      },
+      "idade": {
+        "trend": "positive",
+        "change_percent": 19.180798275834015
+      },
+      "colesterol_total": {
+        "trend": "positive",
+        "change_percent": 3.34074742256721
+      },
+      "frequencia_cardiaca": {
+        "trend": "positive",
+        "change_percent": 5.031922140316519
+      }
+    }
   },
   "performance_metrics": {
     "accuracy": 0.717654986522911,
@@ -41,7 +86,7 @@
     "available": true,
     "results": {}
   },
-  "generation_timestamp": "2026-01-15T17:53:27.022711",
+  "generation_timestamp": "2026-01-16T00:40:14.078246",
   "clinical_analysis": {
     "threshold_recommendations": {
       "screening": {
@@ -70,48 +115,53 @@
     },
     "clinical_category_ranking": {
       "Pressão Arterial": {
-        "mean_importance": 0.6476837820864947,
-        "max_importance": 0.6916498950758709,
+        "mean_importance": 0.3524259194139865,
+        "max_importance": 0.4370195148101961,
         "n_features": 2,
         "top_feature": "pressao_sistolica",
-        "top_score": 0.6916498950758709
+        "top_score": 0.4370195148101961
       },
       "Antropométricas": {
-        "mean_importance": 0.2990791315217128,
-        "max_importance": 0.2990791315217128,
+        "mean_importance": 0.06045471123855544,
+        "max_importance": 0.06045471123855544,
         "n_features": 1,
         "top_feature": "imc",
-        "top_score": 0.2990791315217128
-      },
-      "Medicamentos": {
-        "mean_importance": 0.16871385652281717,
-        "max_importance": 0.2608952323953218,
-        "n_features": 2,
-        "top_feature": "medicamento_pressao",
-        "top_score": 0.2608952323953218
+        "top_score": 0.06045471123855544
       },
       "Demografia": {
-        "mean_importance": 0.1553198980296781,
-        "max_importance": 0.30382972886060966,
+        "mean_importance": 0.03890886848112442,
+        "max_importance": 0.058451627516879635,
         "n_features": 2,
         "top_feature": "idade",
-        "top_score": 0.30382972886060966
+        "top_score": 0.058451627516879635
       },
       "Biomarcadores": {
-        "mean_importance": 0.12587994660004648,
-        "max_importance": 0.16820006934910614,
+        "mean_importance": 0.03283952995970112,
+        "max_importance": 0.036089864370189,
         "n_features": 2,
         "top_feature": "colesterol_total",
-        "top_score": 0.16820006934910614
+        "top_score": 0.036089864370189
+      },
+      "Medicamentos": {
+        "mean_importance": 0.01500695204650138,
+        "max_importance": 0.029514218581225597,
+        "n_features": 2,
+        "top_feature": "medicamento_pressao",
+        "top_score": 0.029514218581225597
       },
       "Estilo de Vida": {
-        "mean_importance": 0.10075355044684599,
-        "max_importance": 0.10075355044684599,
+        "mean_importance": 0.011455621019638918,
+        "max_importance": 0.011455621019638918,
         "n_features": 1,
         "top_feature": "fumante_atualmente",
-        "top_score": 0.10075355044684599
+        "top_score": 0.011455621019638918
       }
     }
   },
-  "medical_report_summary": {}
+  "medical_report_summary": {
+    "total_patients": 1484,
+    "hypertension_prevalence": 31.064690026954178,
+    "mean_age": -0.06256053174356184,
+    "metabolic_syndrome_prevalence": 0
+  }
 }
