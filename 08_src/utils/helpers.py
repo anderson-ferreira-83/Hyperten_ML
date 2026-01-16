@@ -37,7 +37,7 @@ def save_figure(
     subfolder: str = "eda",
     formats: Optional[List[str]] = None,
     dpi: int = 400,
-    save_axes: bool = True,
+    save_axes: bool = False,
     legend_outside: bool = True,
     axes_suffix: str = "ax",
 ):
