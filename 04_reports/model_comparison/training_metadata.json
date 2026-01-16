@@ -1,9 +1,9 @@
 {
   "execution_info": {
-    "timestamp": "2026-01-15T18:51:56.947183",
+    "timestamp": "2026-01-15T23:55:31.982234",
     "notebook_version": "CORRECTED_WORKING",
-    "execution_time_total_seconds": 14.352527141571045,
-    "execution_time_minutes": 0.23920878569285076
+    "execution_time_total_seconds": 14.731241464614868,
+    "execution_time_minutes": 0.24552069107691446
   },
   "best_model": {
     "name": "Random Forest",
