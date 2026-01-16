@@ -31,25 +31,84 @@ def setup_plotting_style():
     })
 
 
-def save_figure(fig, name: str, subfolder: str = "eda", format: str = "svg", dpi: int = 300):
+def save_figure(
+    fig,
+    name: str,
+    subfolder: str = "eda",
+    formats: Optional[List[str]] = None,
+    dpi: int = 400,
+    save_axes: bool = True,
+    legend_outside: bool = True,
+    axes_suffix: str = "ax",
+):
     """
-    Salva figura em diretório apropriado.
-    
+    Salva figura em diretorio apropriado com qualidade de publicacao.
+
     Args:
         fig: Objeto matplotlib figure
-        name: Nome do arquivo (sem extensão)
+        name: Nome do arquivo (sem extensao)
         subfolder: Subpasta em 04_reports/figures/
-        format: Formato do arquivo (svg, png, pdf)
-        dpi: DPI para resolução
+        formats: Lista de formatos (png, pdf, svg)
+        dpi: DPI para resolucao
+        save_axes: Salvar subplots individualmente quando houver mais de um eixo
+        legend_outside: Move legendas para fora do eixo
+        axes_suffix: Sufixo usado nos arquivos dos subplots
     """
     from .config import get_results_path
-    
+
     save_path = get_results_path("figures") / subfolder
     save_path.mkdir(parents=True, exist_ok=True)
-    
-    file_path = save_path / f"{name}.{format}"
-    fig.savefig(file_path, format=format, dpi=dpi, bbox_inches='tight')
-    print(f"Figura salva em: {file_path}")
+
+    if formats is None:
+        formats = ["png", "pdf", "svg"]
+
+    if legend_outside:
+        for ax in fig.axes:
+            legend = ax.get_legend()
+            if legend:
+                legend.set_loc("upper left")
+                legend.set_bbox_to_anchor((1.02, 1.0))
+                if hasattr(legend, "set_frameon"):
+                    legend.set_frameon(True)
+                elif legend.get_frame():
+                    legend.get_frame().set_visible(True)
+
+    save_kwargs = {
+        "dpi": dpi,
+        "bbox_inches": "tight",
+        "facecolor": "white",
+        "pad_inches": 0.2,
+    }
+
+    for fmt in formats:
+        file_path = save_path / f"{name}.{fmt}"
+        fig.savefig(file_path, format=fmt, **save_kwargs)
+
+    if save_axes and len(fig.axes) > 1:
+        try:
+            from matplotlib.transforms import Bbox
+
+            fig.canvas.draw()
+            renderer = fig.canvas.get_renderer()
+            ax_save_kwargs = save_kwargs.copy()
+            ax_save_kwargs.pop("bbox_inches", None)
+
+            for idx, ax in enumerate(fig.axes, 1):
+                if not ax.get_visible():
+                    continue
+                bbox = ax.get_tightbbox(renderer)
+                legend = ax.get_legend()
+                if legend:
+                    bbox = Bbox.union([bbox, legend.get_tightbbox(renderer)])
+                bbox = bbox.transformed(fig.dpi_scale_trans.inverted())
+
+                for fmt in formats:
+                    ax_file = save_path / f"{name}_{axes_suffix}{idx:02d}.{fmt}"
+                    fig.savefig(ax_file, format=fmt, bbox_inches=bbox, **ax_save_kwargs)
+        except Exception as e:
+            print(f"Aviso: Falha ao salvar subplots individuais: {e}")
+
+    print(f"Figura salva em: {save_path / name}")
 
 
 def print_section(title: str, char: str = "=", width: int = 80):

@@ -1,6 +1,6 @@
 {
   "basic_info": {
-    "timestamp": "2026-01-16T00:40:13.954056",
+    "timestamp": "2026-01-16T01:20:44.623585",
     "model_type": "RandomForestClassifier",
     "n_features": 12,
     "n_samples_train": 2756,
@@ -86,7 +86,7 @@
     "available": true,
     "results": {}
   },
-  "generation_timestamp": "2026-01-16T00:40:14.078246",
+  "generation_timestamp": "2026-01-16T01:20:44.727715",
   "clinical_analysis": {
     "threshold_recommendations": {
       "screening": {
