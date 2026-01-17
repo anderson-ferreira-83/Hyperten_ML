@@ -2,11 +2,19 @@
 
 ---
 
-## Demo Online (AWS)
+## Demo Online
+
+### Pagina de Apresentacao (GitHub Pages)
+
+**Metodologia, resultados e metricas do projeto:**
+
+<a href="https://SEU-USUARIO.github.io/trabalho_tcc_mod_classifc_hipertensao/" target="_blank"><strong>Ver Apresentacao do Projeto</strong></a>
+
+### Aplicacao em Producao (AWS)
 
 **Acesse a aplicacao em producao (HTTPS seguro - funciona no celular):**
 
-<a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" target="_blank"><strong>Predição de Risco de Hipertensão</strong></a>
+<a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" target="_blank"><strong>Testar Predição de Risco</strong></a>
 
 ### Teste Rapido da API
 
@@ -213,6 +221,7 @@ O modelo final (Random Forest otimizado) alcancou os seguintes resultados:
 10_clinical_validation/  Scripts de validacao clinica
 11_materials_tcc/        Materiais do TCC
 12_deploy_aws/           Scripts e documentacao para deploy AWS
+13_github_pages/         Pagina de apresentacao (GitHub Pages)
 99_legacy/               Arquivos historicos
 tests/                   Testes automatizados
 ```
@@ -260,9 +269,15 @@ Todos os arquivos de deploy estao em: **[12_deploy_aws/](12_deploy_aws/)**
 | `deploy_config.sh` | Configuracoes AWS |
 | `test_*.sh` | Scripts de teste |
 
-### Arquitetura AWS
+### Arquitetura
 
 ```
+                    ┌─────────────────────────────────────────┐
+                    │           GitHub Pages                   │
+                    │  (Apresentacao + Demo Integrada)         │
+                    └───────────────┬─────────────────────────┘
+                                    │
+                                    ▼
 Usuario --> CloudFront (HTTPS) --> S3 (UI) --> API Gateway --> Lambda --> Random Forest (rf_v1)
 ```
 
