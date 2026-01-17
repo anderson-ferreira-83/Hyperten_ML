@@ -1,4 +1,4 @@
-const API_URL = '/predict?threshold_key=balanced';
+const API_URL = 'https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/predict?threshold_key=balanced';
 
 const form = document.getElementById('predict-form');
 const scoreEl = document.getElementById('score');

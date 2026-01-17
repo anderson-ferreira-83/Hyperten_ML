@@ -63,6 +63,26 @@ O modelo final (Random Forest otimizado) alcançou:
 
 **Significado Clínico**: De cada 100 pacientes com risco real de hipertensão, o modelo identifica corretamente 92, permitindo intervenção preventiva precoce. A taxa de falsos negativos (8%) é considerada aceitável para um sistema de triagem, enquanto a especificidade de 89.8% evita sobrecarga excessiva do sistema de saúde com falsos alarmes.
 
+### Variabilidade e Estabilidade dos Resultados
+
+Como as metricas variam entre simulacoes, os resultados principais tambem sao reportados como media e desvio padrao nas execucoes de validacao cruzada. Esses valores permitem avaliar a robustez do modelo e a estabilidade entre diferentes splits.
+
+**Resumo estatistico (validacao cruzada)**  
+Fonte: `04_reports/executive_report/consolidated_metrics.csv`
+
+| Modelo | F2 (media +/- dp) | Recall (media +/- dp) | Precisao media | Acuracia media | AUC media |
+|---|---|---|---|---|---|
+| Random Forest | 0.870 +/- 0.031 | 0.893 +/- 0.028 | 0.790 | 0.893 | 0.948 |
+| Logistic Regression | 0.855 +/- 0.030 | 0.876 +/- 0.027 | 0.779 | 0.884 | 0.946 |
+| Gradient Boosting | 0.851 +/- 0.027 | 0.867 +/- 0.026 | 0.795 | 0.889 | 0.947 |
+| XGBoost | 0.843 +/- 0.029 | 0.855 +/- 0.027 | 0.797 | 0.887 | 0.948 |
+| Decision Tree | 0.766 +/- 0.009 | 0.772 +/- 0.009 | 0.744 | 0.847 | 0.863 |
+
+**Observacoes**:
+- Os valores acima refletem media e desvio padrao por modelo ao longo das execucoes de CV.
+- Para estabilidade por proporcoes treino/teste, consultar `04_reports/preprocessing/teste_proporcoes.csv` e `04_reports/analises/teste_proporcoes_granular.csv` (colunas `recall_mean`, `recall_std`, `f2_mean`, `f2_std`).
+- Os resultados pontuais informados anteriormente correspondem ao modelo final no conjunto de teste.
+
 ### Diferenciais Metodológicos
 
 1. **Validação Anti-Leakage**: SMOTE aplicado exclusivamente no conjunto de treino e, durante validação cruzada, dentro do pipeline de cada fold, evitando superestimação de desempenho
