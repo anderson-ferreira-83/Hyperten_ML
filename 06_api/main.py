@@ -8,6 +8,7 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import Response
 from pydantic import BaseModel, Field
 
@@ -20,6 +21,15 @@ MODEL_SUMMARY_CANDIDATES = [
 ]
 
 app = FastAPI(title='Hypertension Risk Inference', version='1.0.0')
+
+# CORS middleware para permitir requisições do navegador
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 pipeline = None
 features = None
@@ -128,22 +138,50 @@ class CacheControlStaticFiles(StaticFiles):
         return response
 
 
+class ComponentPipeline:
+    """Pipeline que usa componentes separados (imputer, scaler, model)."""
+    def __init__(self, imputer, scaler, model):
+        self.imputer = imputer
+        self.scaler = scaler
+        self.model = model
+
+    def predict(self, X):
+        X_imputed = self.imputer.transform(X)
+        X_scaled = self.scaler.transform(X_imputed)
+        return self.model.predict(X_scaled)
+
+    def predict_proba(self, X):
+        X_imputed = self.imputer.transform(X)
+        X_scaled = self.scaler.transform(X_imputed)
+        return self.model.predict_proba(X_scaled)
+
+
 @app.on_event('startup')
 def load_artifacts() -> None:
     global pipeline, features, thresholds, metadata, html_index, artifacts_dir, selected_model, selected_summary_path, requested_model
 
     artifacts_dir, selected_model, selected_summary_path, requested_model = _resolve_artifacts_dir()
     pipeline_path = artifacts_dir / 'pipeline.pkl'
+    imputer_path = artifacts_dir / 'imputer.pkl'
+    scaler_path = artifacts_dir / 'scaler.pkl'
+    model_path = artifacts_dir / 'model.pkl'
     features_path = artifacts_dir / 'features.json'
     thresholds_path = artifacts_dir / 'thresholds.json'
     metadata_path = artifacts_dir / 'metadata.json'
 
-    if not pipeline_path.exists():
-        raise RuntimeError(f'Pipeline not found: {pipeline_path}')
     if not features_path.exists():
         raise RuntimeError(f'Features not found: {features_path}')
 
-    pipeline = joblib.load(pipeline_path)
+    # Tenta carregar componentes separados primeiro (evita dependencia do imblearn)
+    if imputer_path.exists() and scaler_path.exists() and model_path.exists():
+        imputer = joblib.load(imputer_path)
+        scaler = joblib.load(scaler_path)
+        model = joblib.load(model_path)
+        pipeline = ComponentPipeline(imputer, scaler, model)
+    elif pipeline_path.exists():
+        pipeline = joblib.load(pipeline_path)
+    else:
+        raise RuntimeError(f'No pipeline or components found in {artifacts_dir}')
 
     with open(features_path, 'r', encoding='utf-8') as f:
         features_data = json.load(f)

@@ -25,10 +25,11 @@
     "n_features": 12
   },
   "artifacts": {
-    "pipeline": "pipeline.pkl",
+    "imputer": "imputer.pkl",
+    "scaler": "scaler.pkl",
+    "model": "model.pkl",
     "features": "features.json",
-    "thresholds": "thresholds.json",
-    "model": "rf_optimized.pkl"
+    "thresholds": "thresholds.json"
   },
   "model_version": "rf_v1"
 }
