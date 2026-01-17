@@ -1,179 +1,90 @@
-# 🚀 Deploy AWS - Documentação Completa
+# Deploy AWS - API de Predição de Hipertensão
 
-Este diretório contém todos os arquivos necessários para fazer o deploy da aplicação de predição de hipertensão na AWS.
+Esta pasta contém a documentação e scripts para o deploy da aplicação na AWS.
 
-## 📁 Estrutura de Arquivos
+## Arquivos
 
+### Documentação
+- **DEPLOY_COMPLETO.md** - Documentação completa do deploy realizado
+- **TUTORIAL_TESTE.md** - Tutorial passo a passo para testar a aplicação
+
+### Scripts de Teste (Prontos para Usar!) ⭐
+- **run_all_tests.sh** - Executa TODOS os testes automaticamente
+- **test_health.sh** - Testa se a API está funcionando
+- **test_prediction_low_risk.sh** - Testa predição de baixo risco
+- **test_prediction_medium_risk.sh** - Testa predição de risco médio
+- **test_prediction_high_risk.sh** - Testa predição de alto risco
+
+### Configuração
+- **deploy_config.sh** - Configurações AWS (Account ID, região, etc.)
+- **.dockerignore** - Arquivos ignorados no build Docker
+
+## Status do Deploy
+
+✅ **Deploy concluído com sucesso!**
+
+### Endpoints Ativos
+
+**API de Predição:**
 ```
-12_deploy_aws/
-├── README.md                    # Este arquivo - índice e navegação
-├── Dockerfile                   # Imagem Docker otimizada para Lambda
-├── .dockerignore               # Otimização do build Docker
-├── deploy_config.example.sh    # Template de configuração (copiar e editar)
-├── deploy_aws.sh               # Script principal de deploy (executável)
-├── test_local.sh               # Script de validação local (executável)
-├── DEPLOY_RESUMO.md            # Guia rápido (5 passos, ~30 min)
-├── GUIA_DEPLOY_RAPIDO.md       # Guia completo (13 passos, ~90 min)
-├── CHECKLIST_DEPLOY.md         # Checklist de validação
-├── DEPLOY_INDICE.md            # Índice detalhado de navegação
-└── ARQUIVOS_CRIADOS.md         # Inventário completo
+https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/predict
 ```
 
-## 🎯 Por Onde Começar?
+**Health Check:**
+```
+https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/health
+```
 
-### 1️⃣ Primeira vez fazendo deploy na AWS?
-👉 **Leia primeiro**: [GUIA_DEPLOY_RAPIDO.md](GUIA_DEPLOY_RAPIDO.md)
+**Interface Web:**
+```
+http://hypertension-tcc-ceunsp-2026.s3-website-sa-east-1.amazonaws.com/ui/index.html
+```
 
-### 2️⃣ Já conhece AWS e quer fazer rápido?
-👉 **Comece aqui**: [DEPLOY_RESUMO.md](DEPLOY_RESUMO.md)
+## Começar Agora - Teste Rápido! 🚀
 
-### 3️⃣ Não sabe por onde começar?
-👉 **Navegue aqui**: [DEPLOY_INDICE.md](DEPLOY_INDICE.md)
-
-## ⚡ Deploy em 3 Comandos
+### Opção 1: Executar Todos os Testes (Recomendado)
 
 ```bash
-# 1. Entre no diretório de deploy
 cd 12_deploy_aws
-
-# 2. Configure suas credenciais
-cp deploy_config.example.sh deploy_config.sh
-nano deploy_config.sh  # Edite: AWS_REGION, AWS_ACCOUNT_ID, S3_BUCKET_NAME
-
-# 3. Execute o deploy
-./deploy_aws.sh
+./run_all_tests.sh
 ```
 
-## 📚 Guias Disponíveis
+Este script executa automaticamente:
+1. Health check da API
+2. Predição de baixo risco
+3. Predição de risco médio
+4. Predição de alto risco
 
-| Arquivo | Descrição | Quando Usar |
-|---------|-----------|-------------|
-| **DEPLOY_RESUMO.md** | Resumo executivo em 5 passos | Início rápido (~30 min) |
-| **GUIA_DEPLOY_RAPIDO.md** | Tutorial completo passo a passo | Primeira vez (~90 min) |
-| **CHECKLIST_DEPLOY.md** | Lista de validação | Durante o deploy |
-| **DEPLOY_INDICE.md** | Índice de navegação | Encontrar informações |
-| **ARQUIVOS_CRIADOS.md** | Inventário completo | Referência técnica |
+### Opção 2: Testes Individuais
 
-## 🛠️ Scripts Disponíveis
-
-### deploy_aws.sh (Principal)
-Script automatizado com menu interativo:
-- Opção 1: Deploy completo (ECR + Lambda + API Gateway)
-- Opção 2: Apenas build e push da imagem Docker
-- Opção 3: Apenas atualizar Lambda
-- Opção 4: Deploy da UI no S3
-
-**Uso**:
 ```bash
-chmod +x deploy_aws.sh
-./deploy_aws.sh
+# Apenas health check
+./test_health.sh
+
+# Apenas teste de baixo risco
+./test_prediction_low_risk.sh
+
+# Apenas teste de alto risco
+./test_prediction_high_risk.sh
 ```
 
-### test_local.sh (Validação)
-Testa a aplicação localmente antes do deploy:
-- Verifica dependências (Python, Docker)
-- Valida arquivos essenciais
-- Verifica artefatos do modelo
-- Opção de testar build Docker
-- Opção de iniciar servidor local
+### Opção 3: Interface Web
 
-**Uso**:
-```bash
-chmod +x test_local.sh
-./test_local.sh
+Abra no navegador:
+```
+http://hypertension-tcc-ceunsp-2026.s3-website-sa-east-1.amazonaws.com/ui/index.html
 ```
 
-## 🏗️ Arquitetura do Deploy
+### Documentação Completa
 
-```
-┌─────────────────┐
-│   CloudFront    │  ← Interface (HTML/CSS/JS)
-│   + S3 Bucket   │
-└────────┬────────┘
-         │ HTTPS
-         ▼
-┌─────────────────┐
-│  API Gateway    │  ← Endpoint público
-└────────┬────────┘
-         │ Invoke
-         ▼
-┌─────────────────┐
-│  Lambda (ECR)   │  ← FastAPI + Modelo ML
-└─────────────────┘
-```
+- **TUTORIAL_TESTE.md** - Tutorial detalhado com mais exemplos
+- **DEPLOY_COMPLETO.md** - Informações técnicas do deploy
 
-## ⚙️ Configuração Necessária
+## Recursos AWS
 
-Antes de executar o deploy, você precisa:
-
-1. **Conta AWS** ativa
-2. **AWS CLI** instalado e configurado:
-   ```bash
-   aws configure
-   ```
-3. **Docker** instalado e rodando
-4. **Credenciais AWS**:
-   - AWS Account ID (12 dígitos)
-   - AWS Region (ex: `us-east-1`)
-   - Nome único para bucket S3
-
-## 📋 Fluxo Recomendado
-
-```
-1. Ler DEPLOY_RESUMO.md ou GUIA_DEPLOY_RAPIDO.md
-   ↓
-2. Executar test_local.sh (validar localmente)
-   ↓
-3. Copiar deploy_config.example.sh → deploy_config.sh
-   ↓
-4. Editar deploy_config.sh com suas credenciais
-   ↓
-5. Executar deploy_aws.sh
-   ↓
-6. Seguir CHECKLIST_DEPLOY.md
-   ↓
-7. Aplicação online! 🎉
-```
-
-## 💰 Estimativa de Custos
-
-Com AWS Free Tier (primeiros 12 meses):
-- ✅ Lambda: 1M requisições/mês GRÁTIS
-- ✅ API Gateway: 1M requisições/mês GRÁTIS
-- ✅ S3: 5GB GRÁTIS
-- ✅ CloudFront: 50GB transferência GRÁTIS
-
-**Para TCC com baixo tráfego**: Custo zero ou < $5/mês
-
-## 🔒 Segurança
-
-**IMPORTANTE**: O arquivo `deploy_config.sh` contém credenciais AWS.
-- ✅ Nunca commite este arquivo no Git
-- ✅ Use apenas o arquivo `.example` como template
-- ✅ Mantenha backup seguro local
-
-## 🆘 Precisa de Ajuda?
-
-1. Consulte a seção "Troubleshooting" em [GUIA_DEPLOY_RAPIDO.md](GUIA_DEPLOY_RAPIDO.md)
-2. Verifique [CHECKLIST_DEPLOY.md](CHECKLIST_DEPLOY.md) - algum passo foi pulado?
-3. Execute `test_local.sh` para validar localmente
-4. Consulte a documentação técnica em `../04_reports/docs/DEPLOY_AWS.md`
-
-## 📖 Documentação Adicional
-
-Além dos arquivos neste diretório, consulte também:
-- `../04_reports/docs/DEPLOY_AWS.md` - Documentação técnica detalhada
-- `../04_reports/docs/PASSO_API_GATEWAY.md` - Configuração do API Gateway
-- `../04_reports/docs/TUTORIAL_INFERENCIA_LOCAL.md` - Inferência local
-
-## 🎓 Desenvolvido por
-
-- **Alunos**: Marcelo V Duarte Colpani, Nicolas Souza, Rubens Jose Collin, Tiago Dias Borges
-- **Orientador**: Prof. Dr. Anderson Henrique Rodrigues Ferreira
-- **Instituição**: CEUNSP - Centro Universitário Nossa Senhora do Patrocínio
-
----
-
-**Versão**: 1.0.0
-**Última atualização**: 2026-01-16
-**Compatível com**: AWS Lambda, API Gateway, S3, CloudFront, ECR
+- **Região**: sa-east-1 (São Paulo)
+- **Account ID**: 710586046477
+- **Lambda Function**: hypertension-api
+- **API Gateway**: yrac79mzj9
+- **S3 Bucket**: hypertension-tcc-ceunsp-2026
+- **Custo Estimado**: ~$0.00 - $0.50/mês (Free Tier)
