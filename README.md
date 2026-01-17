@@ -50,31 +50,33 @@ Este trabalho desenvolve um **modelo preditivo baseado em dados clínicos e demo
 
 ### Principais Resultados
 
-O modelo final (Random Forest otimizado) alcançou:
+O modelo final (Random Forest otimizado) alcançou os seguintes resultados, apresentados com variabilidade estatistica para rigor cientifico:
 
-| Métrica | Valor | Interpretação Clínica |
-|---------|-------|----------------------|
-| **Recall (Sensibilidade)** | **92.0%** | Detecta 92% dos casos de risco real |
-| **F2-Score** | **0.89** | Excelente balanço priorizando detecção de casos |
-| **AUC-ROC** | **0.95** | Excelente capacidade discriminativa |
-| **Especificidade** | **89.8%** | Minimiza falsos alarmes (89.8% das pessoas sem risco são corretamente identificadas) |
-| **Falsos Negativos** | **37 casos** | Apenas 8% dos casos de risco não foram detectados |
-| **Falsos Positivos** | **104 casos** | Taxa controlada de alarmes falsos |
+| Metrica | Valor Final | CV (media +/- dp) | Interpretacao Clinica |
+|---------|-------------|-------------------|----------------------|
+| **Recall (Sensibilidade)** | **92.0%** | 89.3% +/- 2.8% | Detecta 92% dos casos de risco real |
+| **F2-Score** | **0.89** | 0.87 +/- 0.03 | Excelente balanco priorizando deteccao |
+| **AUC-ROC** | **0.95** | 0.948 +/- 0.006 | Excelente capacidade discriminativa |
+| **Precisao** | **80.3%** | 79.0% | Taxa de acerto entre positivos preditos |
+| **Acuracia** | **90.5%** | 89.3% | Taxa global de acerto |
+| **Falsos Negativos** | **37 casos** | - | Apenas 8% dos casos de risco nao detectados |
+| **Falsos Positivos** | **104 casos** | - | Taxa controlada de alarmes falsos |
 
-**Significado Clínico**: De cada 100 pacientes com risco real de hipertensão, o modelo identifica corretamente 92, permitindo intervenção preventiva precoce. A taxa de falsos negativos (8%) é considerada aceitável para um sistema de triagem, enquanto a especificidade de 89.8% evita sobrecarga excessiva do sistema de saúde com falsos alarmes.
+> *"Valor Final" refere-se a avaliacao no conjunto de teste (hold-out 35%, n=1484) com threshold otimizado. "CV" indica media e desvio padrao da validacao cruzada estratificada 5-fold, demonstrando robustez estatistica. Fonte: `04_reports/executive_report/final_report.json` e `04_reports/executive_report/consolidated_metrics.csv`.*
 
-### Variabilidade e Estabilidade dos Resultados
+**Significado Clinico**: De cada 100 pacientes com risco real de hipertensao, o modelo identifica corretamente entre 87 e 92 (intervalo de confianca baseado em CV), permitindo intervencao preventiva precoce. A taxa de falsos negativos (~8-11%) e considerada aceitavel para um sistema de triagem.
 
-Resultados de validação cruzada são apresentados como média +/- dp (robustez e estabilidade). Fonte: `04_reports/executive_report/consolidated_metrics.csv`.  
-Estabilidade por proporções treino/teste: `04_reports/preprocessing/teste_proporcoes.csv` e `04_reports/analises/teste_proporcoes_granular.csv`.
+#### Comparacao entre Modelos (Validacao Cruzada)
 
-| Modelo | F2 (media +/- dp) | Recall (media +/- dp) | Precisao media | Acuracia media | AUC media |
-|---|---|---|---|---|---|
-| Random Forest | 0.870 +/- 0.031 | 0.893 +/- 0.028 | 0.790 | 0.893 | 0.948 |
-| Logistic Regression | 0.855 +/- 0.030 | 0.876 +/- 0.027 | 0.779 | 0.884 | 0.946 |
-| Gradient Boosting | 0.851 +/- 0.027 | 0.867 +/- 0.026 | 0.795 | 0.889 | 0.947 |
-| XGBoost | 0.843 +/- 0.029 | 0.855 +/- 0.027 | 0.797 | 0.887 | 0.948 |
-| Decision Tree | 0.766 +/- 0.009 | 0.772 +/- 0.009 | 0.744 | 0.847 | 0.863 |
+| Modelo | F2 (media +/- dp) | Recall (media +/- dp) | AUC media |
+|--------|-------------------|----------------------|-----------|
+| **Random Forest** | **0.870 +/- 0.031** | **0.893 +/- 0.028** | **0.948** |
+| Logistic Regression | 0.855 +/- 0.030 | 0.876 +/- 0.027 | 0.946 |
+| Gradient Boosting | 0.851 +/- 0.027 | 0.867 +/- 0.026 | 0.947 |
+| XGBoost | 0.843 +/- 0.029 | 0.855 +/- 0.027 | 0.948 |
+| Decision Tree | 0.766 +/- 0.009 | 0.772 +/- 0.009 | 0.863 |
+
+> *Random Forest foi selecionado por apresentar o melhor F2-Score e Recall medios, priorizando a deteccao de casos positivos conforme criterio clinico. Fonte: `04_reports/executive_report/consolidated_metrics.csv`. Estabilidade por proporcoes treino/teste: `04_reports/preprocessing/teste_proporcoes.csv`.*
 
 ### Diferenciais Metodológicos
 
@@ -90,15 +92,17 @@ Estabilidade por proporções treino/teste: `04_reports/preprocessing/teste_prop
 
 6. **Interpretabilidade Completa**: SHAP values, feature importance intrínseca e por permutação, análise de limiares clínicos e categorias de importância médica
 
-### Fundamentação Teórica
+### Fundamentacao Teorica
 
-Os guias metodológicos em `11_materials_tcc/` fundamentam as escolhas técnicas:
+Os guias metodologicos em `11_materials_tcc/` fundamentam as escolhas tecnicas:
 
-- **`guia_metricas_hipertensao.html`**: Justificativa clínica da priorização de Recall e F2-Score, explicação detalhada da matriz de confusão no contexto médico, e análise do custo assimétrico dos erros (FN vs FP)
+- **`guia_metricas_hipertensao.html`**: Justificativa clinica da priorizacao de Recall e F2-Score, explicacao detalhada da matriz de confusao no contexto medico, e analise do custo assimetrico dos erros (FN vs FP)
 
-- **`tutorial_tecnicas_avancadas_orientador_bw.html`**: Sequência metodológica rigorosa (SMOTE → testes de proporção → K-Fold → Stratified K-Fold → pipeline final), comparação SMOTE vs RandomOverSampler, e protocolos de validação robusta
+- **`tutorial_tecnicas_avancadas_orientador_bw.html`**: Sequencia metodologica rigorosa (SMOTE, testes de proporcao, K-Fold, Stratified K-Fold, pipeline final), comparacao SMOTE vs RandomOverSampler, e protocolos de validacao robusta
 
-Esses materiais garantem que cada decisão metodológica está alinhada com o estado da arte em ML aplicado à saúde.
+- **`04_reports/docs/LOG_ARTEFATOS_NOTEBOOKS.md`**: Log completo de saidas geradas por cada notebook
+
+Esses materiais garantem que cada decisao metodologica esta alinhada com o estado da arte em ML aplicado a saude.
 
 ---
 
@@ -170,26 +174,12 @@ Este repositório implementa um pipeline completo de ML para predição de risco
 
 ## Modelo oficial de inferencia
 
-- Algoritmo: Random Forest (otimizado)
-- Parametros principais: `n_estimators=210`, `max_depth=24`, `min_samples_leaf=3`, `max_features='log2'`, `class_weight='balanced_subsample'`
-- Performance: Recall=92.0%, F2-Score=0.89, AUC-ROC=0.95
-- Artefatos: `05_artifacts/rf_v1/`
+- **Algoritmo**: Random Forest (otimizado)
+- **Parametros**: `n_estimators=210`, `max_depth=24`, `min_samples_leaf=3`, `max_features='log2'`, `class_weight='balanced_subsample'`
+- **Artefatos**: `05_artifacts/rf_v1/`
+- **Metricas**: ver secao "Principais Resultados"
 
-## Bases metodologicas (SMOTE, validacao e metricas)
-
-Os guias em `11_materials_tcc/guia_metricas_hipertensao.html` e `11_materials_tcc/tutorial_tecnicas_avancadas_orientador_bw.html` fundamentam as escolhas metodologicas:
-
-- **Balanceamento (SMOTE)**: necessario devido ao desbalanceamento de classes. O SMOTE gera amostras sinteticas apenas no treino (incluindo em cada fold), reduz vies e melhora a capacidade do modelo de detectar casos positivos sem inflar o teste.  
-- **Validacao robusta**: uso de Stratified K-Fold e teste de multiplas proporcoes treino/teste para estabilidade estatistica e representatividade das classes.  
-- **Metricas prioritarias**: Sensibilidade/Recall (minimizar falsos negativos), F2-Score (prioriza Recall), ROC-AUC, especificidade, precision, e monitoramento explicito de FN e FP na matriz de confusao.  
-- **Ajuste de threshold**: analise de limiar de decisao para equilibrar sensibilidade e especificidade, privilegiando triagem clinica (reduzir FN).  
-
-Links diretos:
-- `11_materials_tcc/guia_metricas_hipertensao.html`
-- `11_materials_tcc/tutorial_tecnicas_avancadas_orientador_bw.html`
-- `04_reports/docs/LOG_ARTEFATOS_NOTEBOOKS.md` (log de saidas dos notebooks)
-
-Ordem oficial das features (12):
+## Ordem oficial das features (12)
 1. sexo  
 2. idade  
 3. fumante_atualmente  
@@ -284,17 +274,12 @@ nano deploy_config.sh  # Edite: AWS_REGION, AWS_ACCOUNT_ID, S3_BUCKET_NAME
 
 ## Documentacao do pipeline
 
-Veja tambem o diagrama de diretorios (responsabilidades por pasta) em [04_reports/docs/DIRETORIOS_DIAGRAMA.md](04_reports/docs/DIRETORIOS_DIAGRAMA.md).
-
-- [04_reports/docs/PIPELINE_DESCRICAO.md](04_reports/docs/PIPELINE_DESCRICAO.md)  
-- `04_reports/docs/PIPELINE_DIAGRAMA.md`  
-- `04_reports/docs/PIPELINE_INTERATIVO.html` (diagrama interativo)
-- `04_reports/docs/TUTORIAL_INFERENCIA_LOCAL.md`
-- `00_data/README.md` (dados e dicionario de variaveis)
-- `04_reports/docs/DEPLOY_AWS.md` (deploy)
-- `04_reports/docs/PASSO_API_GATEWAY.md` (API Gateway)
-- `04_reports/docs/DIRETORIOS_DIAGRAMA.md` (diagrama de diretorios)
-- `04_reports/docs/LOG_ARTEFATOS_NOTEBOOKS.md` (log de artefatos)
+- [04_reports/docs/PIPELINE_DESCRICAO.md](04_reports/docs/PIPELINE_DESCRICAO.md) - Descricao textual do pipeline
+- [04_reports/docs/PIPELINE_DIAGRAMA.md](04_reports/docs/PIPELINE_DIAGRAMA.md) - Diagrama do pipeline
+- [04_reports/docs/PIPELINE_INTERATIVO.html](04_reports/docs/PIPELINE_INTERATIVO.html) - Diagrama interativo (zoom/arraste)
+- [04_reports/docs/DIRETORIOS_DIAGRAMA.md](04_reports/docs/DIRETORIOS_DIAGRAMA.md) - Responsabilidades por pasta
+- [04_reports/docs/TUTORIAL_INFERENCIA_LOCAL.md](04_reports/docs/TUTORIAL_INFERENCIA_LOCAL.md) - Tutorial de inferencia
+- [00_data/README.md](00_data/README.md) - Dados e dicionario de variaveis
 
 ## Pipeline em diagrama de blocos
 
