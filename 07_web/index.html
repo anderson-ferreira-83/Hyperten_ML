@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Predicao de Risco de Hipertensao</title>
+  <title>Predicão de Risco de Hipertensão</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <div class="wrap">
     <header>
@@ -71,22 +73,26 @@
           </div>
           <div class="field" id="cigarros-field">
             <label>Cigarros/dia: <span class="slider-value" id="cigarros_por_dia-value">0</span></label>
-            <input type="range" id="cigarros_por_dia" name="cigarros_por_dia" min="0" max="40" value="0" class="slider" disabled>
+            <input type="range" id="cigarros_por_dia" name="cigarros_por_dia" min="0" max="40" value="0" class="slider"
+              disabled>
             <div class="slider-labels"><span>0</span><span>40</span></div>
           </div>
           <div class="field">
             <label>Pressao Sistolica: <span class="slider-value" id="pressao_sistolica-value">120</span> mmHg</label>
-            <input type="range" id="pressao_sistolica" name="pressao_sistolica" min="90" max="200" value="120" class="slider">
+            <input type="range" id="pressao_sistolica" name="pressao_sistolica" min="90" max="200" value="120"
+              class="slider">
             <div class="slider-labels"><span>90</span><span>200</span></div>
           </div>
           <div class="field">
             <label>Pressao Diastolica: <span class="slider-value" id="pressao_diastolica-value">80</span> mmHg</label>
-            <input type="range" id="pressao_diastolica" name="pressao_diastolica" min="60" max="130" value="80" class="slider">
+            <input type="range" id="pressao_diastolica" name="pressao_diastolica" min="60" max="130" value="80"
+              class="slider">
             <div class="slider-labels"><span>60</span><span>130</span></div>
           </div>
           <div class="field">
             <label>Frequencia Cardiaca: <span class="slider-value" id="frequencia_cardiaca-value">72</span> bpm</label>
-            <input type="range" id="frequencia_cardiaca" name="frequencia_cardiaca" min="50" max="120" value="72" class="slider">
+            <input type="range" id="frequencia_cardiaca" name="frequencia_cardiaca" min="50" max="120" value="72"
+              class="slider">
             <div class="slider-labels"><span>50</span><span>120</span></div>
           </div>
           <div class="field">
@@ -96,7 +102,8 @@
           </div>
           <div class="field">
             <label>Colesterol Total: <span class="slider-value" id="colesterol_total-value">200</span> mg/dL</label>
-            <input type="range" id="colesterol_total" name="colesterol_total" min="120" max="350" value="200" class="slider">
+            <input type="range" id="colesterol_total" name="colesterol_total" min="120" max="350" value="200"
+              class="slider">
             <div class="slider-labels"><span>120</span><span>350</span></div>
           </div>
           <div class="field">
@@ -189,7 +196,8 @@
               <span class="risk-level-title">Risco Baixo</span>
             </div>
             <div class="risk-level-range">Probabilidade &lt; 30%</div>
-            <p class="risk-level-desc">Paciente com baixa probabilidade de desenvolver hipertensao. Manter habitos saudaveis e acompanhamento de rotina.</p>
+            <p class="risk-level-desc">Paciente com baixa probabilidade de desenvolver hipertensao. Manter habitos
+              saudaveis e acompanhamento de rotina.</p>
           </div>
           <div class="risk-level risk-level-medium">
             <div class="risk-level-header">
@@ -197,7 +205,8 @@
               <span class="risk-level-title">Risco Moderado</span>
             </div>
             <div class="risk-level-range">Probabilidade 30% - 70%</div>
-            <p class="risk-level-desc">Paciente com fatores de risco presentes. Recomenda-se atencao aos habitos de vida e acompanhamento medico mais frequente.</p>
+            <p class="risk-level-desc">Paciente com fatores de risco presentes. Recomenda-se atencao aos habitos de vida
+              e acompanhamento medico mais frequente.</p>
           </div>
           <div class="risk-level risk-level-high">
             <div class="risk-level-header">
@@ -205,7 +214,8 @@
               <span class="risk-level-title">Risco Elevado</span>
             </div>
             <div class="risk-level-range">Probabilidade &gt; 70%</div>
-            <p class="risk-level-desc">Paciente com alta probabilidade de hipertensao. Avaliacao medica imediata e intervencao nos fatores de risco sao recomendadas.</p>
+            <p class="risk-level-desc">Paciente com alta probabilidade de hipertensao. Avaliacao medica imediata e
+              intervencao nos fatores de risco sao recomendadas.</p>
           </div>
         </div>
       </section>
@@ -214,4 +224,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>

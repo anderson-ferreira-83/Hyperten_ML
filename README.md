@@ -6,7 +6,7 @@
 
 **Acesse a aplicacao em producao:**
 
-<a href="http://hypertension-tcc-ceunsp-2026.s3-website-sa-east-1.amazonaws.com/ui/index.html" target="_blank"><strong>Abrir Interface Web</strong></a>
+<a href="http://hypertension-tcc-ceunsp-2026.s3-website-sa-east-1.amazonaws.com/ui/index.html" target="_blank"><strong>Predição de Risco de Hipertensão</strong></a>
 
 ### Teste Rapido da API
 
