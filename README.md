@@ -165,7 +165,7 @@ Este repositório implementa um pipeline completo de ML para predição de risco
 
 7) Empacotamento para inferencia  
 - Pipeline oficial (imputer + scaler + modelo)  
-- Artefatos: `05_artifacts/gb_v1/*`
+- Artefatos: `05_artifacts/rf_v1/*`
 
 8) API + UI  
 - API: `06_api/main.py`  
@@ -311,7 +311,7 @@ flowchart TB
   M2 --> H[Empacotamento de inferencia]
   D --> H
   R8 --> H
-  H --> I[Artefatos oficiais<br/>05_artifacts/gb_v1]
+  H --> I[Artefatos oficiais<br/>05_artifacts/rf_v1]
 
   I --> J[API FastAPI<br/>06_api/main.py]
   I --> K[UI Web<br/>07_web/]

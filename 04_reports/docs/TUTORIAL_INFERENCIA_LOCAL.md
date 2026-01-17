@@ -14,7 +14,7 @@ pip install -r requirements.txt
 
 ## 2) Teste rapido com script
 
-Executa uma predicao usando o pipeline em `05_artifacts/gb_v1`:
+Executa uma predicao usando o pipeline em `05_artifacts/rf_v1`:
 ```bash
 python 08_src/inference/inference.py
 ```
@@ -68,6 +68,6 @@ Invoke-RestMethod -Uri "http://127.0.0.1:8000/predict?threshold_key=balanced" `
 
 ## 6) Observacoes
 
-- O pipeline oficial esta em `05_artifacts/gb_v1/pipeline.pkl`.
-- A ordem oficial das features esta em `05_artifacts/gb_v1/features.json`.
-- Thresholds clinicos estao em `05_artifacts/gb_v1/thresholds.json`.
+- O pipeline oficial esta em `05_artifacts/rf_v1/pipeline.pkl`.
+- A ordem oficial das features esta em `05_artifacts/rf_v1/features.json`.
+- Thresholds clinicos estao em `05_artifacts/rf_v1/thresholds.json`.

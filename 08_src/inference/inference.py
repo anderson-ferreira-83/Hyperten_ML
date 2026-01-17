@@ -8,7 +8,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 ARTIFACTS_BASE = ROOT / '05_artifacts'
-DEFAULT_ARTIFACT_KEY = 'gb_v1'
+DEFAULT_ARTIFACT_KEY = 'rf_v1'  # Random Forest - melhor modelo (Recall=92%, F2=0.89)
 MODEL_SUMMARY_CANDIDATES = [
     ROOT / '02_notebooks' / '06_model_metrics' / '6_analysis_metrics' / 'model_training_summary.json',
     ROOT / '04_reports' / 'modeling' / 'model_training_summary.json',

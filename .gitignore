@@ -8,10 +8,53 @@ __pycache__/
 
 # Environment
 .env
+.env.*
+!.env.example
 .venv
 env/
 venv/
 
+# ============================================
+# AWS - INFORMACOES SENSIVEIS
+# ============================================
+
+# Arquivos de configuracao com credenciais AWS
+deploy_config.sh
+12_deploy_aws/deploy_config.sh
+**/deploy_config.sh
+!**/deploy_config.example.sh
+
+# Credenciais AWS
+.aws/
+aws_credentials
+aws_credentials.json
+*credentials*.json
+*credentials*.txt
+
+# Chaves e segredos
+*.pem
+*.key
+*secret*
+*SECRET*
+aws_access_key*
+aws_secret_key*
+
+# Terraform (se usado)
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfvars
+!*.tfvars.example
+
+# SAM/CloudFormation
+samconfig.toml
+!samconfig.example.toml
+
+# Arquivos com IDs de conta ou ARNs
+*account_id*
+*ACCOUNT_ID*
+
+# ============================================
 # Data files (keep structure, ignore large files)
 data/raw/*.csv
 data/processed/*.csv

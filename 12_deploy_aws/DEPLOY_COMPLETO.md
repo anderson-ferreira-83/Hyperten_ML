@@ -73,10 +73,12 @@ curl https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/health
 }
 ```
 
-### Predição
+### Predicao
+
+**Linux/Mac (curl):**
 ```bash
-curl -X POST https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/predict \\
-  -H "Content-Type: application/json" \\
+curl -X POST https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/predict \
+  -H "Content-Type: application/json" \
   -d '{
     "sexo": 1,
     "idade": 50,
@@ -93,7 +95,30 @@ curl -X POST https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/predict \\
   }'
 ```
 
-**Resposta:**
+**Windows (PowerShell):**
+```powershell
+$json = '{
+    "sexo": 0,
+    "idade": 35,
+    "fumante_atualmente": 1,
+    "cigarros_por_dia": 35,
+    "medicamento_pressao": 0,
+    "diabetes": 1,
+    "colesterol_total": 200,
+    "pressao_sistolica": 130,
+    "pressao_diastolica": 90,
+    "imc": 28,
+    "frequencia_cardiaca": 90,
+    "glicose": 100
+}'
+
+Invoke-RestMethod -Uri "https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/predict" `
+    -Method Post `
+    -ContentType "application/json" `
+    -Body $json
+```
+
+**Resposta:
 ```json
 {
   "probability": 0.048,

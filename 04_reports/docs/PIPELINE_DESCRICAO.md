@@ -58,8 +58,9 @@ Este documento descreve o pipeline completo do projeto, da analise nos notebooks
 ## 4. Treinamento e modelos
 
 ### Modelo oficial de inferencia
-- Gradient Boosting (definido como modelo oficial apos validacao)
-- Hiperparametros: `n_estimators=100`, `learning_rate=0.05`, `max_depth=3`
+- Random Forest (selecionado por apresentar melhor Recall e F2-Score)
+- Hiperparametros: `n_estimators=210`, `max_depth=24`, `min_samples_leaf=3`, `max_features='log2'`, `class_weight='balanced_subsample'`
+- Metricas: Recall=92.0%, F2-Score=0.89, AUC-ROC=0.95
 
 ### Modelos treinados
 - Treinados: `03_models/trained/*.pkl`
@@ -89,7 +90,7 @@ Este documento descreve o pipeline completo do projeto, da analise nos notebooks
 ## 7. Pipeline de inferencia (artefatos oficiais)
 
 ### Localidade
-- `05_artifacts/gb_v1/`
+- `05_artifacts/rf_v1/`
 
 ### Conteudo
 - `pipeline.pkl` (imputer + scaler + modelo)
@@ -149,7 +150,7 @@ Este documento descreve o pipeline completo do projeto, da analise nos notebooks
 
 ## 10. Peculiaridades e decisoes importantes
 
-- Modelo oficial: Gradient Boosting (alinha com `model_training_summary.json`).
-- Pipeline de inferencia consolidado em `05_artifacts/gb_v1`.
+- Modelo oficial: Random Forest (melhor Recall=92% e F2=0.89, conforme analise comparativa).
+- Pipeline de inferencia consolidado em `05_artifacts/rf_v1`.
 - Dados processados foram movidos de `02_notebooks/data/processed` para `00_data/processed`.
 - Relatorios foram consolidados em `04_reports/` e podem exigir ajustes em notebooks antigos que escreviam em `02_notebooks/results`.

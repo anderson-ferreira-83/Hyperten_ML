@@ -25,7 +25,7 @@ flowchart TB
   M2 --> H[Empacotamento de inferencia]
   D --> H
   R8 --> H
-  H --> I[Artefatos oficiais<br/>05_artifacts/gb_v1]
+  H --> I[Artefatos oficiais<br/>05_artifacts/rf_v1]
 
   I --> J[API FastAPI<br/>06_api/main.py]
   I --> K[UI Web<br/>07_web/]
@@ -33,4 +33,4 @@ flowchart TB
   K --> L
 ```
 
-Observacao: a inferencia usa o pipeline oficial em `05_artifacts/gb_v1` (imputer + scaler + modelo) e thresholds clinicos consolidados.
+Observacao: a inferencia usa o pipeline oficial em `05_artifacts/rf_v1` (imputer + scaler + modelo) e thresholds clinicos consolidados.

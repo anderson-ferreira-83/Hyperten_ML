@@ -93,5 +93,5 @@ No API Gateway (HTTP API), habilite CORS com:
 ## Variaveis/artefatos usados
 
 - API: `06_api/main.py`
-- Artefatos do modelo: `05_artifacts/gb_v1/*`
+- Artefatos do modelo: `05_artifacts/rf_v1/*`
 - UI: `07_web/*`
