@@ -196,6 +196,13 @@ function getRiskColor(prob) {
   return '#ef4444';
 }
 
+// Get risk category based on probability
+function getRiskCategory(prob) {
+  if (prob < 0.3) return 'low';
+  if (prob < 0.7) return 'medium';
+  return 'high';
+}
+
 // Get risk category info
 function getRiskInfo(category) {
   const info = {
@@ -293,7 +300,7 @@ form.addEventListener('submit', async (e) => {
 function displayResults(result, inputData) {
   const prob = result.probability || 0;
   const probPercent = (prob * 100).toFixed(1);
-  const category = result.risk_category || 'medium';
+  const category = getRiskCategory(prob);
   const riskInfo = getRiskInfo(category);
 
   resultContainer.style.display = 'none';
