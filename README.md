@@ -8,7 +8,7 @@
 
 **Metodologia, resultados e metricas do projeto:**
 
-<a href="https://SEU-USUARIO.github.io/trabalho_tcc_mod_classifc_hipertensao/" target="_blank"><strong>Ver Apresentacao do Projeto</strong></a>
+<a href="https://anderson-ferreira-83.github.io/traballho_conclussao_risco_hipertensao/13_github_pages/" target="_blank"><strong>Ver Apresentacao do Projeto</strong></a>
 
 ### Aplicacao em Producao (AWS)
 

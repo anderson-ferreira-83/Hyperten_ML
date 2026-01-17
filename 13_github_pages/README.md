@@ -58,7 +58,7 @@ Depois configure Settings > Pages > Branch: `gh-pages`
 
 ### GitHub Pages
 ```
-https://SEU-USUARIO.github.io/trabalho_tcc_mod_classifc_hipertensao/
+https://anderson-ferreira-83.github.io/traballho_conclussao_risco_hipertensao/13_github_pages/
 ```
 
 ### Demo AWS (Integrada)
