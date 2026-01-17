@@ -6,11 +6,7 @@
 
 **Acesse a aplicacao em producao:**
 
-| Recurso | URL |
-|---------|-----|
-| **Interface Web** | http://hypertension-tcc-ceunsp-2026.s3-website-sa-east-1.amazonaws.com/ui/index.html |
-| **API (Health)** | https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/health |
-| **API (Predict)** | https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/predict |
+<a href="http://hypertension-tcc-ceunsp-2026.s3-website-sa-east-1.amazonaws.com/ui/index.html" target="_blank"><strong>Abrir Interface Web</strong></a>
 
 ### Teste Rapido da API
 
