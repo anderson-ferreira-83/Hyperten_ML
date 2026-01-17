@@ -42,10 +42,7 @@ sliders.forEach(({ id, decimals }) => {
   const valueDisplay = document.getElementById(`${id}-value`);
 
   if (slider && valueDisplay) {
-    // Set initial value
     valueDisplay.textContent = Number(slider.value).toFixed(decimals);
-
-    // Update on input
     slider.addEventListener('input', () => {
       valueDisplay.textContent = Number(slider.value).toFixed(decimals);
     });
@@ -59,7 +56,6 @@ const cigarrosValue = document.getElementById('cigarros_por_dia-value');
 
 function toggleCigarros() {
   const isSmoker = document.querySelector('input[name="fumante_atualmente"]:checked').value === '1';
-
   if (isSmoker) {
     cigarrosSlider.disabled = false;
   } else {
@@ -73,39 +69,85 @@ smokerRadios.forEach(radio => {
   radio.addEventListener('change', toggleCigarros);
 });
 
-// Fill demo data
-document.getElementById('fill-demo').addEventListener('click', () => {
-  const demoData = {
-    'sexo-m': true,
-    idade: 55,
-    'fumante-s': true,
-    cigarros_por_dia: 10,
-    'med-s': true,
-    'diab-n': true,
-    colesterol_total: 250,
-    pressao_sistolica: 150,
-    pressao_diastolica: 95,
-    imc: 28.5,
-    frequencia_cardiaca: 82,
-    glicose: 110
+// Helper: Random integer between min and max (inclusive)
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Helper: Random float between min and max
+function randFloat(min, max, decimals = 1) {
+  return parseFloat((Math.random() * (max - min) + min).toFixed(decimals));
+}
+
+// Generate random patient data
+function generateRandomData() {
+  // Categorical variables (random 0 or 1)
+  const sexo = Math.random() > 0.5 ? 1 : 0;
+  const fumante = Math.random() > 0.7 ? 1 : 0; // 30% chance of smoker
+  const medicamento = Math.random() > 0.85 ? 1 : 0; // 15% chance
+  const diabetes = Math.random() > 0.9 ? 1 : 0; // 10% chance
+
+  // Continuous variables (realistic ranges)
+  const idade = randInt(25, 80);
+  const cigarros = fumante ? randInt(5, 30) : 0;
+  const pressaoSist = randInt(100, 180);
+  const pressaoDiast = randInt(65, 110);
+  const freqCardiaca = randInt(55, 100);
+  const imc = randFloat(19, 38, 1);
+  const colesterol = randInt(150, 300);
+  const glicose = randInt(70, 180);
+
+  return {
+    sexo,
+    fumante_atualmente: fumante,
+    medicamento_pressao: medicamento,
+    diabetes,
+    idade,
+    cigarros_por_dia: cigarros,
+    pressao_sistolica: pressaoSist,
+    pressao_diastolica: pressaoDiast,
+    frequencia_cardiaca: freqCardiaca,
+    imc,
+    colesterol_total: colesterol,
+    glicose
   };
+}
 
-  // Set radio buttons
-  document.getElementById('sexo-m').checked = true;
-  document.getElementById('fumante-s').checked = true;
-  document.getElementById('med-s').checked = true;
-  document.getElementById('diab-n').checked = true;
+// Fill form with random data
+document.getElementById('fill-demo').addEventListener('click', () => {
+  const data = generateRandomData();
 
-  // Enable cigarettes slider
-  cigarrosSlider.disabled = false;
+  // Set categorical radio buttons
+  document.getElementById(data.sexo === 1 ? 'sexo-m' : 'sexo-f').checked = true;
+  document.getElementById(data.fumante_atualmente === 1 ? 'fumante-s' : 'fumante-n').checked = true;
+  document.getElementById(data.medicamento_pressao === 1 ? 'med-s' : 'med-n').checked = true;
+  document.getElementById(data.diabetes === 1 ? 'diab-s' : 'diab-n').checked = true;
+
+  // Enable/disable cigarettes based on smoker status
+  if (data.fumante_atualmente === 1) {
+    cigarrosSlider.disabled = false;
+  } else {
+    cigarrosSlider.disabled = true;
+  }
 
   // Set slider values
+  const sliderData = {
+    idade: data.idade,
+    cigarros_por_dia: data.cigarros_por_dia,
+    pressao_sistolica: data.pressao_sistolica,
+    pressao_diastolica: data.pressao_diastolica,
+    frequencia_cardiaca: data.frequencia_cardiaca,
+    imc: data.imc,
+    colesterol_total: data.colesterol_total,
+    glicose: data.glicose
+  };
+
   sliders.forEach(({ id, decimals }) => {
     const slider = document.getElementById(id);
     const valueDisplay = document.getElementById(`${id}-value`);
-    if (slider && demoData[id] !== undefined) {
-      slider.value = demoData[id];
-      valueDisplay.textContent = Number(demoData[id]).toFixed(decimals);
+    if (slider && sliderData[id] !== undefined) {
+      slider.value = sliderData[id];
+      valueDisplay.textContent = Number(sliderData[id]).toFixed(decimals);
     }
   });
 });
@@ -149,62 +191,53 @@ document.getElementById('reset-form').addEventListener('click', () => {
 
 // Get risk color based on probability
 function getRiskColor(prob) {
-  if (prob < 0.3) return '#10b981'; // green
-  if (prob < 0.7) return '#f59e0b'; // yellow
-  return '#ef4444'; // red
+  if (prob < 0.3) return '#10b981';
+  if (prob < 0.7) return '#f59e0b';
+  return '#ef4444';
 }
 
 // Get risk category info
-function getRiskInfo(category, prob) {
+function getRiskInfo(category) {
   const info = {
     low: {
       text: 'Risco Baixo',
-      icon: '&#10003;', // checkmark
-      description: 'O paciente apresenta baixa probabilidade de desenvolver hipertensao. Recomenda-se manter habitos saudaveis e realizar acompanhamento de rotina.'
+      icon: '&#10003;',
+      description: 'Baixa probabilidade de hipertensao. Manter habitos saudaveis e acompanhamento de rotina.'
     },
     medium: {
       text: 'Risco Moderado',
-      icon: '&#9888;', // warning
-      description: 'O paciente apresenta risco moderado. Recomenda-se atencao aos fatores de risco modificaveis e acompanhamento medico mais frequente.'
+      icon: '&#9888;',
+      description: 'Fatores de risco presentes. Atencao aos habitos de vida e acompanhamento medico mais frequente.'
     },
     high: {
       text: 'Risco Elevado',
-      icon: '&#9888;', // warning
-      description: 'O paciente apresenta alta probabilidade de hipertensao. Recomenda-se avaliacao medica imediata e intervencao nos fatores de risco.'
+      icon: '&#9888;',
+      description: 'Alta probabilidade de hipertensao. Avaliacao medica imediata e intervencao nos fatores de risco.'
     }
   };
-
   return info[category] || info.medium;
 }
 
 // Generate clinical interpretation
 function getInterpretation(prob, prediction, data) {
   const probPercent = (prob * 100).toFixed(1);
-  let text = `Com base nos dados fornecidos, o modelo estima uma probabilidade de ${probPercent}% para hipertensao. `;
+  let text = `Probabilidade estimada de ${probPercent}% para hipertensao. `;
 
-  // Add risk factors analysis
   const riskFactors = [];
-
   if (data.idade >= 60) riskFactors.push('idade avancada');
   if (data.fumante_atualmente === 1) riskFactors.push('tabagismo');
   if (data.diabetes === 1) riskFactors.push('diabetes');
-  if (data.medicamento_pressao === 1) riskFactors.push('uso de medicamento para pressao');
-  if (data.pressao_sistolica >= 140) riskFactors.push('pressao sistolica elevada');
-  if (data.pressao_diastolica >= 90) riskFactors.push('pressao diastolica elevada');
+  if (data.medicamento_pressao === 1) riskFactors.push('uso de anti-hipertensivo');
+  if (data.pressao_sistolica >= 140) riskFactors.push('PA sistolica elevada');
+  if (data.pressao_diastolica >= 90) riskFactors.push('PA diastolica elevada');
   if (data.imc >= 30) riskFactors.push('obesidade');
   if (data.colesterol_total >= 240) riskFactors.push('colesterol elevado');
   if (data.glicose >= 126) riskFactors.push('glicose elevada');
 
   if (riskFactors.length > 0) {
-    text += `Fatores de risco identificados: ${riskFactors.join(', ')}. `;
+    text += `Fatores identificados: ${riskFactors.join(', ')}.`;
   } else {
-    text += 'Nenhum fator de risco significativo identificado nos dados fornecidos. ';
-  }
-
-  if (prediction === 1) {
-    text += 'Recomenda-se avaliacao medica para confirmacao diagnostica.';
-  } else {
-    text += 'Manter acompanhamento de rotina e habitos de vida saudaveis.';
+    text += 'Nenhum fator de risco significativo identificado.';
   }
 
   return text;
@@ -214,7 +247,6 @@ function getInterpretation(prob, prediction, data) {
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  // Collect form data
   const data = {
     sexo: Number(document.querySelector('input[name="sexo"]:checked').value),
     idade: Number(document.getElementById('idade').value),
@@ -230,7 +262,6 @@ form.addEventListener('submit', async (e) => {
     glicose: Number(document.getElementById('glicose').value)
   };
 
-  // Show loading state
   form.classList.add('loading');
   resultContainer.style.display = 'block';
   resultContent.style.display = 'none';
@@ -249,8 +280,6 @@ form.addEventListener('submit', async (e) => {
     }
 
     const result = await response.json();
-
-    // Update UI with results
     displayResults(result, data);
 
   } catch (error) {
@@ -265,32 +294,26 @@ function displayResults(result, inputData) {
   const prob = result.probability || 0;
   const probPercent = (prob * 100).toFixed(1);
   const category = result.risk_category || 'medium';
-  const riskInfo = getRiskInfo(category, prob);
+  const riskInfo = getRiskInfo(category);
 
-  // Hide waiting, show content
   resultContainer.style.display = 'none';
   resultContent.style.display = 'block';
 
-  // Update probability display
   probValue.textContent = `${probPercent}%`;
   probValue.style.color = getRiskColor(prob);
 
-  // Update probability bar
   probBar.style.width = `${prob * 100}%`;
   probMarker.style.left = `${prob * 100}%`;
 
-  // Update risk badge
   riskBadge.className = `risk-badge ${category}`;
   riskIcon.innerHTML = riskInfo.icon;
   riskText.textContent = riskInfo.text;
   riskDescription.textContent = riskInfo.description;
 
-  // Update technical details
   modelName.textContent = result.model_selected || result.model || 'N/A';
   thresholdValue.textContent = result.threshold ? result.threshold.toFixed(2) : 'N/A';
   thresholdProfile.textContent = result.threshold_profile || 'N/A';
   predictionValue.textContent = result.prediction === 1 ? 'Positivo (1)' : 'Negativo (0)';
 
-  // Update interpretation
   interpretationText.textContent = getInterpretation(prob, result.prediction, inputData);
 }

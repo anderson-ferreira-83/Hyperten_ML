@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Predicao de Risco de Hipertensao</title>
-  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="wrap">
@@ -13,18 +13,18 @@
         <h1 class="title">Predicao de Risco de Hipertensao</h1>
         <p class="subtitle">Inferencia clinica com modelo de Machine Learning</p>
       </div>
-      <div class="badge">API /predict</div>
+      <div class="badge">Random Forest</div>
     </header>
 
     <section class="card form-card">
       <h2>Dados do Paciente</h2>
       <form id="predict-form">
 
-        <!-- Dados Demograficos -->
-        <div class="section-title">Dados Demograficos</div>
+        <!-- VARIAVEIS CATEGORICAS (BOTOES) -->
+        <div class="section-title">Variaveis Categoricas</div>
         <div class="grid">
           <div class="field">
-            <label for="sexo">Sexo</label>
+            <label>Sexo</label>
             <div class="toggle-group">
               <input type="radio" id="sexo-f" name="sexo" value="0" checked>
               <label for="sexo-f" class="toggle-btn">Feminino</label>
@@ -33,17 +33,7 @@
             </div>
           </div>
           <div class="field">
-            <label for="idade">Idade: <span class="slider-value" id="idade-value">50</span> anos</label>
-            <input type="range" id="idade" name="idade" min="20" max="90" value="50" class="slider">
-            <div class="slider-labels"><span>20</span><span>90</span></div>
-          </div>
-        </div>
-
-        <!-- Habitos -->
-        <div class="section-title">Habitos</div>
-        <div class="grid">
-          <div class="field">
-            <label for="fumante_atualmente">Fumante atualmente</label>
+            <label>Fumante</label>
             <div class="toggle-group">
               <input type="radio" id="fumante-n" name="fumante_atualmente" value="0" checked>
               <label for="fumante-n" class="toggle-btn">Nao</label>
@@ -51,18 +41,8 @@
               <label for="fumante-s" class="toggle-btn">Sim</label>
             </div>
           </div>
-          <div class="field" id="cigarros-field">
-            <label for="cigarros_por_dia">Cigarros/dia: <span class="slider-value" id="cigarros_por_dia-value">0</span></label>
-            <input type="range" id="cigarros_por_dia" name="cigarros_por_dia" min="0" max="70" value="0" class="slider" disabled>
-            <div class="slider-labels"><span>0</span><span>70</span></div>
-          </div>
-        </div>
-
-        <!-- Condicoes de Saude -->
-        <div class="section-title">Condicoes de Saude</div>
-        <div class="grid">
           <div class="field">
-            <label for="medicamento_pressao">Usa medicamento para pressao</label>
+            <label>Medicamento Pressao</label>
             <div class="toggle-group">
               <input type="radio" id="med-n" name="medicamento_pressao" value="0" checked>
               <label for="med-n" class="toggle-btn">Nao</label>
@@ -71,7 +51,7 @@
             </div>
           </div>
           <div class="field">
-            <label for="diabetes">Diabetes</label>
+            <label>Diabetes</label>
             <div class="toggle-group">
               <input type="radio" id="diab-n" name="diabetes" value="0" checked>
               <label for="diab-n" class="toggle-btn">Nao</label>
@@ -81,43 +61,48 @@
           </div>
         </div>
 
-        <!-- Medidas Clinicas -->
-        <div class="section-title">Medidas Clinicas</div>
+        <!-- VARIAVEIS CONTINUAS (SLIDERS) -->
+        <div class="section-title">Variaveis Continuas</div>
         <div class="grid">
           <div class="field">
-            <label for="pressao_sistolica">Pressao Sistolica: <span class="slider-value" id="pressao_sistolica-value">120</span> mmHg</label>
-            <input type="range" id="pressao_sistolica" name="pressao_sistolica" min="80" max="200" value="120" class="slider slider-pressure">
-            <div class="slider-labels"><span>80</span><span>200</span></div>
+            <label>Idade: <span class="slider-value" id="idade-value">50</span> anos</label>
+            <input type="range" id="idade" name="idade" min="20" max="90" value="50" class="slider">
+            <div class="slider-labels"><span>20</span><span>90</span></div>
+          </div>
+          <div class="field" id="cigarros-field">
+            <label>Cigarros/dia: <span class="slider-value" id="cigarros_por_dia-value">0</span></label>
+            <input type="range" id="cigarros_por_dia" name="cigarros_por_dia" min="0" max="40" value="0" class="slider" disabled>
+            <div class="slider-labels"><span>0</span><span>40</span></div>
           </div>
           <div class="field">
-            <label for="pressao_diastolica">Pressao Diastolica: <span class="slider-value" id="pressao_diastolica-value">80</span> mmHg</label>
-            <input type="range" id="pressao_diastolica" name="pressao_diastolica" min="50" max="140" value="80" class="slider slider-pressure">
-            <div class="slider-labels"><span>50</span><span>140</span></div>
+            <label>Pressao Sistolica: <span class="slider-value" id="pressao_sistolica-value">120</span> mmHg</label>
+            <input type="range" id="pressao_sistolica" name="pressao_sistolica" min="90" max="200" value="120" class="slider">
+            <div class="slider-labels"><span>90</span><span>200</span></div>
           </div>
           <div class="field">
-            <label for="frequencia_cardiaca">Frequencia Cardiaca: <span class="slider-value" id="frequencia_cardiaca-value">72</span> bpm</label>
-            <input type="range" id="frequencia_cardiaca" name="frequencia_cardiaca" min="40" max="140" value="72" class="slider">
-            <div class="slider-labels"><span>40</span><span>140</span></div>
+            <label>Pressao Diastolica: <span class="slider-value" id="pressao_diastolica-value">80</span> mmHg</label>
+            <input type="range" id="pressao_diastolica" name="pressao_diastolica" min="60" max="130" value="80" class="slider">
+            <div class="slider-labels"><span>60</span><span>130</span></div>
           </div>
           <div class="field">
-            <label for="imc">IMC: <span class="slider-value" id="imc-value">25.0</span> kg/m2</label>
-            <input type="range" id="imc" name="imc" min="15" max="50" value="25" step="0.1" class="slider slider-imc">
-            <div class="slider-labels"><span>15</span><span>50</span></div>
-          </div>
-        </div>
-
-        <!-- Exames Laboratoriais -->
-        <div class="section-title">Exames Laboratoriais</div>
-        <div class="grid">
-          <div class="field">
-            <label for="colesterol_total">Colesterol Total: <span class="slider-value" id="colesterol_total-value">200</span> mg/dL</label>
-            <input type="range" id="colesterol_total" name="colesterol_total" min="100" max="400" value="200" class="slider slider-colesterol">
-            <div class="slider-labels"><span>100</span><span>400</span></div>
+            <label>Frequencia Cardiaca: <span class="slider-value" id="frequencia_cardiaca-value">72</span> bpm</label>
+            <input type="range" id="frequencia_cardiaca" name="frequencia_cardiaca" min="50" max="120" value="72" class="slider">
+            <div class="slider-labels"><span>50</span><span>120</span></div>
           </div>
           <div class="field">
-            <label for="glicose">Glicose: <span class="slider-value" id="glicose-value">90</span> mg/dL</label>
-            <input type="range" id="glicose" name="glicose" min="40" max="300" value="90" class="slider slider-glicose">
-            <div class="slider-labels"><span>40</span><span>300</span></div>
+            <label>IMC: <span class="slider-value" id="imc-value">25.0</span> kg/m2</label>
+            <input type="range" id="imc" name="imc" min="18" max="45" value="25" step="0.1" class="slider">
+            <div class="slider-labels"><span>18</span><span>45</span></div>
+          </div>
+          <div class="field">
+            <label>Colesterol Total: <span class="slider-value" id="colesterol_total-value">200</span> mg/dL</label>
+            <input type="range" id="colesterol_total" name="colesterol_total" min="120" max="350" value="200" class="slider">
+            <div class="slider-labels"><span>120</span><span>350</span></div>
+          </div>
+          <div class="field">
+            <label>Glicose: <span class="slider-value" id="glicose-value">90</span> mg/dL</label>
+            <input type="range" id="glicose" name="glicose" min="60" max="250" value="90" class="slider">
+            <div class="slider-labels"><span>60</span><span>250</span></div>
           </div>
         </div>
 
@@ -125,79 +110,108 @@
           <button type="submit" class="btn-primary">
             <span class="btn-icon">&#9658;</span> Calcular Risco
           </button>
-          <button type="button" class="btn-secondary" id="fill-demo">Exemplo</button>
+          <button type="button" class="btn-secondary" id="fill-demo">Aleatorio</button>
           <button type="button" class="btn-secondary" id="reset-form">Limpar</button>
         </div>
       </form>
       <p class="note">Esta ferramenta e um apoio a decisao clinica. Nao substitui avaliacao medica profissional.</p>
     </section>
 
-    <section class="card result-card" id="result">
-      <h2>Resultado da Analise</h2>
+    <div class="right-column">
+      <section class="card result-card" id="result">
+        <h2>Resultado da Analise</h2>
 
-      <div class="result-container" id="result-container">
-        <div class="result-waiting">
-          <div class="waiting-icon">&#128202;</div>
-          <p>Preencha os dados e clique em "Calcular Risco"</p>
-        </div>
-      </div>
-
-      <div class="result-content" id="result-content" style="display: none;">
-        <!-- Probabilidade Principal -->
-        <div class="probability-section">
-          <div class="probability-label">Probabilidade de Hipertensao</div>
-          <div class="probability-value" id="prob-value">0%</div>
-          <div class="probability-bar-container">
-            <div class="probability-bar" id="prob-bar"></div>
-            <div class="probability-marker" id="prob-marker"></div>
-          </div>
-          <div class="probability-scale">
-            <span>0%</span>
-            <span>25%</span>
-            <span>50%</span>
-            <span>75%</span>
-            <span>100%</span>
+        <div class="result-container" id="result-container">
+          <div class="result-waiting">
+            <div class="waiting-icon">&#128202;</div>
+            <p>Preencha os dados e clique em "Calcular Risco"</p>
           </div>
         </div>
 
-        <!-- Categoria de Risco -->
-        <div class="risk-category-section">
-          <div class="risk-badge" id="risk-badge">
-            <span class="risk-icon" id="risk-icon">&#9679;</span>
-            <span class="risk-text" id="risk-text">--</span>
+        <div class="result-content" id="result-content" style="display: none;">
+          <div class="probability-section">
+            <div class="probability-label">Probabilidade de Hipertensao</div>
+            <div class="probability-value" id="prob-value">0%</div>
+            <div class="probability-bar-container">
+              <div class="probability-bar" id="prob-bar"></div>
+              <div class="probability-marker" id="prob-marker"></div>
+            </div>
+            <div class="probability-scale">
+              <span>0%</span>
+              <span>25%</span>
+              <span>50%</span>
+              <span>75%</span>
+              <span>100%</span>
+            </div>
           </div>
-          <div class="risk-description" id="risk-description"></div>
-        </div>
 
-        <!-- Detalhes Tecnicos -->
-        <div class="technical-details">
-          <div class="detail-item">
-            <span class="detail-label">Modelo:</span>
-            <span class="detail-value" id="model-name">--</span>
+          <div class="risk-category-section">
+            <div class="risk-badge" id="risk-badge">
+              <span class="risk-icon" id="risk-icon">&#9679;</span>
+              <span class="risk-text" id="risk-text">--</span>
+            </div>
+            <div class="risk-description" id="risk-description"></div>
           </div>
-          <div class="detail-item">
-            <span class="detail-label">Threshold:</span>
-            <span class="detail-value" id="threshold-value">--</span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Perfil:</span>
-            <span class="detail-value" id="threshold-profile">--</span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Predicao:</span>
-            <span class="detail-value" id="prediction-value">--</span>
-          </div>
-        </div>
 
-        <!-- Interpretacao -->
-        <div class="interpretation-section" id="interpretation-section">
-          <h3>Interpretacao Clinica</h3>
-          <p id="interpretation-text"></p>
+          <div class="technical-details">
+            <div class="detail-item">
+              <span class="detail-label">Modelo:</span>
+              <span class="detail-value" id="model-name">--</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Threshold:</span>
+              <span class="detail-value" id="threshold-value">--</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Perfil:</span>
+              <span class="detail-value" id="threshold-profile">--</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Predicao:</span>
+              <span class="detail-value" id="prediction-value">--</span>
+            </div>
+          </div>
+
+          <div class="interpretation-section" id="interpretation-section">
+            <h3>Interpretacao Clinica</h3>
+            <p id="interpretation-text"></p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- CARD EXPLICATIVO DOS NIVEIS DE RISCO -->
+      <section class="card risk-info-card">
+        <h2>Categorias de Risco</h2>
+        <div class="risk-levels">
+          <div class="risk-level risk-level-low">
+            <div class="risk-level-header">
+              <span class="risk-level-icon">&#10003;</span>
+              <span class="risk-level-title">Risco Baixo</span>
+            </div>
+            <div class="risk-level-range">Probabilidade &lt; 30%</div>
+            <p class="risk-level-desc">Paciente com baixa probabilidade de desenvolver hipertensao. Manter habitos saudaveis e acompanhamento de rotina.</p>
+          </div>
+          <div class="risk-level risk-level-medium">
+            <div class="risk-level-header">
+              <span class="risk-level-icon">&#9888;</span>
+              <span class="risk-level-title">Risco Moderado</span>
+            </div>
+            <div class="risk-level-range">Probabilidade 30% - 70%</div>
+            <p class="risk-level-desc">Paciente com fatores de risco presentes. Recomenda-se atencao aos habitos de vida e acompanhamento medico mais frequente.</p>
+          </div>
+          <div class="risk-level risk-level-high">
+            <div class="risk-level-header">
+              <span class="risk-level-icon">&#9888;</span>
+              <span class="risk-level-title">Risco Elevado</span>
+            </div>
+            <div class="risk-level-range">Probabilidade &gt; 70%</div>
+            <p class="risk-level-desc">Paciente com alta probabilidade de hipertensao. Avaliacao medica imediata e intervencao nos fatores de risco sao recomendadas.</p>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
 
-  <script src="/static/app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
