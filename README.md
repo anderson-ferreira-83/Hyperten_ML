@@ -4,9 +4,9 @@
 
 ## Demo Online (AWS)
 
-**Acesse a aplicacao em producao:**
+**Acesse a aplicacao em producao (HTTPS seguro - funciona no celular):**
 
-<a href="http://hypertension-tcc-ceunsp-2026.s3-website-sa-east-1.amazonaws.com/ui/index.html" target="_blank"><strong>Predição de Risco de Hipertensão</strong></a>
+<a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" target="_blank"><strong>Predição de Risco de Hipertensão</strong></a>
 
 ### Teste Rapido da API
 
@@ -254,6 +254,7 @@ Todos os arquivos de deploy estao em: **[12_deploy_aws/](12_deploy_aws/)**
 |---------|-----------|
 | `README.md` | Visao geral do deploy |
 | `DEPLOY_COMPLETO.md` | Guia passo a passo detalhado |
+| `CLOUDFRONT_HTTPS.md` | Configuracao HTTPS com CloudFront |
 | `TUTORIAL_TESTE.md` | Como testar a API deployada |
 | `INICIO_RAPIDO.md` | Guia rapido de deploy |
 | `deploy_config.sh` | Configuracoes AWS |
@@ -262,7 +263,7 @@ Todos os arquivos de deploy estao em: **[12_deploy_aws/](12_deploy_aws/)**
 ### Arquitetura AWS
 
 ```
-Usuario --> S3 (UI) --> API Gateway --> Lambda --> Random Forest (rf_v1)
+Usuario --> CloudFront (HTTPS) --> S3 (UI) --> API Gateway --> Lambda --> Random Forest (rf_v1)
 ```
 
 ---
@@ -294,7 +295,7 @@ flowchart TB
   I --> J[API FastAPI<br/>06_api/main.py]
   I --> K[UI Web<br/>07_web/]
   J --> L[Deploy AWS<br/>Lambda + API Gateway]
-  K --> N[Deploy AWS<br/>S3]
+  K --> N[Deploy AWS<br/>S3 + CloudFront HTTPS]
 ```
 
 ---

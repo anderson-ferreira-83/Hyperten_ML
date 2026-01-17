@@ -7,6 +7,7 @@ Esta pasta contém a documentação e scripts para o deploy da aplicação na AW
 ### Documentação
 - **DEPLOY_COMPLETO.md** - Documentação completa do deploy realizado
 - **TUTORIAL_TESTE.md** - Tutorial passo a passo para testar a aplicação
+- **CLOUDFRONT_HTTPS.md** - Configuração do CloudFront para HTTPS seguro
 
 ### Scripts de Teste (Prontos para Usar!) ⭐
 - **run_all_tests.sh** - Executa TODOS os testes automaticamente
@@ -25,6 +26,11 @@ Esta pasta contém a documentação e scripts para o deploy da aplicação na AW
 
 ### Endpoints Ativos
 
+**Interface Web (HTTPS - Segura):**
+```
+https://dl52cpaeesvk0.cloudfront.net/ui/index.html
+```
+
 **API de Predição:**
 ```
 https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/predict
@@ -35,7 +41,7 @@ https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/predict
 https://yrac79mzj9.execute-api.sa-east-1.amazonaws.com/health
 ```
 
-**Interface Web:**
+**Interface Web (HTTP - Legacy):**
 ```
 http://hypertension-tcc-ceunsp-2026.s3-website-sa-east-1.amazonaws.com/ui/index.html
 ```
@@ -68,11 +74,11 @@ Este script executa automaticamente:
 ./test_prediction_high_risk.sh
 ```
 
-### Opção 3: Interface Web
+### Opção 3: Interface Web (HTTPS)
 
-Abra no navegador:
+Abra no navegador ou celular:
 ```
-http://hypertension-tcc-ceunsp-2026.s3-website-sa-east-1.amazonaws.com/ui/index.html
+https://dl52cpaeesvk0.cloudfront.net/ui/index.html
 ```
 
 ### Documentação Completa
@@ -87,4 +93,5 @@ http://hypertension-tcc-ceunsp-2026.s3-website-sa-east-1.amazonaws.com/ui/index.
 - **Lambda Function**: hypertension-api
 - **API Gateway**: yrac79mzj9
 - **S3 Bucket**: hypertension-tcc-ceunsp-2026
-- **Custo Estimado**: ~$0.00 - $0.50/mês (Free Tier)
+- **CloudFront Distribution**: E390ZKBDLPPSSU (dl52cpaeesvk0.cloudfront.net)
+- **Custo Estimado**: ~$0.00 - $1.00/mês (Free Tier)
