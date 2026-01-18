@@ -546,6 +546,21 @@ tr:hover {
     border-radius: var(--radius-sm);
 }
 
+/* ===== Interactive Charts ===== */
+.interactive-chart {
+    width: 100%;
+    min-height: 350px;
+    border-radius: var(--radius-sm);
+}
+
+.dataset-figure .interactive-chart {
+    min-height: 300px;
+}
+
+.figures-grid .interactive-chart {
+    min-height: 380px;
+}
+
 /* ===== Interpretability Section ===== */
 .interpretability-grid {
     display: grid;

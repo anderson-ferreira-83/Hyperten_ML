@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Plotly.js para gráficos interativos -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -152,7 +154,7 @@
                     </div>
                 </div>
                 <div class="dataset-figure">
-                    <img src="assets/figures/eda/target_distribution.svg" alt="Distribuição do Target" loading="lazy">
+                    <div id="chart-target-distribution" class="interactive-chart"></div>
                 </div>
             </div>
 
@@ -240,19 +242,19 @@
             <div class="figures-grid">
                 <div class="figure-card">
                     <h4>Comparação de Métricas</h4>
-                    <img src="assets/figures/models/01_comparison_p1_metricas.svg" alt="Comparação de Métricas" loading="lazy">
+                    <div id="chart-metrics-comparison" class="interactive-chart"></div>
                 </div>
                 <div class="figure-card">
                     <h4>Curvas ROC</h4>
-                    <img src="assets/figures/models/03_roc_p1_curvas.svg" alt="Curvas ROC" loading="lazy">
+                    <div id="chart-roc-curves" class="interactive-chart"></div>
                 </div>
                 <div class="figure-card">
                     <h4>Matriz de Confusão</h4>
-                    <img src="assets/figures/models/02_confusion_random_forest.svg" alt="Matriz de Confusão" loading="lazy">
+                    <div id="chart-confusion-matrix" class="interactive-chart"></div>
                 </div>
                 <div class="figure-card">
                     <h4>Radar Multi-Métrica</h4>
-                    <img src="assets/figures/models/01_comparison_p4_radar.svg" alt="Radar Chart" loading="lazy">
+                    <div id="chart-radar" class="interactive-chart"></div>
                 </div>
             </div>
         </div>
@@ -372,12 +374,12 @@
 
             <div class="figures-grid">
                 <div class="figure-card">
-                    <h4>Feature Importance Consenso</h4>
-                    <img src="assets/figures/interpretability/06_feat_p1_consenso.svg" alt="Feature Importance Consenso" loading="lazy">
+                    <h4>Importância das Features</h4>
+                    <div id="chart-feature-importance" class="interactive-chart"></div>
                 </div>
                 <div class="figure-card">
                     <h4>Análise de Threshold</h4>
-                    <img src="assets/figures/interpretability/08_threshold_p1_metricas.svg" alt="Threshold Analysis" loading="lazy">
+                    <div id="chart-threshold" class="interactive-chart"></div>
                 </div>
             </div>
         </div>
@@ -446,5 +448,6 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/charts.js"></script>
 </body>
 </html>
