@@ -110,7 +110,7 @@ const THRESHOLD_DATA = {
     thresholds: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
     sensitivity: [0.98, 0.96, 0.93, 0.90, 0.85, 0.78, 0.68, 0.55, 0.35],
     specificity: [0.65, 0.78, 0.85, 0.88, 0.91, 0.94, 0.96, 0.98, 0.99],
-    f1: [0.72, 0.80, 0.84, 0.85, 0.84, 0.82, 0.77, 0.68, 0.50],
+    f2: [0.78, 0.85, 0.88, 0.87, 0.85, 0.80, 0.73, 0.62, 0.42],
     precision: [0.55, 0.68, 0.76, 0.82, 0.85, 0.88, 0.91, 0.94, 0.97]
 };
 
@@ -517,12 +517,12 @@ function createThresholdAnalysis() {
         },
         {
             x: THRESHOLD_DATA.thresholds,
-            y: THRESHOLD_DATA.f1.map(v => v * 100),
+            y: THRESHOLD_DATA.f2.map(v => v * 100),
             mode: 'lines+markers',
-            name: 'F1-Score',
+            name: 'F2-Score',
             line: { color: COLORS.warning, width: 2.5 },
             marker: { size: 8 },
-            hovertemplate: 'Threshold: %{x}<br>F1-Score: %{y:.1f}%<extra></extra>'
+            hovertemplate: 'Threshold: %{x}<br>F2-Score: %{y:.1f}%<extra></extra>'
         }
     ];
 
