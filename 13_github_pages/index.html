@@ -48,21 +48,25 @@
             <h1>Predição de Risco de <span class="highlight">Hipertensão</span></h1>
             <p class="hero-subtitle">Machine Learning aplicado à Saúde Cardiovascular</p>
             <div class="hero-metrics">
-                <div class="metric-card">
+                <div class="metric-card" title="ROC-AUC: Mede a capacidade geral do modelo em distinguir pacientes com e sem hipertensão. Valores acima de 90% são considerados excelentes.">
                     <span class="metric-value">95.1%</span>
                     <span class="metric-label">ROC-AUC</span>
+                    <span class="metric-hint">Capacidade discriminativa</span>
                 </div>
-                <div class="metric-card">
+                <div class="metric-card" title="Sensibilidade (Recall): Percentual de pacientes com hipertensão que o modelo detecta corretamente. 90.5% significa que apenas 9.5% dos casos positivos não são detectados.">
                     <span class="metric-value">90.5%</span>
                     <span class="metric-label">Sensibilidade</span>
+                    <span class="metric-hint">Detecção de casos positivos</span>
                 </div>
-                <div class="metric-card">
+                <div class="metric-card" title="Especificidade: Percentual de pacientes saudáveis corretamente identificados. 89.7% significa poucos alarmes falsos em pacientes sem hipertensão.">
                     <span class="metric-value">89.7%</span>
                     <span class="metric-label">Especificidade</span>
+                    <span class="metric-hint">Identificação de saudáveis</span>
                 </div>
-                <div class="metric-card">
+                <div class="metric-card" title="F2-Score: Métrica que combina precisão e sensibilidade, dando 2x mais peso à sensibilidade. Ideal para contextos médicos onde perder um caso positivo é mais grave que um alarme falso.">
                     <span class="metric-value">84.8%</span>
                     <span class="metric-label">F2-Score</span>
+                    <span class="metric-hint">Métrica clínica principal</span>
                 </div>
             </div>
             <div class="hero-buttons">
@@ -161,6 +165,19 @@
     <section class="section" id="dataset">
         <div class="container">
             <h2 class="section-title">Dataset</h2>
+            <p class="section-subtitle">Base de dados utilizada para treinar e validar o modelo preditivo</p>
+
+            <div class="info-box">
+                <div class="info-icon">ℹ️</div>
+                <div class="info-content">
+                    <strong>O que é um Dataset?</strong>
+                    <p>Um dataset (conjunto de dados) é a base de informações utilizada para "ensinar" o modelo de Machine Learning.
+                    Neste projeto, utilizamos dados reais de 4.240 pacientes, contendo informações clínicas e demográficas.
+                    A <strong>prevalência de 31%</strong> indica que aproximadamente 1 em cada 3 pacientes no estudo possui hipertensão,
+                    o que representa um desbalanceamento que foi tratado com técnicas específicas (SMOTE) durante o treinamento.</p>
+                </div>
+            </div>
+
             <div class="dataset-info">
                 <div class="dataset-stats">
                     <div class="stat">
@@ -266,6 +283,18 @@
             <h2 class="section-title">Resultados</h2>
             <p class="section-subtitle">Comparação de 10 modelos com validação cruzada estratificada</p>
 
+            <div class="info-box info-box-light">
+                <div class="info-icon">🎯</div>
+                <div class="info-content">
+                    <strong>Como interpretar os resultados?</strong>
+                    <p>Testamos 10 algoritmos diferentes de Machine Learning para encontrar o mais adequado para prever hipertensão.
+                    O <strong>Random Forest</strong> foi selecionado como melhor modelo por apresentar o melhor equilíbrio entre
+                    detectar corretamente pacientes com hipertensão (alta sensibilidade) e não gerar alarmes falsos desnecessários
+                    (boa especificidade). Em contexto médico, prioriza-se não deixar passar casos positivos (falsos negativos),
+                    por isso usamos o <strong>F2-Score</strong> como métrica principal de decisão.</p>
+                </div>
+            </div>
+
             <div class="results-grid">
                 <div class="result-card best-model">
                     <span class="badge">Melhor Modelo</span>
@@ -313,19 +342,70 @@
             <div class="figures-grid">
                 <div class="figure-card">
                     <h4>Comparação de Métricas</h4>
+                    <p class="chart-explanation">
+                        <strong>O que mostra:</strong> Compara o desempenho de todos os modelos testados usando diferentes métricas.
+                        Use o dropdown para alternar entre métricas. Quanto maior a barra, melhor o desempenho do modelo naquela métrica específica.
+                    </p>
                     <div id="chart-metrics-comparison" class="interactive-chart"></div>
                 </div>
                 <div class="figure-card">
                     <h4>Curvas ROC</h4>
+                    <p class="chart-explanation">
+                        <strong>O que mostra:</strong> A curva ROC ilustra a capacidade do modelo em distinguir entre pacientes com e sem hipertensão.
+                        Quanto mais a curva se aproxima do canto superior esquerdo, melhor o modelo. A área sob a curva (AUC) resume essa capacidade:
+                        valores próximos a 100% indicam excelente discriminação.
+                    </p>
                     <div id="chart-roc-curves" class="interactive-chart"></div>
                 </div>
                 <div class="figure-card">
                     <h4>Matriz de Confusão</h4>
+                    <p class="chart-explanation">
+                        <strong>O que mostra:</strong> Resume os acertos e erros do modelo. <strong>Verdadeiros Positivos (VP)</strong>: pacientes com hipertensão corretamente identificados.
+                        <strong>Verdadeiros Negativos (VN)</strong>: pacientes saudáveis corretamente identificados.
+                        <strong>Falsos Negativos (FN)</strong>: pacientes com hipertensão não detectados (mais crítico em saúde).
+                        <strong>Falsos Positivos (FP)</strong>: alarmes falsos em pacientes saudáveis.
+                    </p>
                     <div id="chart-confusion-matrix" class="interactive-chart"></div>
                 </div>
                 <div class="figure-card">
                     <h4>Radar Multi-Métrica</h4>
+                    <p class="chart-explanation">
+                        <strong>O que mostra:</strong> Visualização comparativa de múltiplas métricas simultaneamente para os principais modelos.
+                        Cada eixo representa uma métrica diferente. Um modelo ideal teria todas as métricas próximas de 100%, formando um polígono grande.
+                        Útil para identificar pontos fortes e fracos de cada modelo.
+                    </p>
                     <div id="chart-radar" class="interactive-chart"></div>
+                </div>
+            </div>
+
+            <!-- Glossário de Métricas -->
+            <div class="metrics-glossary">
+                <h3>Glossário de Métricas</h3>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <span class="glossary-term">ROC-AUC</span>
+                        <span class="glossary-definition">Mede a capacidade geral do modelo distinguir entre classes. Valores acima de 90% são considerados excelentes.</span>
+                    </div>
+                    <div class="glossary-item">
+                        <span class="glossary-term">Sensibilidade (Recall)</span>
+                        <span class="glossary-definition">Percentual de pacientes com hipertensão que o modelo detecta corretamente. Alta sensibilidade = poucos casos perdidos.</span>
+                    </div>
+                    <div class="glossary-item">
+                        <span class="glossary-term">Especificidade</span>
+                        <span class="glossary-definition">Percentual de pacientes saudáveis corretamente identificados. Alta especificidade = poucos alarmes falsos.</span>
+                    </div>
+                    <div class="glossary-item">
+                        <span class="glossary-term">Precisão</span>
+                        <span class="glossary-definition">Dos pacientes que o modelo classifica como hipertensos, quantos realmente são. Mede a confiabilidade dos alertas positivos.</span>
+                    </div>
+                    <div class="glossary-item">
+                        <span class="glossary-term">F2-Score</span>
+                        <span class="glossary-definition">Média ponderada que prioriza a sensibilidade (2x mais peso). Ideal para contextos médicos onde perder um caso positivo é mais grave que um alarme falso.</span>
+                    </div>
+                    <div class="glossary-item">
+                        <span class="glossary-term">Acurácia</span>
+                        <span class="glossary-definition">Percentual total de predições corretas. Métrica simples, mas pode ser enganosa em datasets desbalanceados.</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -337,9 +417,24 @@
             <h2 class="section-title">Interpretabilidade</h2>
             <p class="section-subtitle">Entendendo as decisões do modelo para validação clínica</p>
 
+            <div class="info-box">
+                <div class="info-icon">🔍</div>
+                <div class="info-content">
+                    <strong>Por que a Interpretabilidade é importante?</strong>
+                    <p>Em aplicações médicas, não basta o modelo fazer predições precisas — é fundamental entender <em>por que</em> ele chegou
+                    àquela conclusão. A interpretabilidade permite que médicos validem se o modelo está usando critérios clinicamente relevantes,
+                    aumentando a confiança no sistema e facilitando a tomada de decisão compartilhada com o paciente.
+                    Modelos "caixa-preta" que não explicam suas decisões são menos aceitos na prática clínica.</p>
+                </div>
+            </div>
+
             <div class="interpretability-grid">
                 <div class="importance-card">
                     <h3>Importância das Features</h3>
+                    <p class="card-explanation">
+                        Mostra quanto cada variável contribui para a decisão do modelo. Barras maiores indicam maior influência na predição.
+                        As cores identificam a categoria clínica de cada variável.
+                    </p>
                     <div class="importance-legend">
                         <span class="legend-item"><span class="legend-color" style="background: #e74c3c;"></span>Pressão Arterial</span>
                         <span class="legend-item"><span class="legend-color" style="background: #2ecc71;"></span>Demografia</span>
@@ -394,6 +489,11 @@
 
                 <div class="category-card">
                     <h3>Importância por Categoria Clínica</h3>
+                    <p class="card-explanation">
+                        Agrupa as variáveis por categoria médica. O tamanho de cada círculo representa a contribuição total
+                        daquela categoria para as predições do modelo. Note como a Pressão Arterial domina, o que está
+                        alinhado com o conhecimento médico sobre hipertensão.
+                    </p>
                     <div class="category-chart">
                         <div class="category-item">
                             <div class="category-circle" style="background: #e74c3c; width: 120px; height: 120px;">
@@ -425,6 +525,12 @@
 
             <div class="threshold-section">
                 <h3>Thresholds Clínicos Recomendados</h3>
+                <p class="threshold-explanation">
+                    O <strong>threshold</strong> (limiar de decisão) determina a partir de qual probabilidade o modelo classifica
+                    um paciente como "em risco". Um threshold mais baixo (ex: 0.30) detecta mais casos, mas gera mais alarmes falsos.
+                    Um threshold mais alto (ex: 0.80) é mais preciso, mas pode deixar passar alguns casos.
+                    A escolha depende do contexto clínico: triagem populacional vs. confirmação diagnóstica.
+                </p>
                 <div class="threshold-cards">
                     <div class="threshold-card screening">
                         <h4>Triagem</h4>
@@ -458,11 +564,22 @@
 
             <div class="figures-grid">
                 <div class="figure-card">
-                    <h4>Importância das Features</h4>
+                    <h4>Importância das Features (Gráfico Interativo)</h4>
+                    <p class="chart-explanation">
+                        <strong>O que mostra:</strong> Versão interativa do ranking de importância das variáveis.
+                        Passe o mouse sobre as barras para ver detalhes de cada variável, incluindo sua categoria clínica e descrição.
+                        As variáveis de pressão arterial dominam, validando o conhecimento médico estabelecido.
+                    </p>
                     <div id="chart-feature-importance" class="interactive-chart"></div>
                 </div>
                 <div class="figure-card">
                     <h4>Análise de Threshold</h4>
+                    <p class="chart-explanation">
+                        <strong>O que mostra:</strong> Como sensibilidade e especificidade variam conforme o threshold.
+                        As linhas verticais pontilhadas indicam os três cenários clínicos recomendados.
+                        Note o trade-off: aumentar a sensibilidade reduz a especificidade e vice-versa.
+                        O ponto de cruzamento representa o threshold "ótimo" para equilíbrio entre ambas.
+                    </p>
                     <div id="chart-threshold" class="interactive-chart"></div>
                 </div>
             </div>
@@ -474,6 +591,17 @@
         <div class="container">
             <h2 class="section-title">Arquitetura de Deploy</h2>
             <p class="section-subtitle">Pipeline de produção na AWS com alta disponibilidade</p>
+
+            <div class="info-box info-box-light">
+                <div class="info-icon">☁️</div>
+                <div class="info-content">
+                    <strong>Por que Deploy em Nuvem?</strong>
+                    <p>Um modelo de Machine Learning só gera valor quando está disponível para uso real. O deploy na AWS permite que
+                    o sistema seja acessado de qualquer lugar, 24 horas por dia, com alta disponibilidade e baixa latência.
+                    A arquitetura serverless (sem servidores dedicados) reduz custos e escala automaticamente conforme a demanda,
+                    tornando o sistema viável mesmo para instituições com recursos limitados.</p>
+                </div>
+            </div>
 
             <div class="aws-pipeline">
                 <div class="aws-flow">
@@ -651,7 +779,7 @@
                 </div>
                 <div class="footer-section">
                     <h4>Contato</h4>
-                    <p>anderson.ferreira@ceunsp.edu.br</p>
+                    <p>ahferreira@ceunsp.edu.br</p>
                 </div>
             </div>
 
