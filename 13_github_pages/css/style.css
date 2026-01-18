@@ -391,8 +391,8 @@ body {
 /* ===== Dataset Section ===== */
 .dataset-info {
     display: grid;
-    grid-template-columns: 0.7fr 1.3fr;
-    gap: 40px;
+    grid-template-columns: 0.5fr 1.5fr;
+    gap: 30px;
     align-items: center;
     margin-bottom: 50px;
 }
@@ -400,26 +400,26 @@ body {
 .dataset-stats {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
 .stat {
     background: var(--gray-100);
-    padding: 20px;
+    padding: 15px;
     border-radius: var(--radius);
     text-align: center;
 }
 
 .stat-value {
     display: block;
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: var(--primary);
 }
 
 .stat-label {
     color: var(--gray-600);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 .dataset-figure img {
@@ -461,6 +461,27 @@ th {
 
 tr:hover {
     background: var(--gray-100);
+}
+
+/* Variable type badges */
+.type-continua,
+.type-categorica {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.type-continua {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.type-categorica {
+    background: #e8f5e9;
+    color: #2e7d32;
 }
 
 /* ===== Results Section ===== */
@@ -575,7 +596,7 @@ tr:hover {
 }
 
 .dataset-figure .interactive-chart {
-    min-height: 300px;
+    min-height: 380px;
 }
 
 .figures-grid .interactive-chart {
