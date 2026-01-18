@@ -1492,3 +1492,73 @@ tr:hover {
         transform: rotate(360deg);
     }
 }
+
+/* ===== References Section ===== */
+.references-list {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.reference-item {
+    display: flex;
+    gap: 15px;
+    padding: 20px 25px;
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 15px;
+    transition: var(--transition);
+    border-left: 4px solid var(--secondary);
+}
+
+.reference-item:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.ref-number {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1rem;
+    min-width: 30px;
+    flex-shrink: 0;
+}
+
+.ref-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--gray-800);
+    margin: 0;
+}
+
+.ref-text em {
+    color: var(--dark);
+}
+
+.ref-text a {
+    color: var(--secondary);
+    text-decoration: none;
+    word-break: break-all;
+    transition: var(--transition);
+}
+
+.ref-text a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .reference-item {
+        flex-direction: column;
+        gap: 8px;
+        padding: 15px 20px;
+    }
+
+    .ref-number {
+        font-size: 0.9rem;
+    }
+
+    .ref-text {
+        font-size: 0.85rem;
+    }
+}
