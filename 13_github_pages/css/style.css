@@ -84,11 +84,39 @@ body {
     text-decoration: none;
     color: var(--dark);
     font-weight: 500;
+    font-size: 0.85rem;
     transition: var(--transition);
 }
 
 .nav-menu a:hover {
     color: var(--primary);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-github {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: var(--dark);
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.nav-github:hover {
+    color: var(--primary);
+    background: var(--gray-100);
+}
+
+.nav-github svg {
+    width: 22px;
+    height: 22px;
 }
 
 .nav-cta {

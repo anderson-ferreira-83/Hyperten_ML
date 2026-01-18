@@ -179,7 +179,7 @@ function createMetricsComparison() {
     const traces = metrics.map((metric, i) => {
         const values = sortedIndices.map(idx => MODELS_DATA[metric][idx]);
         const names = sortedIndices.map(idx => MODELS_DATA.names[idx]);
-        const colors = names.map(name => name === 'Random Forest' ? COLORS.primary : COLORS.gray);
+        const colors = names.map(name => name === 'Random Forest' ? COLORS.danger : '#bdc3c7');
 
         return {
             x: names,
@@ -320,9 +320,9 @@ function createConfusionMatrix() {
         y: ['Real Positivo', 'Real Negativo'],
         type: 'heatmap',
         colorscale: [
-            [0, '#e8f5e9'],
-            [0.5, '#81c784'],
-            [1, '#2e7d32']
+            [0, '#e3f2fd'],
+            [0.5, '#64b5f6'],
+            [1, '#1565c0']
         ],
         showscale: true,
         hovertemplate: '%{text}<extra></extra>',
