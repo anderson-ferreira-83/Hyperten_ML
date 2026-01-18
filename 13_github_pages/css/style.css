@@ -341,6 +341,10 @@ body {
     margin-top: 50px;
 }
 
+.pipeline-row-2 {
+    margin-top: 20px;
+}
+
 .methodology-highlight {
     background: var(--white);
     padding: 40px;
