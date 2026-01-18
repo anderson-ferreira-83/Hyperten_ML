@@ -320,6 +320,26 @@ body {
     color: var(--gray-600);
 }
 
+.problem-source {
+    display: block;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid var(--gray-200);
+    font-size: 0.75rem;
+    color: var(--gray-600);
+}
+
+.problem-source a {
+    color: var(--secondary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.problem-source a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
 .problem-intro {
     max-width: 900px;
     margin: 0 auto 20px;
