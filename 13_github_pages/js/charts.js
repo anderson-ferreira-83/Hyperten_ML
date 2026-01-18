@@ -435,15 +435,40 @@ function createFeatureImportance() {
     const colors = indices.map(i => FEATURE_IMPORTANCE.colors[i]);
     const categories = indices.map(i => FEATURE_IMPORTANCE.categories[i]);
 
+    // Criar descrições detalhadas para cada feature
+    const featureDescriptions = {
+        'Pressão Sistólica': 'Pressão arterial sistólica (mmHg) - Principal indicador de hipertensão',
+        'Pressão Diastólica': 'Pressão arterial diastólica (mmHg) - Pressão durante relaxamento cardíaco',
+        'IMC': 'Índice de Massa Corporal (kg/m²) - Indicador de obesidade',
+        'Idade': 'Idade do paciente em anos',
+        'Colesterol Total': 'Colesterol total (mg/dL) - Fator de risco cardiovascular',
+        'Freq. Cardíaca': 'Frequência cardíaca (bpm) - Batimentos por minuto',
+        'Glicose': 'Glicose sanguínea (mg/dL) - Indicador metabólico',
+        'Medicamento Pressão': 'Uso de medicamento anti-hipertensivo (Sim/Não)',
+        'Sexo': 'Sexo biológico do paciente',
+        'Cigarros/Dia': 'Quantidade de cigarros fumados por dia',
+        'Fumante': 'Status de fumante atual (Sim/Não)',
+        'Diabetes': 'Diagnóstico de diabetes (Sim/Não)'
+    };
+
+    // Criar customdata com categoria e descrição para cada feature
+    const customData = indices.map(i => ({
+        category: FEATURE_IMPORTANCE.categories[i],
+        description: featureDescriptions[FEATURE_IMPORTANCE.features[i]] || ''
+    }));
+
     const data = [{
         type: 'bar',
         orientation: 'h',
         x: importance,
         y: features,
         marker: { color: colors },
-        hovertemplate: '<b>%{y}</b><br>Importância: %{x:.1f}%<br>Categoria: ' +
-            categories.map((c, i) => `${c}`).join('') + '<extra></extra>',
-        customdata: categories,
+        hovertemplate: '<b>%{y}</b><br>' +
+            '<b>Importância:</b> %{x:.1f}%<br>' +
+            '<b>Categoria:</b> %{customdata.category}<br>' +
+            '<i>%{customdata.description}</i>' +
+            '<extra></extra>',
+        customdata: customData,
         text: importance.map(v => v.toFixed(1) + '%'),
         textposition: 'outside'
     }];
