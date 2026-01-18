@@ -1547,6 +1547,18 @@ tr:hover {
     text-decoration: underline;
 }
 
+.ref-link {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--gray-600);
+}
+
+.ref-link a {
+    color: var(--secondary);
+    font-weight: 500;
+}
+
 @media (max-width: 768px) {
     .reference-item {
         flex-direction: column;
