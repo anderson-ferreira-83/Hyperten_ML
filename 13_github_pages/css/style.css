@@ -94,10 +94,11 @@ body {
 .nav-cta {
     background: var(--primary);
     color: var(--white);
-    padding: 10px 24px;
+    padding: 8px 18px;
     border-radius: var(--radius-sm);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 0.85rem;
     transition: var(--transition);
 }
 
@@ -291,6 +292,14 @@ body {
     color: var(--gray-600);
 }
 
+.problem-intro {
+    max-width: 900px;
+    margin: 0 auto 20px;
+    text-align: center;
+    line-height: 1.7;
+    color: var(--gray-700);
+}
+
 /* ===== Pipeline ===== */
 .pipeline {
     display: flex;
@@ -382,7 +391,7 @@ body {
 /* ===== Dataset Section ===== */
 .dataset-info {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.7fr 1.3fr;
     gap: 40px;
     align-items: center;
     margin-bottom: 50px;
@@ -391,25 +400,26 @@ body {
 .dataset-stats {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
 .stat {
     background: var(--gray-100);
-    padding: 30px;
+    padding: 20px;
     border-radius: var(--radius);
     text-align: center;
 }
 
 .stat-value {
     display: block;
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary);
 }
 
 .stat-label {
     color: var(--gray-600);
+    font-size: 0.9rem;
 }
 
 .dataset-figure img {
