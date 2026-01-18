@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Predição de Risco de Hipertensão | TCC CEUNSP 2026</title>
-    <meta name="description" content="Sistema de Machine Learning para predição de risco de hipertensão arterial. Projeto de TCC do CEUNSP.">
+    <meta name="description"
+        content="Sistema de Machine Learning para predição de risco de hipertensão arterial. Projeto de TCC do CEUNSP.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +14,7 @@
     <!-- Plotly.js para gráficos interativos -->
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar">
@@ -25,10 +28,15 @@
                 <li><a href="#equipe">Equipe</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="https://github.com/anderson-ferreira-83/traballho_conclussao_risco_hipertensao" class="nav-github" target="_blank" title="Ver código no GitHub">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                <a href="https://github.com/anderson-ferreira-83/traballho_conclussao_risco_hipertensao"
+                    class="nav-github" target="_blank" title="Ver código no GitHub">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
                 </a>
-                <a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" class="nav-cta" target="_blank">Testar Modelo</a>
+                <a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" class="nav-cta" target="_blank">Testar
+                    Modelo</a>
             </div>
         </div>
     </nav>
@@ -54,11 +62,12 @@
                 </div>
                 <div class="metric-card">
                     <span class="metric-value">84.8%</span>
-                    <span class="metric-label">F1-Score</span>
+                    <span class="metric-label">F2-Score</span>
                 </div>
             </div>
             <div class="hero-buttons">
-                <a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" class="btn btn-primary" target="_blank">Testar Modelo Online</a>
+                <a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" class="btn btn-primary"
+                    target="_blank">Testar Modelo Online</a>
                 <a href="#metodologia" class="btn btn-secondary">Ver Metodologia</a>
             </div>
         </div>
@@ -141,7 +150,8 @@
                     <li><strong>Sem Data Leakage:</strong> SMOTE aplicado exclusivamente no conjunto de treino</li>
                     <li><strong>Métricas Clínicas:</strong> F2-Score priorizando minimização de falsos negativos</li>
                     <li><strong>Validação Robusta:</strong> CV estratificada 5-fold com múltiplas seeds</li>
-                    <li><strong>Threshold Otimizado:</strong> Análise de diferentes limiares para contextos clínicos</li>
+                    <li><strong>Threshold Otimizado:</strong> Análise de diferentes limiares para contextos clínicos
+                    </li>
                 </ul>
             </div>
         </div>
@@ -183,18 +193,66 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>pressao_sistolica</td><td class="type-continua">Contínua</td><td>Pressão arterial sistólica (mmHg)</td></tr>
-                            <tr><td>pressao_diastolica</td><td class="type-continua">Contínua</td><td>Pressão arterial diastólica (mmHg)</td></tr>
-                            <tr><td>idade</td><td class="type-continua">Contínua</td><td>Idade em anos</td></tr>
-                            <tr><td>imc</td><td class="type-continua">Contínua</td><td>Índice de Massa Corporal (kg/m²)</td></tr>
-                            <tr><td>colesterol_total</td><td class="type-continua">Contínua</td><td>Colesterol total (mg/dL)</td></tr>
-                            <tr><td>glicose</td><td class="type-continua">Contínua</td><td>Glicose sanguínea (mg/dL)</td></tr>
-                            <tr><td>frequencia_cardiaca</td><td class="type-continua">Contínua</td><td>Frequência cardíaca (bpm)</td></tr>
-                            <tr><td>cigarros_por_dia</td><td class="type-continua">Contínua</td><td>Quantidade de cigarros por dia</td></tr>
-                            <tr><td>sexo</td><td class="type-categorica">Categórica</td><td>0 = Feminino, 1 = Masculino</td></tr>
-                            <tr><td>fumante_atualmente</td><td class="type-categorica">Categórica</td><td>0 = Não, 1 = Sim</td></tr>
-                            <tr><td>medicamento_pressao</td><td class="type-categorica">Categórica</td><td>0 = Não, 1 = Sim</td></tr>
-                            <tr><td>diabetes</td><td class="type-categorica">Categórica</td><td>0 = Não, 1 = Sim</td></tr>
+                            <tr>
+                                <td>pressao_sistolica</td>
+                                <td class="type-continua">Contínua</td>
+                                <td>Pressão arterial sistólica (mmHg)</td>
+                            </tr>
+                            <tr>
+                                <td>pressao_diastolica</td>
+                                <td class="type-continua">Contínua</td>
+                                <td>Pressão arterial diastólica (mmHg)</td>
+                            </tr>
+                            <tr>
+                                <td>idade</td>
+                                <td class="type-continua">Contínua</td>
+                                <td>Idade em anos</td>
+                            </tr>
+                            <tr>
+                                <td>imc</td>
+                                <td class="type-continua">Contínua</td>
+                                <td>Índice de Massa Corporal (kg/m²)</td>
+                            </tr>
+                            <tr>
+                                <td>colesterol_total</td>
+                                <td class="type-continua">Contínua</td>
+                                <td>Colesterol total (mg/dL)</td>
+                            </tr>
+                            <tr>
+                                <td>glicose</td>
+                                <td class="type-continua">Contínua</td>
+                                <td>Glicose sanguínea (mg/dL)</td>
+                            </tr>
+                            <tr>
+                                <td>frequencia_cardiaca</td>
+                                <td class="type-continua">Contínua</td>
+                                <td>Frequência cardíaca (bpm)</td>
+                            </tr>
+                            <tr>
+                                <td>cigarros_por_dia</td>
+                                <td class="type-continua">Contínua</td>
+                                <td>Quantidade de cigarros por dia</td>
+                            </tr>
+                            <tr>
+                                <td>sexo</td>
+                                <td class="type-categorica">Categórica</td>
+                                <td>0 = Feminino, 1 = Masculino</td>
+                            </tr>
+                            <tr>
+                                <td>fumante_atualmente</td>
+                                <td class="type-categorica">Categórica</td>
+                                <td>0 = Não, 1 = Sim</td>
+                            </tr>
+                            <tr>
+                                <td>medicamento_pressao</td>
+                                <td class="type-categorica">Categórica</td>
+                                <td>0 = Não, 1 = Sim</td>
+                            </tr>
+                            <tr>
+                                <td>diabetes</td>
+                                <td class="type-categorica">Categórica</td>
+                                <td>0 = Não, 1 = Sim</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -219,7 +277,7 @@
                         </div>
                         <div class="model-metric">
                             <span class="value">84.84%</span>
-                            <span class="label">F1-Score</span>
+                            <span class="label">F2-Score</span>
                         </div>
                         <div class="model-metric">
                             <span class="value">90.46%</span>
@@ -238,17 +296,17 @@
                 <div class="result-card">
                     <h3>Gradient Boosting</h3>
                     <p class="auc">AUC: 95.96%</p>
-                    <p class="f1">F1: 84.80%</p>
+                    <p class="f1">F2: 84.80%</p>
                 </div>
                 <div class="result-card">
                     <h3>XGBoost</h3>
                     <p class="auc">AUC: 95.34%</p>
-                    <p class="f1">F1: 84.30%</p>
+                    <p class="f1">F2: 84.30%</p>
                 </div>
                 <div class="result-card">
                     <h3>Logistic Regression</h3>
                     <p class="auc">AUC: 95.47%</p>
-                    <p class="f1">F1: 82.81%</p>
+                    <p class="f1">F2: 82.81%</p>
                 </div>
             </div>
 
@@ -409,7 +467,10 @@
                     <!-- Usuário -->
                     <div class="aws-node user-node">
                         <div class="aws-icon">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                            </svg>
                         </div>
                         <span class="aws-label">Usuário</span>
                     </div>
@@ -419,7 +480,10 @@
                     <!-- CloudFront -->
                     <div class="aws-node cloudfront-node">
                         <div class="aws-icon">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                            </svg>
                         </div>
                         <span class="aws-label">CloudFront</span>
                         <span class="aws-sublabel">CDN + HTTPS</span>
@@ -431,7 +495,10 @@
                     <div class="aws-split">
                         <div class="aws-node s3-node">
                             <div class="aws-icon">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z" />
+                                </svg>
                             </div>
                             <span class="aws-label">S3 Bucket</span>
                             <span class="aws-sublabel">UI Estática</span>
@@ -439,7 +506,10 @@
 
                         <div class="aws-node api-node">
                             <div class="aws-icon">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                                </svg>
                             </div>
                             <span class="aws-label">API Gateway</span>
                             <span class="aws-sublabel">HTTP API</span>
@@ -451,7 +521,9 @@
                     <!-- Lambda -->
                     <div class="aws-node lambda-node">
                         <div class="aws-icon">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                            </svg>
                         </div>
                         <span class="aws-label">Lambda</span>
                         <span class="aws-sublabel">Python 3.11</span>
@@ -462,7 +534,10 @@
                     <!-- ML Layer -->
                     <div class="aws-node ml-node">
                         <div class="aws-icon">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+                            </svg>
                         </div>
                         <span class="aws-label">ML Layer</span>
                         <span class="aws-sublabel">Scikit-learn</span>
@@ -544,9 +619,12 @@
                 <div class="footer-section">
                     <h4>Links Úteis</h4>
                     <ul>
-                        <li><a href="https://github.com/anderson-ferreira-83/traballho_conclussao_risco_hipertensao" target="_blank">Repositório GitHub</a></li>
-                        <li><a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" target="_blank">Demo AWS</a></li>
-                        <li><a href="https://www.kaggle.com/datasets/khan1803115/hypertension-risk-model-main/data" target="_blank">Dataset Original</a></li>
+                        <li><a href="https://github.com/anderson-ferreira-83/traballho_conclussao_risco_hipertensao"
+                                target="_blank">Repositório GitHub</a></li>
+                        <li><a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" target="_blank">Demo AWS</a>
+                        </li>
+                        <li><a href="https://www.kaggle.com/datasets/khan1803115/hypertension-risk-model-main/data"
+                                target="_blank">Dataset Original</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -565,7 +643,9 @@
             </div>
 
             <div class="disclaimer">
-                <p><strong>Disclaimer Médico:</strong> Este projeto é educacional. As predições <strong>não substituem</strong> avaliação clínica profissional. Sempre consulte um médico para diagnóstico e tratamento.</p>
+                <p><strong>Disclaimer Médico:</strong> Este projeto é educacional. As predições <strong>não
+                        substituem</strong> avaliação clínica profissional. Sempre consulte um médico para diagnóstico e
+                    tratamento.</p>
             </div>
 
             <div class="copyright">
@@ -577,4 +657,5 @@
     <script src="js/main.js"></script>
     <script src="js/charts.js"></script>
 </body>
+
 </html>
