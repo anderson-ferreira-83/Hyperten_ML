@@ -1306,13 +1306,11 @@ tr:hover {
 
 /* ===== Info Boxes (Explicações Didáticas) ===== */
 .info-box {
-    display: flex;
-    gap: 20px;
     background: linear-gradient(135deg, #e8f4fd 0%, #f0f7ff 100%);
     border: 1px solid #c3ddf5;
     border-left: 4px solid var(--secondary);
     border-radius: var(--radius);
-    padding: 25px;
+    padding: 25px 30px;
     margin-bottom: 35px;
 }
 
@@ -1322,17 +1320,11 @@ tr:hover {
     border-left: 4px solid var(--primary);
 }
 
-.info-icon {
-    font-size: 2rem;
-    flex-shrink: 0;
-    line-height: 1;
-}
-
 .info-content strong {
     display: block;
     font-size: 1.1rem;
     color: var(--dark);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .info-content p {
@@ -1443,13 +1435,7 @@ tr:hover {
 /* ===== Responsive adjustments for new elements ===== */
 @media (max-width: 768px) {
     .info-box {
-        flex-direction: column;
-        gap: 12px;
         padding: 20px;
-    }
-
-    .info-icon {
-        font-size: 1.5rem;
     }
 
     .glossary-grid {
