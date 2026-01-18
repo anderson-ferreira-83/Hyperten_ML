@@ -128,11 +128,11 @@ header {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--accent);
-  border: 2px solid var(--accent);
+  color: var(--primary);
+  border: 2px solid var(--primary);
   padding: 8px 14px;
   border-radius: 999px;
-  background: rgba(8,145,178,0.1);
+  background: var(--primary-light);
 }
 
 /* Cards */
