@@ -316,8 +316,8 @@ function createConfusionMatrix() {
 
     const data = [{
         z: z,
-        x: ['Predito: Negativo', 'Predito: Positivo'],
-        y: ['Real: Positivo', 'Real: Negativo'],
+        x: ['Predito Negativo', 'Predito Positivo'],
+        y: ['Real Positivo', 'Real Negativo'],
         type: 'heatmap',
         colorscale: [
             [0, '#e8f5e9'],
@@ -343,7 +343,7 @@ function createConfusionMatrix() {
                 y: i,
                 text: `<b>${z[i][j]}</b><br>${labels[i][j]}`,
                 showarrow: false,
-                font: { color: z[i][j] > 500 ? 'white' : 'black', size: 12 }
+                font: { color: z[i][j] > 500 ? 'white' : 'black', size: 14 }
             });
         }
     }
@@ -352,8 +352,14 @@ function createConfusionMatrix() {
         ...LAYOUT_CONFIG,
         title: 'Matriz de Confusão - Random Forest',
         annotations: annotations,
-        xaxis: { side: 'bottom' },
-        yaxis: { autorange: 'reversed' }
+        xaxis: {
+            side: 'bottom',
+            tickfont: { size: 14 }
+        },
+        yaxis: {
+            autorange: 'reversed',
+            tickfont: { size: 14 }
+        }
     };
 
     Plotly.newPlot(element, data, layout, PLOTLY_CONFIG);

@@ -21,6 +21,7 @@
                 <li><a href="#metodologia">Metodologia</a></li>
                 <li><a href="#resultados">Resultados</a></li>
                 <li><a href="#interpretabilidade">Interpretabilidade</a></li>
+                <li><a href="#deploy">Deploy</a></li>
                 <li><a href="#equipe">Equipe</a></li>
             </ul>
             <a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" class="nav-cta" target="_blank">Testar Modelo</a>
@@ -380,6 +381,120 @@
                 <div class="figure-card">
                     <h4>Análise de Threshold</h4>
                     <div id="chart-threshold" class="interactive-chart"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AWS Pipeline Section -->
+    <section class="section section-alt" id="deploy">
+        <div class="container">
+            <h2 class="section-title">Arquitetura de Deploy</h2>
+            <p class="section-subtitle">Pipeline de produção na AWS com alta disponibilidade</p>
+
+            <div class="aws-pipeline">
+                <div class="aws-flow">
+                    <!-- Usuário -->
+                    <div class="aws-node user-node">
+                        <div class="aws-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        </div>
+                        <span class="aws-label">Usuário</span>
+                    </div>
+
+                    <div class="aws-arrow"></div>
+
+                    <!-- CloudFront -->
+                    <div class="aws-node cloudfront-node">
+                        <div class="aws-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                        </div>
+                        <span class="aws-label">CloudFront</span>
+                        <span class="aws-sublabel">CDN + HTTPS</span>
+                    </div>
+
+                    <div class="aws-arrow"></div>
+
+                    <!-- S3 + API Gateway -->
+                    <div class="aws-split">
+                        <div class="aws-node s3-node">
+                            <div class="aws-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+                            </div>
+                            <span class="aws-label">S3 Bucket</span>
+                            <span class="aws-sublabel">UI Estática</span>
+                        </div>
+
+                        <div class="aws-node api-node">
+                            <div class="aws-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                            </div>
+                            <span class="aws-label">API Gateway</span>
+                            <span class="aws-sublabel">HTTP API</span>
+                        </div>
+                    </div>
+
+                    <div class="aws-arrow"></div>
+
+                    <!-- Lambda -->
+                    <div class="aws-node lambda-node">
+                        <div class="aws-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <span class="aws-label">Lambda</span>
+                        <span class="aws-sublabel">Python 3.11</span>
+                    </div>
+
+                    <div class="aws-arrow"></div>
+
+                    <!-- ML Layer -->
+                    <div class="aws-node ml-node">
+                        <div class="aws-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                        </div>
+                        <span class="aws-label">ML Layer</span>
+                        <span class="aws-sublabel">Scikit-learn</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cards de Tecnologias -->
+            <div class="aws-tech-cards">
+                <div class="aws-tech-card">
+                    <h4>Lambda Function</h4>
+                    <ul>
+                        <li>Python 3.11 Runtime</li>
+                        <li>1024 MB de memória</li>
+                        <li>Random Forest Model</li>
+                        <li>Resposta em &lt;100ms</li>
+                    </ul>
+                </div>
+                <div class="aws-tech-card">
+                    <h4>ML Dependencies</h4>
+                    <ul>
+                        <li>NumPy 2.2.6</li>
+                        <li>Pandas 2.3.3</li>
+                        <li>Scikit-learn 1.7.2</li>
+                        <li>Imbalanced-learn 0.14</li>
+                    </ul>
+                </div>
+                <div class="aws-tech-card">
+                    <h4>API Gateway</h4>
+                    <ul>
+                        <li>HTTP API (REST)</li>
+                        <li>CORS habilitado</li>
+                        <li>Endpoint: /predict</li>
+                        <li>Health check: /health</li>
+                    </ul>
+                </div>
+                <div class="aws-tech-card">
+                    <h4>CloudFront + S3</h4>
+                    <ul>
+                        <li>CDN Global</li>
+                        <li>HTTPS automático</li>
+                        <li>Cache otimizado</li>
+                        <li>UI responsiva</li>
+                    </ul>
                 </div>
             </div>
         </div>

@@ -303,17 +303,21 @@ body {
 
 .pipeline-step {
     background: var(--white);
-    padding: 30px 20px;
+    padding: 35px 25px;
     border-radius: var(--radius);
     text-align: center;
-    width: 180px;
+    width: 220px;
+    min-height: 180px;
     box-shadow: var(--shadow);
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .step-number {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     background: var(--primary);
     color: var(--white);
     border-radius: 50%;
@@ -321,17 +325,20 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    margin: 0 auto 16px;
+    font-size: 1.1rem;
+    margin: 0 auto 18px;
 }
 
 .pipeline-step h3 {
-    font-size: 1rem;
-    margin-bottom: 8px;
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
 }
 
 .pipeline-step p {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--gray-600);
+    line-height: 1.5;
 }
 
 .pipeline-arrow {
@@ -578,6 +585,11 @@ tr:hover {
     padding: 30px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.category-card {
+    min-height: 280px;
 }
 
 .importance-bars {
@@ -700,6 +712,156 @@ tr:hover {
     font-size: 0.9rem;
     color: var(--gray-600);
     font-style: italic;
+}
+
+/* ===== AWS Pipeline Section ===== */
+.aws-pipeline {
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 40px;
+    overflow-x: auto;
+}
+
+.aws-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-width: 800px;
+    padding: 20px 0;
+}
+
+.aws-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: var(--radius);
+    min-width: 100px;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.aws-node:hover {
+    transform: translateY(-5px);
+}
+
+.aws-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.aws-icon svg {
+    width: 40px;
+    height: 40px;
+}
+
+.aws-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.aws-sublabel {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+}
+
+.aws-arrow {
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    position: relative;
+    flex-shrink: 0;
+}
+
+.aws-arrow::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: -4px;
+    border: 6px solid transparent;
+    border-left-color: var(--secondary);
+}
+
+.aws-split {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Node colors */
+.user-node {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    color: #2e7d32;
+}
+
+.cloudfront-node {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    color: #e65100;
+}
+
+.s3-node {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    color: #1565c0;
+}
+
+.api-node {
+    background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+    color: #c2185b;
+}
+
+.lambda-node {
+    background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+    color: #7b1fa2;
+}
+
+.ml-node {
+    background: linear-gradient(135deg, #e8eaf6, #c5cae9);
+    color: #303f9f;
+}
+
+/* Tech Cards */
+.aws-tech-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.aws-tech-card {
+    background: var(--white);
+    padding: 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border-top: 4px solid var(--primary);
+}
+
+.aws-tech-card h4 {
+    color: var(--primary);
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.aws-tech-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.aws-tech-card li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 0.9rem;
+    color: var(--gray-700);
+}
+
+.aws-tech-card li:last-child {
+    border-bottom: none;
 }
 
 /* ===== Demo Section ===== */
