@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predição de Risco de Hipertensão | TCC CEUNSP 2026</title>
+    <title>Predição</title>
     <meta name="description"
         content="Sistema de Machine Learning para predição de risco de hipertensão arterial. Projeto de TCC do CEUNSP.">
     <link rel="stylesheet" href="css/style.css">
@@ -29,8 +29,8 @@
                 <li><a href="#referencias">Referências</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="https://github.com/anderson-ferreira-83/Hyperten_ML"
-                    class="nav-github" target="_blank" title="Ver código no GitHub">
+                <a href="https://github.com/anderson-ferreira-83/Hyperten_ML" class="nav-github" target="_blank"
+                    title="Ver código no GitHub">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path
                             d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
@@ -45,26 +45,30 @@
     <!-- Hero Section -->
     <header class="hero">
         <div class="hero-content">
-            <span class="hero-badge">TCC - CEUNSP 2026</span>
+            <!--<span class="hero-badge">TCC - CEUNSP 2026</span>-->
             <h1>Predição de Risco de <span class="highlight">Hipertensão</span></h1>
             <p class="hero-subtitle">Machine Learning aplicado à Saúde Cardiovascular</p>
             <div class="hero-metrics">
-                <div class="metric-card" title="ROC-AUC (media ± DP): 94.2% ± 0.7%. Mede a capacidade geral do modelo em distinguir pacientes com e sem hipertensão. Valores acima de 90% são considerados excelentes.">
+                <div class="metric-card"
+                    title="ROC-AUC (media ± DP): 94.2% ± 0.7%. Mede a capacidade geral do modelo em distinguir pacientes com e sem hipertensão. Valores acima de 90% são considerados excelentes.">
                     <span class="metric-value"><span>94.2%</span><span class="metric-std">± 0.7%</span></span>
                     <span class="metric-label">ROC-AUC</span>
                     <span class="metric-hint">Capacidade discriminativa</span>
                 </div>
-                <div class="metric-card" title="Sensibilidade (media ± DP): 89.3% ± 2.8%. Percentual de pacientes com hipertensão que o modelo detecta corretamente.">
+                <div class="metric-card"
+                    title="Sensibilidade (media ± DP): 89.3% ± 2.8%. Percentual de pacientes com hipertensão que o modelo detecta corretamente.">
                     <span class="metric-value"><span>89.3%</span><span class="metric-std">± 2.8%</span></span>
                     <span class="metric-label">Sensibilidade</span>
                     <span class="metric-hint">Detecção de casos positivos</span>
                 </div>
-                <div class="metric-card" title="Especificidade (media ± DP): 91.3% ± 3.1%. Percentual de pacientes saudáveis corretamente identificados.">
+                <div class="metric-card"
+                    title="Especificidade (media ± DP): 91.3% ± 3.1%. Percentual de pacientes saudáveis corretamente identificados.">
                     <span class="metric-value"><span>91.3%</span><span class="metric-std">± 3.1%</span></span>
                     <span class="metric-label">Especificidade</span>
                     <span class="metric-hint">Identificação de saudáveis</span>
                 </div>
-                <div class="metric-card" title="F2-Score (media ± DP): 87.0% ± 3.1%. Métrica que combina precisão e sensibilidade, dando 2x mais peso à sensibilidade. Ideal para contextos médicos onde perder um caso positivo é mais grave que um alarme falso.">
+                <div class="metric-card"
+                    title="F2-Score (media ± DP): 87.0% ± 3.1%. Métrica que combina precisão e sensibilidade, dando 2x mais peso à sensibilidade. Ideal para contextos médicos onde perder um caso positivo é mais grave que um alarme falso.">
                     <span class="metric-value"><span>87.0%</span><span class="metric-std">± 3.1%</span></span>
                     <span class="metric-label">F2-Score</span>
                     <span class="metric-hint">Métrica clínica principal</span>
@@ -105,7 +109,8 @@
                 <div class="problem-card">
                     <div class="problem-icon">#1</div>
                     <h3>Fator de Risco</h3>
-                    <p>Principal fator de risco prevenível para doenças cardiovasculares, causando 10,8 milhões de mortes/ano</p>
+                    <p>Principal fator de risco prevenível para doenças cardiovasculares, causando 10,8 milhões de
+                        mortes/ano</p>
                     <span class="problem-source">Fonte: WHO Fact Sheet 2024 <a href="#ref-8">[8]</a></span>
                 </div>
             </div>
@@ -174,12 +179,21 @@
             <div class="info-box">
                 <div class="info-content">
                     <strong>O que é um Dataset?</strong>
-                    <p>Um dataset (conjunto de dados) é a base de informações utilizada para "ensinar" o modelo de Machine Learning.
-                    Neste projeto, utilizamos dados reais de 4.240 pacientes, contendo informações clínicas e demográficas.
-                    A <strong>prevalência de 31%</strong> indica que aproximadamente 1 em cada 3 pacientes no estudo possui hipertensão,
-                    o que representa um desbalanceamento que foi tratado com técnicas específicas (SMOTE) durante o treinamento.
-                    <strong>Dataset:</strong> O conjunto de dados utilizado neste projeto está disponível publicamente no Kaggle.
-                    <br><span class="info-note"><strong>Acesse o link:</strong> <a href="https://www.kaggle.com/datasets/khan1803115/hypertension-risk-model-main/data/code" target="_blank" rel="noopener noreferrer">Kaggle - hypertension-risk-model-main</a></span></p>
+                    <p>Um dataset (conjunto de dados) é a base de informações utilizada para "ensinar" o modelo de
+                        Machine Learning.
+                        Neste projeto, utilizamos dados reais de 4.240 pacientes, contendo informações clínicas e
+                        demográficas.
+                        A <strong>prevalência de 31%</strong> indica que aproximadamente 1 em cada 3 pacientes no estudo
+                        possui hipertensão,
+                        o que representa um desbalanceamento que foi tratado com técnicas específicas (SMOTE) durante o
+                        treinamento.
+                        <strong>Dataset:</strong> O conjunto de dados utilizado neste projeto está disponível
+                        publicamente no Kaggle.
+                        <br><span class="info-note"><strong>Acesse o link:</strong> <a
+                                href="https://www.kaggle.com/datasets/khan1803115/hypertension-risk-model-main/data/code"
+                                target="_blank" rel="noopener noreferrer">Kaggle -
+                                hypertension-risk-model-main</a></span>
+                    </p>
                 </div>
             </div>
 
@@ -291,12 +305,17 @@
             <div class="info-box info-box-light">
                 <div class="info-content">
                     <strong>Como interpretar os resultados?</strong>
-                    <p>Testamos 10 algoritmos diferentes de Machine Learning para encontrar o mais adequado para prever hipertensão.
-                    O <strong>Random Forest</strong> foi selecionado como melhor modelo por apresentar o melhor equilíbrio entre
-                    detectar corretamente pacientes com hipertensão (alta sensibilidade) e não gerar alarmes falsos desnecessários
-                    (boa especificidade).
-                    <br><span class=\"info-note\">Em contexto médico, prioriza-se não deixar passar casos positivos (falsos negativos),
-                    por isso usamos o <strong>F2-Score</strong> como métrica principal de decisão.</span></p>
+                    <p>Testamos 10 algoritmos diferentes de Machine Learning para encontrar o mais adequado para prever
+                        hipertensão.
+                        O <strong>Random Forest</strong> foi selecionado como melhor modelo por apresentar o melhor
+                        equilíbrio entre
+                        detectar corretamente pacientes com hipertensão (alta sensibilidade) e não gerar alarmes falsos
+                        desnecessários
+                        (boa especificidade).
+                        <br><span class=\"info-note\">Em contexto médico, prioriza-se não deixar passar casos positivos
+                            (falsos negativos),
+                            por isso usamos o <strong>F2-Score</strong> como métrica principal de decisão.</span>
+                    </p>
                 </div>
             </div>
 
@@ -348,16 +367,20 @@
                 <div class="figure-card">
                     <h4>Comparação de Métricas</h4>
                     <p class="chart-explanation">
-                        <strong>O que mostra:</strong> Compara o desempenho de todos os modelos testados usando diferentes métricas.
-                        Use o dropdown para alternar entre métricas. Quanto maior a barra, melhor o desempenho do modelo naquela métrica específica.
+                        <strong>O que mostra:</strong> Compara o desempenho de todos os modelos testados usando
+                        diferentes métricas.
+                        Use o dropdown para alternar entre métricas. Quanto maior a barra, melhor o desempenho do modelo
+                        naquela métrica específica.
                     </p>
                     <div id="chart-metrics-comparison" class="interactive-chart"></div>
                 </div>
                 <div class="figure-card">
                     <h4>Curvas ROC</h4>
                     <p class="chart-explanation">
-                        <strong>O que mostra:</strong> A curva ROC ilustra a capacidade do modelo em distinguir entre pacientes com e sem hipertensão.
-                        Quanto mais a curva se aproxima do canto superior esquerdo, melhor o modelo. A área sob a curva (AUC) resume essa capacidade:
+                        <strong>O que mostra:</strong> A curva ROC ilustra a capacidade do modelo em distinguir entre
+                        pacientes com e sem hipertensão.
+                        Quanto mais a curva se aproxima do canto superior esquerdo, melhor o modelo. A área sob a curva
+                        (AUC) resume essa capacidade:
                         valores próximos a 100% indicam excelente discriminação.
                     </p>
                     <div id="chart-roc-curves" class="interactive-chart"></div>
@@ -365,9 +388,11 @@
                 <div class="figure-card">
                     <h4>Matriz de Confusão</h4>
                     <p class="chart-explanation">
-                        <strong>O que mostra:</strong> Resume os acertos e erros do modelo. <strong>Verdadeiros Positivos (VP)</strong>: pacientes com hipertensão corretamente identificados.
+                        <strong>O que mostra:</strong> Resume os acertos e erros do modelo. <strong>Verdadeiros
+                            Positivos (VP)</strong>: pacientes com hipertensão corretamente identificados.
                         <strong>Verdadeiros Negativos (VN)</strong>: pacientes saudáveis corretamente identificados.
-                        <strong>Falsos Negativos (FN)</strong>: pacientes com hipertensão não detectados (mais crítico em saúde).
+                        <strong>Falsos Negativos (FN)</strong>: pacientes com hipertensão não detectados (mais crítico
+                        em saúde).
                         <strong>Falsos Positivos (FP)</strong>: alarmes falsos em pacientes saudáveis.
                     </p>
                     <div id="chart-confusion-matrix" class="interactive-chart"></div>
@@ -375,8 +400,10 @@
                 <div class="figure-card">
                     <h4>Radar Multi-Métrica</h4>
                     <p class="chart-explanation">
-                        <strong>O que mostra:</strong> Visualização comparativa de múltiplas métricas simultaneamente para os principais modelos.
-                        Cada eixo representa uma métrica diferente. Um modelo ideal teria todas as métricas próximas de 100%, formando um polígono grande.
+                        <strong>O que mostra:</strong> Visualização comparativa de múltiplas métricas simultaneamente
+                        para os principais modelos.
+                        Cada eixo representa uma métrica diferente. Um modelo ideal teria todas as métricas próximas de
+                        100%, formando um polígono grande.
                         Útil para identificar pontos fortes e fracos de cada modelo.
                     </p>
                     <div id="chart-radar" class="interactive-chart"></div>
@@ -389,27 +416,34 @@
                 <div class="glossary-grid">
                     <div class="glossary-item">
                         <span class="glossary-term">ROC-AUC</span>
-                        <span class="glossary-definition">Mede a capacidade geral do modelo distinguir entre classes. Valores acima de 90% são considerados excelentes.</span>
+                        <span class="glossary-definition">Mede a capacidade geral do modelo distinguir entre classes.
+                            Valores acima de 90% são considerados excelentes.</span>
                     </div>
                     <div class="glossary-item">
                         <span class="glossary-term">Sensibilidade (Recall)</span>
-                        <span class="glossary-definition">Percentual de pacientes com hipertensão que o modelo detecta corretamente. Alta sensibilidade = poucos casos perdidos.</span>
+                        <span class="glossary-definition">Percentual de pacientes com hipertensão que o modelo detecta
+                            corretamente. Alta sensibilidade = poucos casos perdidos.</span>
                     </div>
                     <div class="glossary-item">
                         <span class="glossary-term">Especificidade</span>
-                        <span class="glossary-definition">Percentual de pacientes saudáveis corretamente identificados. Alta especificidade = poucos alarmes falsos.</span>
+                        <span class="glossary-definition">Percentual de pacientes saudáveis corretamente identificados.
+                            Alta especificidade = poucos alarmes falsos.</span>
                     </div>
                     <div class="glossary-item">
                         <span class="glossary-term">Precisão</span>
-                        <span class="glossary-definition">Dos pacientes que o modelo classifica como hipertensos, quantos realmente são. Mede a confiabilidade dos alertas positivos.</span>
+                        <span class="glossary-definition">Dos pacientes que o modelo classifica como hipertensos,
+                            quantos realmente são. Mede a confiabilidade dos alertas positivos.</span>
                     </div>
                     <div class="glossary-item">
                         <span class="glossary-term">F2-Score</span>
-                        <span class="glossary-definition">Média ponderada que prioriza a sensibilidade (2x mais peso). Ideal para contextos médicos onde perder um caso positivo é mais grave que um alarme falso.</span>
+                        <span class="glossary-definition">Média ponderada que prioriza a sensibilidade (2x mais peso).
+                            Ideal para contextos médicos onde perder um caso positivo é mais grave que um alarme
+                            falso.</span>
                     </div>
                     <div class="glossary-item">
                         <span class="glossary-term">Acurácia</span>
-                        <span class="glossary-definition">Percentual total de predições corretas. Métrica simples, mas pode ser enganosa em datasets desbalanceados.</span>
+                        <span class="glossary-definition">Percentual total de predições corretas. Métrica simples, mas
+                            pode ser enganosa em datasets desbalanceados.</span>
                     </div>
                 </div>
             </div>
@@ -425,10 +459,15 @@
             <div class="info-box">
                 <div class="info-content">
                     <strong>Por que a Interpretabilidade é importante?</strong>
-                    <p>Em aplicações médicas, não basta o modelo fazer predições precisas — é fundamental entender <em>por que</em> ele chegou
-                    àquela conclusão. A interpretabilidade permite que médicos validem se o modelo está usando critérios clinicamente relevantes,
-                    aumentando a confiança no sistema e facilitando a tomada de decisão compartilhada com o paciente.
-                    <br><span class=\"info-note\">Modelos "caixa-preta" que não explicam suas decisões são menos aceitos na prática clínica.</span></p>
+                    <p>Em aplicações médicas, não basta o modelo fazer predições precisas — é fundamental entender
+                        <em>por que</em> ele chegou
+                        àquela conclusão. A interpretabilidade permite que médicos validem se o modelo está usando
+                        critérios clinicamente relevantes,
+                        aumentando a confiança no sistema e facilitando a tomada de decisão compartilhada com o
+                        paciente.
+                        <br><span class=\"info-note\">Modelos "caixa-preta" que não explicam suas decisões são menos
+                            aceitos na prática clínica.</span>
+                    </p>
                 </div>
             </div>
 
@@ -436,19 +475,28 @@
                 <div class="importance-card">
                     <h3>Importância das Features</h3>
                     <p class="card-explanation">
-                        <strong>O que mostra:</strong> Quanto cada variável contribui para a decisão do modelo. Barras maiores indicam maior influência na predição.
-                        As cores identificam a categoria clínica de cada variável. Passe o mouse sobre cada barra para ver detalhes adicionais.
+                        <strong>O que mostra:</strong> Quanto cada variável contribui para a decisão do modelo. Barras
+                        maiores indicam maior influência na predição.
+                        As cores identificam a categoria clínica de cada variável. Passe o mouse sobre cada barra para
+                        ver detalhes adicionais.
                     </p>
                     <div class="importance-legend">
-                        <span class="legend-item"><span class="legend-color" style="background: #e74c3c;"></span>Pressão Arterial</span>
-                        <span class="legend-item"><span class="legend-color" style="background: #2ecc71;"></span>Demografia</span>
-                        <span class="legend-item"><span class="legend-color" style="background: #3498db;"></span>Antropométricas</span>
-                        <span class="legend-item"><span class="legend-color" style="background: #9b59b6;"></span>Biomarcadores</span>
-                        <span class="legend-item"><span class="legend-color" style="background: #f39c12;"></span>Medicamentos</span>
-                        <span class="legend-item"><span class="legend-color" style="background: #1abc9c;"></span>Estilo de Vida</span>
+                        <span class="legend-item"><span class="legend-color" style="background: #e74c3c;"></span>Pressão
+                            Arterial</span>
+                        <span class="legend-item"><span class="legend-color"
+                                style="background: #2ecc71;"></span>Demografia</span>
+                        <span class="legend-item"><span class="legend-color"
+                                style="background: #3498db;"></span>Antropométricas</span>
+                        <span class="legend-item"><span class="legend-color"
+                                style="background: #9b59b6;"></span>Biomarcadores</span>
+                        <span class="legend-item"><span class="legend-color"
+                                style="background: #f39c12;"></span>Medicamentos</span>
+                        <span class="legend-item"><span class="legend-color" style="background: #1abc9c;"></span>Estilo
+                            de Vida</span>
                     </div>
                     <div class="importance-bars">
-                        <div class="importance-bar" title="Categoria: Pressão Arterial | Pressão arterial sistólica (mmHg) - Principal indicador de hipertensão">
+                        <div class="importance-bar"
+                            title="Categoria: Pressão Arterial | Pressão arterial sistólica (mmHg) - Principal indicador de hipertensão">
                             <span class="feature-name">Pressão Sistólica</span>
                             <div class="bar-container">
                                 <div class="bar" style="width: 100%; background: #e74c3c;"></div>
@@ -456,7 +504,8 @@
                             <span class="importance-value">45.8%</span>
                             <span class="feature-category">Pressão Arterial</span>
                         </div>
-                        <div class="importance-bar" title="Categoria: Pressão Arterial | Pressão arterial diastólica (mmHg) - Pressão durante relaxamento cardíaco">
+                        <div class="importance-bar"
+                            title="Categoria: Pressão Arterial | Pressão arterial diastólica (mmHg) - Pressão durante relaxamento cardíaco">
                             <span class="feature-name">Pressão Diastólica</span>
                             <div class="bar-container">
                                 <div class="bar" style="width: 57%; background: #e74c3c;"></div>
@@ -472,7 +521,8 @@
                             <span class="importance-value">7.0%</span>
                             <span class="feature-category">Demografia</span>
                         </div>
-                        <div class="importance-bar" title="Categoria: Antropométricas | Índice de Massa Corporal (kg/m²) - Indicador de obesidade">
+                        <div class="importance-bar"
+                            title="Categoria: Antropométricas | Índice de Massa Corporal (kg/m²) - Indicador de obesidade">
                             <span class="feature-name">IMC</span>
                             <div class="bar-container">
                                 <div class="bar" style="width: 12%; background: #3498db;"></div>
@@ -480,7 +530,8 @@
                             <span class="importance-value">5.8%</span>
                             <span class="feature-category">Antropométricas</span>
                         </div>
-                        <div class="importance-bar" title="Categoria: Biomarcadores | Colesterol total (mg/dL) - Fator de risco cardiovascular">
+                        <div class="importance-bar"
+                            title="Categoria: Biomarcadores | Colesterol total (mg/dL) - Fator de risco cardiovascular">
                             <span class="feature-name">Colesterol Total</span>
                             <div class="bar-container">
                                 <div class="bar" style="width: 7%; background: #9b59b6;"></div>
@@ -494,7 +545,8 @@
                 <div class="category-card">
                     <h3>Importância por Categoria Clínica</h3>
                     <p class="card-explanation">
-                        <strong>O que mostra:</strong> Agrupamento das variáveis por categoria médica. O tamanho de cada círculo representa a contribuição total
+                        <strong>O que mostra:</strong> Agrupamento das variáveis por categoria médica. O tamanho de cada
+                        círculo representa a contribuição total
                         daquela categoria para as predições do modelo. Note como a Pressão Arterial domina, o que está
                         alinhado com o conhecimento médico estabelecido sobre hipertensão.
                     </p>
@@ -530,8 +582,10 @@
             <div class="threshold-section">
                 <h3>Thresholds Clínicos Recomendados</h3>
                 <p class="chart-explanation">
-                    <strong>O que mostra:</strong> O threshold (limiar de decisão) determina a partir de qual probabilidade o modelo classifica
-                    um paciente como "em risco". Um threshold mais baixo (ex: 0.30) detecta mais casos, mas gera mais alarmes falsos.
+                    <strong>O que mostra:</strong> O threshold (limiar de decisão) determina a partir de qual
+                    probabilidade o modelo classifica
+                    um paciente como "em risco". Um threshold mais baixo (ex: 0.30) detecta mais casos, mas gera mais
+                    alarmes falsos.
                     Um threshold mais alto (ex: 0.80) é mais preciso, mas pode deixar passar alguns casos.
                     A escolha depende do contexto clínico: triagem populacional vs. confirmação diagnóstica.
                 </p>
@@ -571,7 +625,8 @@
                     <h4>Importância das Features (Gráfico Interativo)</h4>
                     <p class="chart-explanation">
                         <strong>O que mostra:</strong> Versão interativa do ranking de importância das variáveis.
-                        Passe o mouse sobre as barras para ver detalhes de cada variável, incluindo sua categoria clínica e descrição.
+                        Passe o mouse sobre as barras para ver detalhes de cada variável, incluindo sua categoria
+                        clínica e descrição.
                         As variáveis de pressão arterial dominam, validando o conhecimento médico estabelecido.
                     </p>
                     <div id="chart-feature-importance" class="interactive-chart"></div>
@@ -599,10 +654,14 @@
             <div class="info-box info-box-light">
                 <div class="info-content">
                     <strong>Por que Deploy em Nuvem?</strong>
-                    <p>Um modelo de Machine Learning só gera valor quando está disponível para uso real. O deploy na AWS permite que
-                    o sistema seja acessado de qualquer lugar, 24 horas por dia, com alta disponibilidade e baixa latência.
-                    <br><span class=\"info-note\">A arquitetura serverless (sem servidores dedicados) reduz custos e escala automaticamente conforme a demanda,
-                    tornando o sistema viável mesmo para instituições com recursos limitados.</span></p>
+                    <p>Um modelo de Machine Learning só gera valor quando está disponível para uso real. O deploy na AWS
+                        permite que
+                        o sistema seja acessado de qualquer lugar, 24 horas por dia, com alta disponibilidade e baixa
+                        latência.
+                        <br><span class=\"info-note\">A arquitetura serverless (sem servidores dedicados) reduz custos e
+                            escala automaticamente conforme a demanda,
+                            tornando o sistema viável mesmo para instituições com recursos limitados.</span>
+                    </p>
                 </div>
             </div>
 
@@ -765,35 +824,71 @@
             <div class="references-list">
                 <div class="reference-item">
                     <span class="ref-number">[1]</span>
-                    <p class="ref-text">M. Kivrak, U. Avci, H. Uzun, and C. Ardic, "The impact of the SMOTE method on machine learning and ensemble learning performance results in addressing class imbalance in data used for predicting total testosterone deficiency in type 2 diabetes patients," <em>Diagnostics</em>, vol. 14, no. 23, Art. no. 2634, Nov. 2024.<br><span class="ref-link">Link de Acesso: <a href="https://doi.org/10.3390/diagnostics14232634" target="_blank">https://doi.org/10.3390/diagnostics14232634</a></span></p>
+                    <p class="ref-text">M. Kivrak, U. Avci, H. Uzun, and C. Ardic, "The impact of the SMOTE method on
+                        machine learning and ensemble learning performance results in addressing class imbalance in data
+                        used for predicting total testosterone deficiency in type 2 diabetes patients,"
+                        <em>Diagnostics</em>, vol. 14, no. 23, Art. no. 2634, Nov. 2024.<br><span class="ref-link">Link
+                            de Acesso: <a href="https://doi.org/10.3390/diagnostics14232634"
+                                target="_blank">https://doi.org/10.3390/diagnostics14232634</a></span>
+                    </p>
                 </div>
                 <div class="reference-item">
                     <span class="ref-number">[2]</span>
-                    <p class="ref-text">A. Fernández, S. García, F. Herrera, and N. V. Chawla, "SMOTE for learning from imbalanced data: Progress and challenges, marking the 15-year anniversary," <em>J. Artif. Intell. Res.</em>, vol. 61, pp. 863–905, 2018.<br><span class="ref-link">Link de Acesso: <a href="https://doi.org/10.1613/jair.1.11192" target="_blank">https://doi.org/10.1613/jair.1.11192</a></span></p>
+                    <p class="ref-text">A. Fernández, S. García, F. Herrera, and N. V. Chawla, "SMOTE for learning from
+                        imbalanced data: Progress and challenges, marking the 15-year anniversary," <em>J. Artif.
+                            Intell. Res.</em>, vol. 61, pp. 863–905, 2018.<br><span class="ref-link">Link de Acesso: <a
+                                href="https://doi.org/10.1613/jair.1.11192"
+                                target="_blank">https://doi.org/10.1613/jair.1.11192</a></span></p>
                 </div>
                 <div class="reference-item">
                     <span class="ref-number">[3]</span>
-                    <p class="ref-text">M. Talebi Moghaddam, Y. Jahani, Z. Arefzadeh, A. Dehghan, M. Khaleghi, M. Sharafi, and G. Nikfar, "Predicting diabetes in adults: Identifying important features in unbalanced data over a 5-year cohort study using machine learning algorithm," <em>BMC Med. Res. Methodol.</em>, vol. 24, Art. no. 220, Sep. 2024.<br><span class="ref-link">Link de Acesso: <a href="https://doi.org/10.1186/s12874-024-02341-z" target="_blank">https://doi.org/10.1186/s12874-024-02341-z</a></span></p>
+                    <p class="ref-text">M. Talebi Moghaddam, Y. Jahani, Z. Arefzadeh, A. Dehghan, M. Khaleghi, M.
+                        Sharafi, and G. Nikfar, "Predicting diabetes in adults: Identifying important features in
+                        unbalanced data over a 5-year cohort study using machine learning algorithm," <em>BMC Med. Res.
+                            Methodol.</em>, vol. 24, Art. no. 220, Sep. 2024.<br><span class="ref-link">Link de Acesso:
+                            <a href="https://doi.org/10.1186/s12874-024-02341-z"
+                                target="_blank">https://doi.org/10.1186/s12874-024-02341-z</a></span></p>
                 </div>
                 <div class="reference-item">
                     <span class="ref-number">[4]</span>
-                    <p class="ref-text">Y. Li, Y. Yang, P. Song, L. Duan, and R. Ren, "An improved SMOTE algorithm for enhanced imbalanced data classification by expanding sample generation space," <em>Sci. Rep.</em>, vol. 15, Art. no. 23521, Jul. 2025.<br><span class="ref-link">Link de Acesso: <a href="https://doi.org/10.1038/s41598-025-09506-w" target="_blank">https://doi.org/10.1038/s41598-025-09506-w</a></span></p>
+                    <p class="ref-text">Y. Li, Y. Yang, P. Song, L. Duan, and R. Ren, "An improved SMOTE algorithm for
+                        enhanced imbalanced data classification by expanding sample generation space," <em>Sci.
+                            Rep.</em>, vol. 15, Art. no. 23521, Jul. 2025.<br><span class="ref-link">Link de Acesso: <a
+                                href="https://doi.org/10.1038/s41598-025-09506-w"
+                                target="_blank">https://doi.org/10.1038/s41598-025-09506-w</a></span></p>
                 </div>
                 <div class="reference-item">
                     <span class="ref-number">[5]</span>
-                    <p class="ref-text">J. Zhu, S. Pu, J. He, D. Su, W. Cai, X. Xu, and H. Liu, "Processing imbalanced medical data at the data level with assisted-reproduction data as an example," <em>BioData Mining</em>, vol. 17, Art. no. 29, Sep. 2024.<br><span class="ref-link">Link de Acesso: <a href="https://doi.org/10.1186/s13040-024-00384-y" target="_blank">https://doi.org/10.1186/s13040-024-00384-y</a></span></p>
+                    <p class="ref-text">J. Zhu, S. Pu, J. He, D. Su, W. Cai, X. Xu, and H. Liu, "Processing imbalanced
+                        medical data at the data level with assisted-reproduction data as an example," <em>BioData
+                            Mining</em>, vol. 17, Art. no. 29, Sep. 2024.<br><span class="ref-link">Link de Acesso: <a
+                                href="https://doi.org/10.1186/s13040-024-00384-y"
+                                target="_blank">https://doi.org/10.1186/s13040-024-00384-y</a></span></p>
                 </div>
                 <div class="reference-item" id="ref-6">
                     <span class="ref-number">[6]</span>
-                    <p class="ref-text">World Health Organization, "Global report on hypertension: The race against a silent killer," Geneva: WHO, Sep. 2023.<br><span class="ref-link">Link de Acesso: <a href="https://www.who.int/teams/noncommunicable-diseases/hypertension-report" target="_blank">https://www.who.int/teams/noncommunicable-diseases/hypertension-report</a></span></p>
+                    <p class="ref-text">World Health Organization, "Global report on hypertension: The race against a
+                        silent killer," Geneva: WHO, Sep. 2023.<br><span class="ref-link">Link de Acesso: <a
+                                href="https://www.who.int/teams/noncommunicable-diseases/hypertension-report"
+                                target="_blank">https://www.who.int/teams/noncommunicable-diseases/hypertension-report</a></span>
+                    </p>
                 </div>
                 <div class="reference-item" id="ref-7">
                     <span class="ref-number">[7]</span>
-                    <p class="ref-text">NCD Risk Factor Collaboration (NCD-RisC), "Worldwide trends in hypertension prevalence and progress in treatment and control from 1990 to 2019: a pooled analysis of 1201 population-representative studies with 104 million participants," <em>The Lancet</em>, vol. 398, no. 10304, pp. 957–980, Sep. 2021.<br><span class="ref-link">Link de Acesso: <a href="https://doi.org/10.1016/S0140-6736(21)01330-1" target="_blank">https://doi.org/10.1016/S0140-6736(21)01330-1</a></span></p>
+                    <p class="ref-text">NCD Risk Factor Collaboration (NCD-RisC), "Worldwide trends in hypertension
+                        prevalence and progress in treatment and control from 1990 to 2019: a pooled analysis of 1201
+                        population-representative studies with 104 million participants," <em>The Lancet</em>, vol. 398,
+                        no. 10304, pp. 957–980, Sep. 2021.<br><span class="ref-link">Link de Acesso: <a
+                                href="https://doi.org/10.1016/S0140-6736(21)01330-1"
+                                target="_blank">https://doi.org/10.1016/S0140-6736(21)01330-1</a></span></p>
                 </div>
                 <div class="reference-item" id="ref-8">
                     <span class="ref-number">[8]</span>
-                    <p class="ref-text">World Health Organization, "Hypertension: Key facts," WHO Fact Sheets, Mar. 2023. [Online].<br><span class="ref-link">Link de Acesso: <a href="https://www.who.int/news-room/fact-sheets/detail/hypertension" target="_blank">https://www.who.int/news-room/fact-sheets/detail/hypertension</a></span></p>
+                    <p class="ref-text">World Health Organization, "Hypertension: Key facts," WHO Fact Sheets, Mar.
+                        2023. [Online].<br><span class="ref-link">Link de Acesso: <a
+                                href="https://www.who.int/news-room/fact-sheets/detail/hypertension"
+                                target="_blank">https://www.who.int/news-room/fact-sheets/detail/hypertension</a></span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -806,8 +901,8 @@
                 <div class="footer-section">
                     <h4>Links Úteis</h4>
                     <ul>
-                        <li><a href="https://github.com/anderson-ferreira-83/Hyperten_ML"
-                                target="_blank">Repositório GitHub</a></li>
+                        <li><a href="https://github.com/anderson-ferreira-83/Hyperten_ML" target="_blank">Repositório
+                                GitHub</a></li>
                         <li><a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" target="_blank">Demo AWS</a>
                         </li>
                         <li><a href="https://www.kaggle.com/datasets/khan1803115/hypertension-risk-model-main/data"
@@ -846,4 +941,3 @@
 </body>
 
 </html>
-
