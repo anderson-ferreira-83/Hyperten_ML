@@ -1894,6 +1894,23 @@ tr:hover {
     padding: 25px 30px;
     margin-bottom: 35px;
 }
+.info-content p {
+    margin-top: 8px;
+}
+.info-note {
+    display: inline-block;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(52, 152, 219, 0.35);
+}
+.info-note a {
+    color: var(--secondary);
+    font-weight: 600;
+    text-decoration: none;
+}
+.info-note a:hover {
+    text-decoration: underline;
+}
 
 .info-box-light {
     background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
