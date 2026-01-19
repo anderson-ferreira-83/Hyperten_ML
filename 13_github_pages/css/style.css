@@ -101,6 +101,38 @@ body {
     gap: 15px;
 }
 
+.nav-langs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lang-link {
+    display: inline-flex;
+    width: 28px;
+    height: 20px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+    transition: var(--transition);
+}
+
+.lang-link svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.lang-link:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+.lang-link.is-active {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.15);
+}
+
 .nav-social {
     display: flex;
     align-items: center;

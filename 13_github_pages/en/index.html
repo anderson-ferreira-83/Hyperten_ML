@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction</title>
+    <meta name="description"
+        content="Machine Learning system to predict hypertension risk. CEUNSP capstone project.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Plotly.js for interactive charts -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">HypertenML</a>
+            <ul class="nav-menu">
+                <li><a href="#metodologia">Methodology</a></li>
+                <li><a href="#resultados">Results</a></li>
+                <li><a href="#interpretabilidade">Interpretability</a></li>
+                <li><a href="#deploy">Deployment</a></li>
+                <li><a href="#equipe">Team</a></li>
+                <li><a href="#referencias">Referências</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="https://github.com/anderson-ferreira-83/Hyperten_ML" class="nav-social nav-github" target="_blank" rel="noopener noreferrer"
+                    title="Ver código no GitHub">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/anderson-ferreira-1a473138/" class="nav-social nav-linkedin" target="_blank" rel="noopener noreferrer"
+                    title="Connect on LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76 1.75.79 1.75 1.76-.78 1.76-1.75 1.76zm13.5 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.88v1.37h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.59v6.3z" />
+                    </svg>
+                </a>
+                <a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" class="nav-cta" target="_blank" rel="noopener noreferrer">Try Model</a>
+            </div>
+        </div>
+    </nav>
+
+        <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <!--<span class="hero-badge">Capstone - CEUNSP 2026</span>-->
+            <h1>Hypertension <span class="highlight">Risk Prediction</span></h1>
+            <p class="hero-subtitle">Machine Learning applied to cardiovascular health</p>
+            <div class="hero-metrics">
+                <div class="metric-card"
+                    title="ROC-AUC (mean +/- SD): 94.2% +/- 0.7%. Measures the model's overall ability to distinguish patients with and without hypertension. Values above 90% are considered excellent.">
+                    <span class="metric-value"><span>94.2%</span><span class="metric-std">+/- 0.7%</span></span>
+                    <span class="metric-label">ROC-AUC</span>
+                    <span class="metric-hint">Discriminative power</span>
+                </div>
+                <div class="metric-card"
+                    title="Sensitivity (mean +/- SD): 89.3% +/- 2.8%. Percentage of hypertensive patients correctly detected by the model.">
+                    <span class="metric-value"><span>89.3%</span><span class="metric-std">+/- 2.8%</span></span>
+                    <span class="metric-label">Sensitivity</span>
+                    <span class="metric-hint">Detecting positive cases</span>
+                </div>
+                <div class="metric-card"
+                    title="Specificity (mean +/- SD): 91.3% +/- 3.1%. Percentage of healthy patients correctly identified.">
+                    <span class="metric-value"><span>91.3%</span><span class="metric-std">+/- 3.1%</span></span>
+                    <span class="metric-label">Specificity</span>
+                    <span class="metric-hint">Identifying healthy cases</span>
+                </div>
+                <div class="metric-card"
+                    title="F2-Score (mean +/- SD): 87.0% +/- 3.1%. Combines precision and sensitivity with 2x weight on sensitivity. Ideal for clinical settings where missing a positive case is worse than a false alarm.">
+                    <span class="metric-value"><span>87.0%</span><span class="metric-std">+/- 3.1%</span></span>
+                    <span class="metric-label">F2-Score</span>
+                    <span class="metric-hint">Primary clinical metric</span>
+                </div>
+            </div>
+            <div class="hero-buttons">
+                <a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" class="btn btn-primary"
+                    target="_blank" rel="noopener noreferrer">Try Model Online</a>
+                <a href="#metodologia" class="btn btn-secondary">View Methodology</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Problem Section -->
+    <section class="section" id="problema">
+        <div class="container">
+            <h2 class="section-title">The Problem</h2>
+            <p class="section-subtitle problem-intro">
+                Systemic arterial hypertension is one of the greatest public health challenges worldwide.
+                Known as the "silent killer," it often shows no symptoms until significant cardiovascular damage occurs.
+                Early detection through predictive Machine Learning models can help health professionals identify patients
+                at risk, enabling preventive interventions that save lives and reduce treatment costs.
+            </p>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">1.28B</div>
+                    <h3>Adults Affected</h3>
+                    <p>Hypertension affects approximately 1.28 billion adults worldwide</p>
+                    <span class="problem-source">Source: WHO Global Report 2023 <a href="#ref-6">[6]</a></span>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">46%</div>
+                    <h3>Undiagnosed</h3>
+                    <p>Nearly half of people with hypertension are unaware of their condition</p>
+                    <span class="problem-source">Source: WHO/Lancet Study 2021 <a href="#ref-7">[7]</a></span>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">#1</div>
+                    <h3>Risk Factor</h3>
+                    <p>Leading preventable risk factor for cardiovascular disease, causing 10.8 million deaths per year</p>
+                    <span class="problem-source">Source: WHO Fact Sheet 2024 <a href="#ref-8">[8]</a></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section class="section section-alt" id="metodologia">
+        <div class="container">
+            <h2 class="section-title">Methodology</h2>
+            <p class="section-subtitle">End-to-end Machine Learning pipeline following best practices</p>
+
+            <div class="pipeline">
+                <div class="pipeline-step">
+                    <div class="step-number">1</div>
+                    <h3>Exploratory Analysis</h3>
+                    <p>Descriptive statistics, correlations, outliers, multicollinearity (VIF)</p>
+                </div>
+                <div class="pipeline-arrow"></div>
+                <div class="pipeline-step">
+                    <div class="step-number">2</div>
+                    <h3>Preprocessing</h3>
+                    <p>Imputation, SMOTE (train only), scaling, stratified split</p>
+                </div>
+                <div class="pipeline-arrow"></div>
+                <div class="pipeline-step">
+                    <div class="step-number">3</div>
+                    <h3>Training</h3>
+                    <p>10 models, 5-fold cross-validation, ensemble methods</p>
+                </div>
+            </div>
+
+            <div class="pipeline pipeline-row-2">
+                <div class="pipeline-step">
+                    <div class="step-number">4</div>
+                    <h3>Optimization</h3>
+                    <p>Grid Search, Random Search, clinical threshold analysis</p>
+                </div>
+                <div class="pipeline-arrow"></div>
+                <div class="pipeline-step">
+                    <div class="step-number">5</div>
+                    <h3>Interpretability</h3>
+                    <p>Feature importance, SHAP values, clinical validation</p>
+                </div>
+            </div>
+
+            <div class="methodology-highlight">
+                <h3>Methodological Highlights</h3>
+                <ul>
+                    <li><strong>No Data Leakage:</strong> SMOTE applied exclusively to the training set</li>
+                    <li><strong>Clinical Metrics:</strong> F2-Score prioritizing minimization of false negatives</li>
+                    <li><strong>Robust Validation:</strong> Stratified 5-fold CV with multiple seeds</li>
+                    <li><strong>Optimized Threshold:</strong> Analysis of different thresholds for clinical contexts</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dataset Section -->
+    <section class="section" id="dataset">
+        <div class="container">
+            <h2 class="section-title">Dataset</h2>
+            <p class="section-subtitle">Dataset used to train and validate the predictive model</p>
+
+            <div class="info-box">
+                <div class="info-content">
+                    <strong>What is a dataset?</strong>
+                    <p>A dataset is the collection of information used to "teach" the Machine Learning model.
+                        In this project, we use real data from 4,240 patients with clinical and demographic information.
+                        A <strong>31% prevalence</strong> indicates that about 1 in 3 patients in the study has hypertension,
+                        which represents an imbalance handled with specific techniques (SMOTE) during training.
+                        <strong>Dataset:</strong> The dataset used in this project is publicly available on Kaggle.
+                        <br><span class="info-note"><strong>Access the link:</strong> <a
+                                href="https://www.kaggle.com/datasets/khan1803115/hypertension-risk-model-main/data/code"
+                                target="_blank" rel="noopener noreferrer">Kaggle -
+                                hypertension-risk-model-main</a></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="dataset-info">
+                <div class="dataset-stats">
+                    <div class="stat">
+                        <span class="stat-value">4.240</span>
+                        <span class="stat-label">Patients</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">12</span>
+                        <span class="stat-label">Features</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">31%</span>
+                        <span class="stat-label">Prevalence</span>
+                    </div>
+                </div>
+                <div class="dataset-figure">
+                    <div id="chart-target-distribution" class="interactive-chart"></div>
+                </div>
+            </div>
+
+            <div class="features-table">
+                <h3>Model Variables</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>pressao_sistolica</td>
+                                <td class="type-continua">Continuous</td>
+                                <td>Systolic blood pressure (mmHg)</td>
+                            </tr>
+                            <tr>
+                                <td>pressao_diastolica</td>
+                                <td class="type-continua">Continuous</td>
+                                <td>Diastolic blood pressure (mmHg)</td>
+                            </tr>
+                            <tr>
+                                <td>idade</td>
+                                <td class="type-continua">Continuous</td>
+                                <td>Age in years</td>
+                            </tr>
+                            <tr>
+                                <td>imc</td>
+                                <td class="type-continua">Continuous</td>
+                                <td>Body Mass Index (kg/m^2)</td>
+                            </tr>
+                            <tr>
+                                <td>colesterol_total</td>
+                                <td class="type-continua">Continuous</td>
+                                <td>Total cholesterol (mg/dL)</td>
+                            </tr>
+                            <tr>
+                                <td>glicose</td>
+                                <td class="type-continua">Continuous</td>
+                                <td>Blood glucose (mg/dL)</td>
+                            </tr>
+                            <tr>
+                                <td>frequencia_cardiaca</td>
+                                <td class="type-continua">Continuous</td>
+                                <td>Heart rate (bpm)</td>
+                            </tr>
+                            <tr>
+                                <td>cigarros_por_dia</td>
+                                <td class="type-continua">Continuous</td>
+                                <td>Cigarettes per day</td>
+                            </tr>
+                            <tr>
+                                <td>sexo</td>
+                                <td class="type-categorica">Categorical</td>
+                                <td>0 = Female, 1 = Male</td>
+                            </tr>
+                            <tr>
+                                <td>fumante_atualmente</td>
+                                <td class="type-categorica">Categorical</td>
+                                <td>0 = No, 1 = Yes</td>
+                            </tr>
+                            <tr>
+                                <td>medicamento_pressao</td>
+                                <td class="type-categorica">Categorical</td>
+                                <td>0 = No, 1 = Yes</td>
+                            </tr>
+                            <tr>
+                                <td>diabetes</td>
+                                <td class="type-categorica">Categorical</td>
+                                <td>0 = No, 1 = Yes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="section section-alt" id="resultados">
+        <div class="container">
+            <h2 class="section-title">Results</h2>
+            <p class="section-subtitle">Comparison of 10 models with stratified cross-validation</p>
+
+            <div class="info-box info-box-light">
+                <div class="info-content">
+                    <strong>How to interpret the results?</strong>
+                    <p>We tested 10 different Machine Learning algorithms to find the most suitable for predicting hypertension.
+                        The <strong>Random Forest</strong> was selected as the best model because it offers the best balance between
+                        correctly detecting hypertensive patients (high sensitivity) and not generating unnecessary false alarms
+                        (good specificity).
+                        <br><span class="info-note">In a clinical context, the priority is not to miss positive cases
+                            (false negatives), so we use <strong>F2-Score</strong> as the primary decision metric.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-card best-model">
+                    <span class="badge">Best Model</span>
+                    <h3>Random Forest</h3>
+                    <div class="model-metrics">
+                        <div class="model-metric">
+                            <span class="value">95.08%</span>
+                            <span class="label">ROC-AUC</span>
+                        </div>
+                        <div class="model-metric">
+                            <span class="value">84.84%</span>
+                            <span class="label">F2-Score</span>
+                        </div>
+                        <div class="model-metric">
+                            <span class="value">90.46%</span>
+                            <span class="label">Recall</span>
+                        </div>
+                        <div class="model-metric">
+                            <span class="value">79.89%</span>
+                            <span class="label">Precision</span>
+                        </div>
+                    </div>
+                    <div class="model-params">
+                        <code>n_estimators=100, max_depth=10, min_samples_split=2</code>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Gradient Boosting</h3>
+                    <p class="auc">AUC: 95.96%</p>
+                    <p class="f1">F2: 84.80%</p>
+                </div>
+                <div class="result-card">
+                    <h3>XGBoost</h3>
+                    <p class="auc">AUC: 95.34%</p>
+                    <p class="f1">F2: 84.30%</p>
+                </div>
+                <div class="result-card">
+                    <h3>Logistic Regression</h3>
+                    <p class="auc">AUC: 95.47%</p>
+                    <p class="f1">F2: 82.81%</p>
+                </div>
+            </div>
+
+            <div class="figures-grid">
+                <div class="figure-card">
+                    <h4>Metrics Comparison</h4>
+                    <p class="chart-explanation">
+                        <strong>What it shows:</strong> Compares the performance of all tested models using different metrics.
+                        Use the dropdown to switch metrics. The taller the bar, the better the model performs on that metric.
+                    </p>
+                    <div id="chart-metrics-comparison" class="interactive-chart"></div>
+                </div>
+                <div class="figure-card">
+                    <h4>ROC Curves</h4>
+                    <p class="chart-explanation">
+                        <strong>What it shows:</strong> The ROC curve illustrates the model's ability to distinguish between
+                        patients with and without hypertension. The closer the curve is to the upper-left corner, the better
+                        the model. The area under the curve (AUC) summarizes this ability: values close to 100% indicate
+                        excellent discrimination.
+                    </p>
+                    <div id="chart-roc-curves" class="interactive-chart"></div>
+                </div>
+                <div class="figure-card">
+                    <h4>Confusion Matrix</h4>
+                    <p class="chart-explanation">
+                        <strong>What it shows:</strong> Summarizes the model's correct and incorrect predictions.
+                        <strong>True Positives (TP)</strong>: hypertensive patients correctly identified.
+                        <strong>True Negatives (TN)</strong>: healthy patients correctly identified.
+                        <strong>False Negatives (FN)</strong>: hypertensive patients not detected (most critical in healthcare).
+                        <strong>False Positives (FP)</strong>: false alarms in healthy patients.
+                    </p>
+                    <div id="chart-confusion-matrix" class="interactive-chart"></div>
+                </div>
+                <div class="figure-card">
+                    <h4>Multi-metric Radar</h4>
+                    <p class="chart-explanation">
+                        <strong>What it shows:</strong> Comparative visualization of multiple metrics at once for the main models.
+                        Each axis represents a different metric. An ideal model would have all metrics close to 100%, forming
+                        a large polygon. Useful to identify strengths and weaknesses of each model.
+                    </p>
+                    <div id="chart-radar" class="interactive-chart"></div>
+                </div>
+            </div>
+
+            <!-- Metrics Glossary -->
+            <div class="metrics-glossary">
+                <h3>Metrics Glossary</h3>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <span class="glossary-term">ROC-AUC</span>
+                        <span class="glossary-definition">Measures the model's overall ability to distinguish classes. Values above 90% are considered excellent.</span>
+                    </div>
+                    <div class="glossary-item">
+                        <span class="glossary-term">Sensitivity (Recall)</span>
+                        <span class="glossary-definition">Percentage of hypertensive patients correctly detected by the model. High sensitivity = few missed cases.</span>
+                    </div>
+                    <div class="glossary-item">
+                        <span class="glossary-term">Specificity</span>
+                        <span class="glossary-definition">Percentage of healthy patients correctly identified. High specificity = few false alarms.</span>
+                    </div>
+                    <div class="glossary-item">
+                        <span class="glossary-term">Precision</span>
+                        <span class="glossary-definition">Of patients the model classifies as hypertensive, how many truly are. Measures the reliability of positive alerts.</span>
+                    </div>
+                    <div class="glossary-item">
+                        <span class="glossary-term">F2-Score</span>
+                        <span class="glossary-definition">Weighted mean that prioritizes sensitivity (2x weight). Ideal for clinical settings where missing a positive case is worse than a false alarm.</span>
+                    </div>
+                    <div class="glossary-item">
+                        <span class="glossary-term">Accuracy</span>
+                        <span class="glossary-definition">Overall percentage of correct predictions. Simple metric, but can be misleading in imbalanced datasets.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interpretability Section -->
+    <section class="section" id="interpretabilidade">
+        <div class="container">
+            <h2 class="section-title">Interpretability</h2>
+            <p class="section-subtitle">Understanding model decisions for clinical validation</p>
+
+            <div class="info-box">
+                <div class="info-content">
+                    <strong>Why is interpretability important?</strong>
+                    <p>In medical applications, it is not enough for the model to make accurate predictions ? it is essential to understand
+                        <em>why</em> it reached that conclusion. Interpretability allows clinicians to validate whether the model is using
+                        clinically relevant criteria, increasing trust in the system and supporting shared decision-making with the
+                        patient.
+                        <br><span class="info-note">"Black-box" models that do not explain their decisions are less
+                            accepted in clinical practice.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="interpretability-grid">
+                <div class="importance-card">
+                    <h3>Feature Importance</h3>
+                    <p class="card-explanation">
+                        <strong>What it shows:</strong> How much each variable contributes to the model's decision. Larger bars indicate greater
+                        influence on the prediction. The colors identify the clinical category of each variable. Hover over each bar to
+                        see additional details.
+                    </p>
+                    <div class="importance-legend">
+                        <span class="legend-item"><span class="legend-color" style="background: #e74c3c;"></span>Blood
+                            Pressure</span>
+                        <span class="legend-item"><span class="legend-color"
+                                style="background: #2ecc71;"></span>Demographics</span>
+                        <span class="legend-item"><span class="legend-color"
+                                style="background: #3498db;"></span>Anthropometrics</span>
+                        <span class="legend-item"><span class="legend-color"
+                                style="background: #9b59b6;"></span>Biomarkers</span>
+                        <span class="legend-item"><span class="legend-color"
+                                style="background: #f39c12;"></span>Medications</span>
+                        <span class="legend-item"><span class="legend-color" style="background: #1abc9c;"></span>Lifestyle</span>
+                    </div>
+                    <div class="importance-bars">
+                        <div class="importance-bar"
+                            title="Category: Blood Pressure | Systolic blood pressure (mmHg) - Primary indicator of hypertension">
+                            <span class="feature-name">Systolic Pressure</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 100%; background: #e74c3c;"></div>
+                            </div>
+                            <span class="importance-value">45.8%</span>
+                            <span class="feature-category">Blood Pressure</span>
+                        </div>
+                        <div class="importance-bar"
+                            title="Category: Blood Pressure | Diastolic blood pressure (mmHg) - Pressure during cardiac relaxation">
+                            <span class="feature-name">Diastolic Pressure</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 57%; background: #e74c3c;"></div>
+                            </div>
+                            <span class="importance-value">26.3%</span>
+                            <span class="feature-category">Blood Pressure</span>
+                        </div>
+                        <div class="importance-bar" title="Category: Demographics | Patient age in years">
+                            <span class="feature-name">Age</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 15%; background: #2ecc71;"></div>
+                            </div>
+                            <span class="importance-value">7.0%</span>
+                            <span class="feature-category">Demographics</span>
+                        </div>
+                        <div class="importance-bar"
+                            title="Category: Anthropometrics | Body Mass Index (kg/m^2) - Indicator of obesity">
+                            <span class="feature-name">BMI</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 12%; background: #3498db;"></div>
+                            </div>
+                            <span class="importance-value">5.8%</span>
+                            <span class="feature-category">Anthropometrics</span>
+                        </div>
+                        <div class="importance-bar"
+                            title="Category: Biomarkers | Total cholesterol (mg/dL) - Cardiovascular risk factor">
+                            <span class="feature-name">Total Cholesterol</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 7%; background: #9b59b6;"></div>
+                            </div>
+                            <span class="importance-value">3.3%</span>
+                            <span class="feature-category">Biomarkers</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <h3>Importance by Clinical Category</h3>
+                    <p class="card-explanation">
+                        <strong>What it shows:</strong> Grouping of variables by clinical category. The size of each circle represents the total
+                        contribution of that category to the model's predictions. Note how Blood Pressure dominates, which is aligned with
+                        established clinical knowledge about hypertension.
+                    </p>
+                    <div class="category-chart">
+                        <div class="category-item">
+                            <div class="category-circle" style="background: #e74c3c; width: 120px; height: 120px;">
+                                <span>36.1%</span>
+                            </div>
+                            <span class="category-name">Blood Pressure</span>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-circle" style="background: #3498db; width: 50px; height: 50px;">
+                                <span>5.8%</span>
+                            </div>
+                            <span class="category-name">Anthropometrics</span>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-circle" style="background: #2ecc71; width: 45px; height: 45px;">
+                                <span>3.8%</span>
+                            </div>
+                            <span class="category-name">Demographics</span>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-circle" style="background: #9b59b6; width: 40px; height: 40px;">
+                                <span>3.1%</span>
+                            </div>
+                            <span class="category-name">Biomarkers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="threshold-section">
+                <h3>Recommended Clinical Thresholds</h3>
+                <p class="chart-explanation">
+                    <strong>What it shows:</strong> The threshold (decision cutoff) determines from which probability the model classifies
+                    a patient as "at risk." A lower threshold (e.g., 0.30) detects more cases but generates more false alarms.
+                    A higher threshold (e.g., 0.80) is more precise but may miss some cases. The choice depends on the clinical context:
+                    population screening vs. diagnostic confirmation.
+                </p>
+                <div class="threshold-cards">
+                    <div class="threshold-card screening">
+                        <h4>Screening</h4>
+                        <span class="threshold-value">0.30</span>
+                        <div class="threshold-metrics">
+                            <p>Sensitivity: <strong>95.5%</strong></p>
+                            <p>Specificity: <strong>86.5%</strong></p>
+                        </div>
+                        <p class="use-case">Minimize false negatives</p>
+                    </div>
+                    <div class="threshold-card balanced">
+                        <h4>Balanced</h4>
+                        <span class="threshold-value">0.50</span>
+                        <div class="threshold-metrics">
+                            <p>Sensitivity: <strong>91.5%</strong></p>
+                            <p>Specificity: <strong>91.0%</strong></p>
+                        </div>
+                        <p class="use-case">General use</p>
+                    </div>
+                    <div class="threshold-card confirmation">
+                        <h4>Confirmation</h4>
+                        <span class="threshold-value">0.80</span>
+                        <div class="threshold-metrics">
+                            <p>Sensitivity: <strong>79.7%</strong></p>
+                            <p>Specificity: <strong>95.7%</strong></p>
+                        </div>
+                        <p class="use-case">Minimize false positives</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="figures-grid">
+                <div class="figure-card">
+                    <h4>Feature Importance (Interactive Chart)</h4>
+                    <p class="chart-explanation">
+                        <strong>What it shows:</strong> Interactive version of the feature importance ranking. Hover over the bars to see details
+                        for each variable, including its clinical category and description. Blood pressure variables dominate, validating
+                        established clinical knowledge.
+                    </p>
+                    <div id="chart-feature-importance" class="interactive-chart"></div>
+                </div>
+                <div class="figure-card">
+                    <h4>Threshold Analysis</h4>
+                    <p class="chart-explanation">
+                        <strong>What it shows:</strong> How sensitivity and specificity change across thresholds. The dashed vertical lines indicate
+                        the three recommended clinical scenarios. Note the trade-off: increasing sensitivity reduces specificity and vice versa.
+                        The crossing point represents the "optimal" threshold for balancing both.
+                    </p>
+                    <div id="chart-threshold" class="interactive-chart"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AWS Pipeline Section -->
+    <section class="section section-alt" id="deploy">
+        <div class="container">
+            <h2 class="section-title">Deployment Architecture</h2>
+            <p class="section-subtitle">Production pipeline on AWS with high availability</p>
+
+            <div class="info-box info-box-light">
+                <div class="info-content">
+                    <strong>Why Cloud Deployment?</strong>
+                    <p>A Machine Learning model only creates value when it is available for real use. Deploying on AWS allows
+                        the system to be accessed from anywhere, 24/7, with high availability and low latency.
+                        <br><span class="info-note">The serverless architecture (no dedicated servers) reduces costs and
+                            scales automatically with demand, making the system viable even for institutions with limited resources.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="aws-pipeline">
+                <div class="aws-flow">
+                    <!-- User -->
+                    <div class="aws-node user-node">
+                        <div class="aws-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                            </svg>
+                        </div>
+                        <span class="aws-label">User</span>
+                    </div>
+
+                    <div class="aws-arrow"></div>
+
+                    <!-- CloudFront -->
+                    <div class="aws-node cloudfront-node">
+                        <div class="aws-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                            </svg>
+                        </div>
+                        <span class="aws-label">CloudFront</span>
+                        <span class="aws-sublabel">CDN + HTTPS</span>
+                    </div>
+
+                    <div class="aws-arrow"></div>
+
+                    <!-- S3 + API Gateway -->
+                    <div class="aws-split">
+                        <div class="aws-node s3-node">
+                            <div class="aws-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z" />
+                                </svg>
+                            </div>
+                            <span class="aws-label">S3 Bucket</span>
+                            <span class="aws-sublabel">Static UI</span>
+                        </div>
+
+                        <div class="aws-node api-node">
+                            <div class="aws-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                                </svg>
+                            </div>
+                            <span class="aws-label">API Gateway</span>
+                            <span class="aws-sublabel">HTTP API</span>
+                        </div>
+                    </div>
+
+                    <div class="aws-arrow"></div>
+
+                    <!-- Lambda -->
+                    <div class="aws-node lambda-node">
+                        <div class="aws-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                            </svg>
+                        </div>
+                        <span class="aws-label">Lambda</span>
+                        <span class="aws-sublabel">Python 3.11</span>
+                    </div>
+
+                    <div class="aws-arrow"></div>
+
+                    <!-- ML Layer -->
+                    <div class="aws-node ml-node">
+                        <div class="aws-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+                            </svg>
+                        </div>
+                        <span class="aws-label">ML Layer</span>
+                        <span class="aws-sublabel">Scikit-learn</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Cards -->
+            <div class="aws-tech-cards">
+                <div class="aws-tech-card">
+                    <h4>Lambda Function</h4>
+                    <ul>
+                        <li>Python 3.11 Runtime</li>
+                        <li>1024 MB memory</li>
+                        <li>Random Forest Model</li>
+                        <li>Response in &lt;100ms</li>
+                    </ul>
+                </div>
+                <div class="aws-tech-card">
+                    <h4>ML Dependencies</h4>
+                    <ul>
+                        <li>NumPy 2.2.6</li>
+                        <li>Pandas 2.3.3</li>
+                        <li>Scikit-learn 1.7.2</li>
+                        <li>Imbalanced-learn 0.14</li>
+                    </ul>
+                </div>
+                <div class="aws-tech-card">
+                    <h4>API Gateway</h4>
+                    <ul>
+                        <li>HTTP API (REST)</li>
+                        <li>CORS enabled</li>
+                        <li>Endpoint: /predict</li>
+                        <li>Health check: /health</li>
+                    </ul>
+                </div>
+                <div class="aws-tech-card">
+                    <h4>CloudFront + S3</h4>
+                    <ul>
+                        <li>Global CDN</li>
+                        <li>Automatic HTTPS</li>
+                        <li>Optimized cache</li>
+                        <li>Responsive UI</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section" id="equipe">
+        <div class="container">
+            <h2 class="section-title">Team</h2>
+
+            <div class="team-grid">
+                <div class="team-card advisor">
+                    <h3>Advisor</h3>
+                    <p class="name">Prof. Dr. Anderson Henrique Rodrigues Ferreira</p>
+                    <p class="role">Advisor and Developer</p>
+                    <p class="institution">CEUNSP - Centro Universitario Nossa Senhora do Patrocinio</p>
+                </div>
+                <div class="team-card students">
+                    <h3>Student Developers</h3>
+                    <ul>
+                        <li>Marcelo V Duarte Colpani</li>
+                        <li>Nicolas Souza</li>
+                        <li>Rubens Jose Collin</li>
+                        <li>Tiago Dias Borges</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- References Section -->
+    <section class="section section-alt" id="referencias">
+        <div class="container">
+            <h2 class="section-title">Referências</h2>
+            <p class="section-subtitle">Artigos científicos que fundamentam a metodologia utilizada</p>
+
+            <div class="references-list">
+                <div class="reference-item">
+                    <span class="ref-number">[1]</span>
+                    <p class="ref-text">M. Kivrak, U. Avci, H. Uzun, and C. Ardic, "The impact of the SMOTE method on
+                        machine learning and ensemble learning performance results in addressing class imbalance in data
+                        used for predicting total testosterone deficiency in type 2 diabetes patients,"
+                        <em>Diagnostics</em>, vol. 14, no. 23, Art. no. 2634, Nov. 2024.<br><span class="ref-link">Link
+                            de Acesso: <a href="https://doi.org/10.3390/diagnostics14232634"
+                                target="_blank" rel="noopener noreferrer">https://doi.org/10.3390/diagnostics14232634</a></span>
+                    </p>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-number">[2]</span>
+                    <p class="ref-text">A. Fernández, S. García, F. Herrera, and N. V. Chawla, "SMOTE for learning from
+                        imbalanced data: Progress and challenges, marking the 15-year anniversary," <em>J. Artif.
+                            Intell. Res.</em>, vol. 61, pp. 863–905, 2018.<br><span class="ref-link">Access link: <a
+                                href="https://doi.org/10.1613/jair.1.11192"
+                                target="_blank" rel="noopener noreferrer">https://doi.org/10.1613/jair.1.11192</a></span></p>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-number">[3]</span>
+                    <p class="ref-text">M. Talebi Moghaddam, Y. Jahani, Z. Arefzadeh, A. Dehghan, M. Khaleghi, M.
+                        Sharafi, and G. Nikfar, "Predicting diabetes in adults: Identifying important features in
+                        unbalanced data over a 5-year cohort study using machine learning algorithm," <em>BMC Med. Res.
+                            Methodol.</em>, vol. 24, Art. no. 220, Sep. 2024.<br><span class="ref-link">Access link:
+                            <a href="https://doi.org/10.1186/s12874-024-02341-z"
+                                target="_blank" rel="noopener noreferrer">https://doi.org/10.1186/s12874-024-02341-z</a></span></p>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-number">[4]</span>
+                    <p class="ref-text">Y. Li, Y. Yang, P. Song, L. Duan, and R. Ren, "An improved SMOTE algorithm for
+                        enhanced imbalanced data classification by expanding sample generation space," <em>Sci.
+                            Rep.</em>, vol. 15, Art. no. 23521, Jul. 2025.<br><span class="ref-link">Access link: <a
+                                href="https://doi.org/10.1038/s41598-025-09506-w"
+                                target="_blank" rel="noopener noreferrer">https://doi.org/10.1038/s41598-025-09506-w</a></span></p>
+                </div>
+                <div class="reference-item">
+                    <span class="ref-number">[5]</span>
+                    <p class="ref-text">J. Zhu, S. Pu, J. He, D. Su, W. Cai, X. Xu, and H. Liu, "Processing imbalanced
+                        medical data at the data level with assisted-reproduction data as an example," <em>BioData
+                            Mining</em>, vol. 17, Art. no. 29, Sep. 2024.<br><span class="ref-link">Access link: <a
+                                href="https://doi.org/10.1186/s13040-024-00384-y"
+                                target="_blank" rel="noopener noreferrer">https://doi.org/10.1186/s13040-024-00384-y</a></span></p>
+                </div>
+                <div class="reference-item" id="ref-6">
+                    <span class="ref-number">[6]</span>
+                    <p class="ref-text">World Health Organization, "Global report on hypertension: The race against a
+                        silent killer," Geneva: WHO, Sep. 2023.<br><span class="ref-link">Access link: <a
+                                href="https://www.who.int/teams/noncommunicable-diseases/hypertension-report"
+                                target="_blank" rel="noopener noreferrer">https://www.who.int/teams/noncommunicable-diseases/hypertension-report</a></span>
+                    </p>
+                </div>
+                <div class="reference-item" id="ref-7">
+                    <span class="ref-number">[7]</span>
+                    <p class="ref-text">NCD Risk Factor Collaboration (NCD-RisC), "Worldwide trends in hypertension
+                        prevalence and progress in treatment and control from 1990 to 2019: a pooled analysis of 1201
+                        population-representative studies with 104 million participants," <em>The Lancet</em>, vol. 398,
+                        no. 10304, pp. 957–980, Sep. 2021.<br><span class="ref-link">Access link: <a
+                                href="https://doi.org/10.1016/S0140-6736(21)01330-1"
+                                target="_blank" rel="noopener noreferrer">https://doi.org/10.1016/S0140-6736(21)01330-1</a></span></p>
+                </div>
+                <div class="reference-item" id="ref-8">
+                    <span class="ref-number">[8]</span>
+                    <p class="ref-text">World Health Organization, "Hypertension: Key facts," WHO Fact Sheets, Mar.
+                        2023. [Online].<br><span class="ref-link">Access link: <a
+                                href="https://www.who.int/news-room/fact-sheets/detail/hypertension"
+                                target="_blank" rel="noopener noreferrer">https://www.who.int/news-room/fact-sheets/detail/hypertension</a></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/anderson-ferreira-83/Hyperten_ML" target="_blank" rel="noopener noreferrer">GitHub
+                                Repository</a></li>
+                        <li><a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" target="_blank" rel="noopener noreferrer">AWS Demo</a>
+                        </li>
+                        <li><a href="https://www.kaggle.com/datasets/khan1803115/hypertension-risk-model-main/data"
+                                target="_blank" rel="noopener noreferrer">Original Dataset</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Technologies</h4>
+                    <ul>
+                        <li>Python + Scikit-learn</li>
+                        <li>FastAPI</li>
+                        <li>AWS Lambda + API Gateway</li>
+                        <li>CloudFront + S3</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>ahferreira@ceunsp.edu.br</p>
+                </div>
+            </div>
+
+            <div class="disclaimer">
+                <p><strong>Medical Disclaimer:</strong> This project is educational. The predictions <strong>do not
+                        replace</strong> professional clinical evaluation. Always consult a physician for diagnosis and
+                    treatment.</p>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2026 TCC CEUNSP - Hypertension Risk Prediction. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/charts.js"></script>
+</body>
+
+</html>
