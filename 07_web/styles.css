@@ -687,6 +687,29 @@ header {
   color: var(--primary);
 }
 
+.footer-dataset {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  padding: 10px 14px;
+  background: var(--bg);
+  border-radius: var(--radius);
+}
+
+.footer-dataset a {
+  color: var(--secondary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-dataset a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
 .footer-contact {
   font-size: 13px;
   color: var(--muted);
