@@ -86,18 +86,18 @@ header {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--muted);
   text-decoration: none;
-  padding: 8px 14px;
+  padding: 7px 12px;
   border-radius: var(--radius);
   transition: all 0.2s ease;
 }
@@ -109,6 +109,30 @@ header {
 
 .nav-link svg {
   flex-shrink: 0;
+}
+
+.nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-icon:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.linkedin-link:hover {
+  color: #0a66c2;
+  background: #e7f1fb;
+  border-color: #cfe3f8;
 }
 
 .title {
@@ -809,6 +833,11 @@ header {
   .nav-link {
     padding: 6px 10px;
     font-size: 12px;
+  }
+
+  .nav-icon {
+    width: 32px;
+    height: 32px;
   }
 
   .footer {
