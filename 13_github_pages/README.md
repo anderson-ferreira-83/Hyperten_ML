@@ -58,7 +58,7 @@ Depois configure Settings > Pages > Branch: `gh-pages`
 
 ### GitHub Pages
 ```
-https://anderson-ferreira-83.github.io/traballho_conclussao_risco_hipertensao/13_github_pages/
+https://anderson-ferreira-83.github.io/Hyperten_ML/
 ```
 
 ### Demo AWS (Integrada)
