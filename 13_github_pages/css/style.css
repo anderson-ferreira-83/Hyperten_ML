@@ -80,14 +80,14 @@ body {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 24px;
 }
 
 .nav-menu a {
     text-decoration: none;
     color: var(--dark);
     font-weight: 500;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     transition: var(--transition);
 }
 
@@ -101,7 +101,7 @@ body {
     gap: 15px;
 }
 
-.nav-github {
+.nav-social {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -112,14 +112,18 @@ body {
     transition: var(--transition);
 }
 
-.nav-github:hover {
+.nav-social:hover {
     color: var(--primary);
     background: var(--gray-100);
 }
 
-.nav-github svg {
+.nav-social svg {
     width: 22px;
     height: 22px;
+}
+
+.nav-linkedin:hover {
+    color: #0a66c2;
 }
 
 .nav-cta {
@@ -1716,7 +1720,7 @@ tr:hover {
         font-size: 0.75rem;
     }
 
-    .nav-github {
+    .nav-social {
         width: 32px;
         height: 32px;
     }
