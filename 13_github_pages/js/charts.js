@@ -295,8 +295,9 @@ function createROCCurves() {
     const mobile = isMobile();
     const traces = [];
     const modelColors = [COLORS.primary, COLORS.danger, COLORS.success, COLORS.warning];
+    const modelNames = Object.keys(ROC_DATA);
 
-    Object.keys(ROC_DATA).forEach((model, i) => {
+    modelNames.forEach((model, i) => {
         const data = ROC_DATA[model];
         const shortName = mobile ? model.split(' ')[0] : model;
         traces.push({
@@ -304,20 +305,46 @@ function createROCCurves() {
             y: data.tpr,
             mode: 'lines',
             name: mobile ? `${shortName} (${(data.auc * 100).toFixed(0)}%)` : `${model} (AUC: ${(data.auc * 100).toFixed(1)}%)`,
-            line: { color: modelColors[i], width: mobile ? 2 : 2.5 },
+            line: { color: modelColors[i % modelColors.length], width: mobile ? 2 : 2.5 },
             hovertemplate: `<b>${model}</b><br>FPR: %{x:.2f}<br>TPR: %{y:.2f}<extra></extra>`
         });
     });
 
-    // Linha diagonal de referência
+    // Linha diagonal de refer?ncia
     traces.push({
         x: [0, 1],
         y: [0, 1],
         mode: 'lines',
-        name: 'Aleatório',
+        name: 'Aleat?rio',
         line: { color: COLORS.gray, dash: 'dash', width: 1 },
         hoverinfo: 'skip'
     });
+
+    const totalTraces = traces.length;
+    const allVisible = Array(totalTraces).fill(true);
+    const buttons = [
+        {
+            label: mobile ? 'Todos' : 'Todos os Modelos',
+            method: 'update',
+            args: [
+                { visible: allVisible },
+                { title: mobile ? 'Curvas ROC' : 'Curvas ROC - Principais Modelos' }
+            ]
+        },
+        ...modelNames.map((model, i) => {
+            const visibility = Array(totalTraces).fill(false);
+            visibility[i] = true;
+            visibility[totalTraces - 1] = true;
+            return {
+                label: mobile ? model.split(' ')[0] : model,
+                method: 'update',
+                args: [
+                    { visible: visibility },
+                    { title: mobile ? 'Curva ROC' : `Curva ROC - ${model}` }
+                ]
+            };
+        })
+    ];
 
     const layout = getResponsiveLayout({
         title: mobile ? 'Curvas ROC' : 'Curvas ROC - Principais Modelos',
@@ -343,6 +370,18 @@ function createROCCurves() {
             xanchor: 'right',
             bgcolor: 'rgba(255,255,255,0.8)'
         },
+        updatemenus: [{
+            buttons: buttons,
+            direction: 'down',
+            showactive: true,
+            x: 0.0,
+            y: 1.15,
+            xanchor: 'left',
+            yanchor: 'top',
+            bgcolor: 'white',
+            bordercolor: COLORS.primary,
+            font: { size: mobile ? 9 : 11 }
+        }],
         shapes: mobile ? [] : [{
             type: 'rect',
             x0: 0, x1: 0.2,
@@ -362,6 +401,8 @@ function createROCCurves() {
     Plotly.newPlot(element, traces, layout, mobile ? PLOTLY_CONFIG_MOBILE : PLOTLY_CONFIG);
 }
 
+
+
 /**
  * 4. Matriz de Confusão - Heatmap
  */
@@ -370,19 +411,45 @@ function createConfusionMatrix() {
     if (!element) return;
 
     const mobile = isMobile();
+    const models = MODELS_DATA.names;
+    const labels = mobile
+        ? [['VN', 'FP'], ['FN', 'VP']]
+        : [['Verdadeiro Negativo', 'Falso Positivo'], ['Falso Negativo', 'Verdadeiro Positivo']];
 
-    // Random Forest confusion matrix
-    const tn = 918, fp = 105, fn = 44, tp = 417;
-    const total = tn + fp + fn + tp;
+    function buildMatrix(idx) {
+        const tn = MODELS_DATA.tn[idx];
+        const fp = MODELS_DATA.fp[idx];
+        const fn = MODELS_DATA.fn[idx];
+        const tp = MODELS_DATA.tp[idx];
+        const total = tn + fp + fn + tp;
 
-    const z = [[tn, fp], [fn, tp]];
-    const zText = [
-        [`VN: ${tn}<br>(${(tn/total*100).toFixed(1)}%)`, `FP: ${fp}<br>(${(fp/total*100).toFixed(1)}%)`],
-        [`FN: ${fn}<br>(${(fn/total*100).toFixed(1)}%)`, `VP: ${tp}<br>(${(tp/total*100).toFixed(1)}%)`]
-    ];
+        const z = [[tn, fp], [fn, tp]];
+        const zText = [
+            [`VN: ${tn}<br>(${(tn / total * 100).toFixed(1)}%)`, `FP: ${fp}<br>(${(fp / total * 100).toFixed(1)}%)`],
+            [`FN: ${fn}<br>(${(fn / total * 100).toFixed(1)}%)`, `VP: ${tp}<br>(${(tp / total * 100).toFixed(1)}%)`]
+        ];
+
+        const annotations = [];
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 2; j++) {
+                annotations.push({
+                    x: j,
+                    y: i,
+                    text: `<b>${z[i][j]}</b><br>${labels[i][j]}`,
+                    showarrow: false,
+                    font: { color: z[i][j] > 500 ? 'white' : 'black', size: mobile ? 11 : 14 }
+                });
+            }
+        }
+
+        return { z, zText, annotations };
+    }
+
+    const matrices = models.map((_, idx) => buildMatrix(idx));
+    const initial = matrices[0];
 
     const data = [{
-        z: z,
+        z: initial.z,
         x: mobile ? ['Pred. Neg.', 'Pred. Pos.'] : ['Predito Negativo', 'Predito Positivo'],
         y: mobile ? ['Real Pos.', 'Real Neg.'] : ['Real Positivo', 'Real Negativo'],
         type: 'heatmap',
@@ -393,30 +460,24 @@ function createConfusionMatrix() {
         ],
         showscale: !mobile,
         hovertemplate: '%{text}<extra></extra>',
-        text: zText
+        text: initial.zText
     }];
 
-    // Adicionar anotações com valores
-    const annotations = [];
-    const labels = mobile
-        ? [['VN', 'FP'], ['FN', 'VP']]
-        : [['Verdadeiro Negativo', 'Falso Positivo'], ['Falso Negativo', 'Verdadeiro Positivo']];
-
-    for (let i = 0; i < 2; i++) {
-        for (let j = 0; j < 2; j++) {
-            annotations.push({
-                x: j,
-                y: i,
-                text: mobile ? `<b>${z[i][j]}</b><br>${labels[i][j]}` : `<b>${z[i][j]}</b><br>${labels[i][j]}`,
-                showarrow: false,
-                font: { color: z[i][j] > 500 ? 'white' : 'black', size: mobile ? 11 : 14 }
-            });
-        }
-    }
+    const buttons = models.map((model, idx) => ({
+        label: mobile ? model.split(' ')[0] : model,
+        method: 'update',
+        args: [
+            { z: [matrices[idx].z], text: [matrices[idx].zText] },
+            {
+                title: mobile ? 'Matriz de Confus?o' : `Matriz de Confus?o - ${model}`,
+                annotations: matrices[idx].annotations
+            }
+        ]
+    }));
 
     const layout = getResponsiveLayout({
-        title: mobile ? 'Matriz de Confusão' : 'Matriz de Confusão - Random Forest',
-        annotations: annotations,
+        title: mobile ? 'Matriz de Confus?o' : `Matriz de Confus?o - ${models[0]}`,
+        annotations: initial.annotations,
         xaxis: {
             side: 'bottom',
             tickfont: { size: mobile ? 10 : 14 }
@@ -424,11 +485,25 @@ function createConfusionMatrix() {
         yaxis: {
             autorange: 'reversed',
             tickfont: { size: mobile ? 10 : 14 }
-        }
+        },
+        updatemenus: [{
+            buttons: buttons,
+            direction: 'down',
+            showactive: true,
+            x: 0.0,
+            y: 1.15,
+            xanchor: 'left',
+            yanchor: 'top',
+            bgcolor: 'white',
+            bordercolor: COLORS.primary,
+            font: { size: mobile ? 9 : 11 }
+        }]
     });
 
     Plotly.newPlot(element, data, layout, mobile ? PLOTLY_CONFIG_MOBILE : PLOTLY_CONFIG);
 }
+
+
 
 /**
  * 5. Radar Chart Multi-Modelo
@@ -439,12 +514,9 @@ function createRadarChart() {
 
     const mobile = isMobile();
     const metrics = mobile ? ['Acc', 'Prec', 'Rec', 'F1', 'AUC'] : ['Accuracy', 'Precision', 'Recall', 'F1-Score', 'ROC-AUC'];
-    const modelsToShow = mobile
-        ? ['Random Forest', 'Gradient Boosting']
-        : ['Random Forest', 'Gradient Boosting', 'XGBoost', 'Logistic Regression'];
-    const modelColors = [COLORS.primary, COLORS.danger, COLORS.success, COLORS.warning];
+    const modelColors = COLORS.models;
 
-    const traces = modelsToShow.map((model, i) => {
+    const traces = MODELS_DATA.names.map((model, i) => {
         const idx = MODELS_DATA.names.indexOf(model);
         const values = [
             MODELS_DATA.accuracy[idx] * 100,
@@ -452,7 +524,7 @@ function createRadarChart() {
             MODELS_DATA.recall[idx] * 100,
             MODELS_DATA.f1_score[idx] * 100,
             MODELS_DATA.auc_roc[idx] * 100,
-            MODELS_DATA.accuracy[idx] * 100 // Fechar o polígono
+            MODELS_DATA.accuracy[idx] * 100 // Fechar o pol?gono
         ];
 
         return {
@@ -461,14 +533,39 @@ function createRadarChart() {
             theta: [...metrics, metrics[0]],
             name: mobile ? model.split(' ')[0] : model,
             fill: 'toself',
-            fillcolor: `${modelColors[i]}20`,
-            line: { color: modelColors[i], width: mobile ? 1.5 : 2 },
+            fillcolor: `${modelColors[i % modelColors.length]}20`,
+            line: { color: modelColors[i % modelColors.length], width: mobile ? 1.5 : 2 },
             hovertemplate: `<b>${model}</b><br>%{theta}: %{r:.1f}%<extra></extra>`
         };
     });
 
+    const totalTraces = traces.length;
+    const allVisible = Array(totalTraces).fill(true);
+    const buttons = [
+        {
+            label: mobile ? 'Todos' : 'Todos os Modelos',
+            method: 'update',
+            args: [
+                { visible: allVisible },
+                { title: mobile ? 'Radar Multi-M?trica' : 'Compara??o Multi-M?trica' }
+            ]
+        },
+        ...MODELS_DATA.names.map((model, i) => {
+            const visibility = Array(totalTraces).fill(false);
+            visibility[i] = true;
+            return {
+                label: mobile ? model.split(' ')[0] : model,
+                method: 'update',
+                args: [
+                    { visible: visibility },
+                    { title: mobile ? 'Radar Multi-M?trica' : `Radar Multi-M?trica - ${model}` }
+                ]
+            };
+        })
+    ];
+
     const layout = getResponsiveLayout({
-        title: mobile ? 'Radar Multi-Métrica' : 'Comparação Multi-Métrica',
+        title: mobile ? 'Radar Multi-M?trica' : 'Compara??o Multi-M?trica',
         polar: {
             radialaxis: {
                 visible: true,
@@ -488,11 +585,25 @@ function createRadarChart() {
         } : {
             x: 1.1,
             y: 0.5
-        }
+        },
+        updatemenus: [{
+            buttons: buttons,
+            direction: 'down',
+            showactive: true,
+            x: 0.0,
+            y: 1.15,
+            xanchor: 'left',
+            yanchor: 'top',
+            bgcolor: 'white',
+            bordercolor: COLORS.primary,
+            font: { size: mobile ? 9 : 11 }
+        }]
     });
 
     Plotly.newPlot(element, traces, layout, mobile ? PLOTLY_CONFIG_MOBILE : PLOTLY_CONFIG);
 }
+
+
 
 /**
  * 6. Feature Importance - Barras Horizontais
