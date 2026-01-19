@@ -8,13 +8,13 @@
 
 **Metodologia, resultados e metricas do projeto:**
 
-<a href="https://anderson-ferreira-83.github.io/Hyperten_ML/" target="_blank" rel="noopener noreferrer"><strong>Ver Apresentacao do Projeto</strong></a>
+<a href="https://anderson-ferreira-83.github.io/Hyperten_ML/" target="_blank" rel="noopener noreferrer" title="Abrir apresentacao em nova aba" aria-label="Abrir apresentacao do projeto em nova aba"><strong>Ver Apresentacao do Projeto</strong></a>
 
 ### Aplicacao em Producao (AWS)
 
 **Acesse a aplicacao em producao (HTTPS seguro - funciona no celular):**
 
-<a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" target="_blank" rel="noopener noreferrer"><strong>Testar Predição de Risco</strong></a>
+<a href="https://dl52cpaeesvk0.cloudfront.net/ui/index.html" target="_blank" rel="noopener noreferrer" title="Abrir aplicacao em nova aba" aria-label="Abrir aplicacao de predicao de risco em nova aba"><strong>Testar Predição de Risco</strong></a>
 
 ### Teste Rapido da API
 
@@ -346,3 +346,4 @@ Este projeto e educacional. As predicoes **nao substituem** avaliacao clinica pr
 ```bash
 pytest -q
 ```
+
