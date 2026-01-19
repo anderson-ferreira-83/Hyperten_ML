@@ -200,10 +200,18 @@ body {
 }
 
 .metric-value {
-    display: block;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
     font-size: 2rem;
     font-weight: 700;
     color: var(--primary);
+}
+.metric-std {
+    font-size: 0.55em;
+    font-weight: 500;
+    color: var(--gray-300);
+    letter-spacing: 0.02em;
 }
 
 .metric-label {
