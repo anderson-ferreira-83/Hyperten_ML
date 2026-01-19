@@ -19,28 +19,73 @@ const COLORS = {
     ]
 };
 
+// Detectar se é mobile
+const isMobile = () => window.innerWidth <= 768;
+const isSmallMobile = () => window.innerWidth <= 480;
+
 // Configuração global de layout
 const LAYOUT_CONFIG = {
-    font: { family: 'Inter, sans-serif' },
+    font: {
+        family: 'Inter, sans-serif',
+        size: isMobile() ? 10 : 12
+    },
     paper_bgcolor: 'rgba(0,0,0,0)',
     plot_bgcolor: 'rgba(0,0,0,0)',
-    margin: { t: 40, r: 20, b: 40, l: 60 },
+    margin: isMobile()
+        ? { t: 30, r: 10, b: 50, l: 40 }
+        : { t: 40, r: 20, b: 40, l: 60 },
     hoverlabel: {
         bgcolor: '#2c3e50',
-        font: { color: 'white', family: 'Inter, sans-serif' }
+        font: {
+            color: 'white',
+            family: 'Inter, sans-serif',
+            size: isMobile() ? 11 : 13
+        }
     }
 };
 
+// Função para obter layout responsivo
+function getResponsiveLayout(baseLayout = {}) {
+    const mobile = isMobile();
+    return {
+        ...LAYOUT_CONFIG,
+        ...baseLayout,
+        font: {
+            ...LAYOUT_CONFIG.font,
+            size: mobile ? 10 : 12
+        },
+        margin: mobile
+            ? { t: 30, r: 10, b: 50, l: 40 }
+            : { t: 40, r: 20, b: 40, l: 60 },
+        legend: {
+            ...(baseLayout.legend || {}),
+            font: { size: mobile ? 9 : 11 },
+            orientation: mobile ? 'h' : (baseLayout.legend?.orientation || 'v'),
+            y: mobile ? -0.3 : (baseLayout.legend?.y || undefined),
+            x: mobile ? 0.5 : (baseLayout.legend?.x || undefined),
+            xanchor: mobile ? 'center' : (baseLayout.legend?.xanchor || undefined)
+        }
+    };
+}
+
 const PLOTLY_CONFIG = {
     responsive: true,
-    displayModeBar: true,
+    displayModeBar: !isMobile(),
     modeBarButtonsToRemove: ['lasso2d', 'select2d'],
     displaylogo: false,
     toImageButtonOptions: {
         format: 'png',
         filename: 'grafico_hipertensao',
         scale: 2
-    }
+    },
+    scrollZoom: false
+};
+
+// Configuração específica para mobile
+const PLOTLY_CONFIG_MOBILE = {
+    ...PLOTLY_CONFIG,
+    displayModeBar: false,
+    staticPlot: false
 };
 
 // ===== DADOS =====
@@ -124,6 +169,8 @@ function createTargetDistribution() {
     const element = document.getElementById('chart-target-distribution');
     if (!element) return;
 
+    const mobile = isMobile();
+
     const data = [{
         values: [2924, 1316],
         labels: ['Sem Hipertensão', 'Com Hipertensão'],
@@ -133,23 +180,26 @@ function createTargetDistribution() {
             colors: [COLORS.success, COLORS.danger]
         },
         textinfo: 'percent',
-        textposition: 'outside',
-        textfont: { size: 14 },
+        textposition: mobile ? 'inside' : 'outside',
+        textfont: { size: mobile ? 11 : 14 },
         hovertemplate: '<b>%{label}</b><br>Quantidade: %{value}<br>Percentual: %{percent}<extra></extra>'
     }];
 
-    const layout = {
-        ...LAYOUT_CONFIG,
+    const layout = getResponsiveLayout({
         showlegend: true,
-        legend: { orientation: 'h', y: -0.1 },
+        legend: {
+            orientation: 'h',
+            y: mobile ? -0.15 : -0.1,
+            font: { size: mobile ? 10 : 12 }
+        },
         annotations: [{
             text: '<b>4.240</b><br>Pacientes',
             showarrow: false,
-            font: { size: 16, color: COLORS.dark }
+            font: { size: mobile ? 12 : 16, color: COLORS.dark }
         }]
-    };
+    });
 
-    Plotly.newPlot(element, data, layout, PLOTLY_CONFIG);
+    Plotly.newPlot(element, data, layout, mobile ? PLOTLY_CONFIG_MOBILE : PLOTLY_CONFIG);
 }
 
 /**
@@ -158,6 +208,8 @@ function createTargetDistribution() {
 function createMetricsComparison() {
     const element = document.getElementById('chart-metrics-comparison');
     if (!element) return;
+
+    const mobile = isMobile();
 
     // Criar traces para cada métrica
     const metrics = ['auc_roc', 'f1_score', 'recall', 'precision', 'accuracy', 'f2_score'];
@@ -176,10 +228,13 @@ function createMetricsComparison() {
         .sort((a, b) => b.val - a.val)
         .map(obj => obj.idx);
 
+    // No mobile, mostrar apenas top 5 modelos
+    const indicesToShow = mobile ? sortedIndices.slice(0, 5) : sortedIndices;
+
     const traces = metrics.map((metric, i) => {
-        const values = sortedIndices.map(idx => MODELS_DATA[metric][idx]);
-        const names = sortedIndices.map(idx => MODELS_DATA.names[idx]);
-        const colors = names.map(name => name === 'Random Forest' ? COLORS.danger : '#bdc3c7');
+        const values = indicesToShow.map(idx => MODELS_DATA[metric][idx]);
+        const names = indicesToShow.map(idx => mobile ? MODELS_DATA.names[idx].split(' ')[0] : MODELS_DATA.names[idx]);
+        const colors = indicesToShow.map(idx => MODELS_DATA.names[idx] === 'Random Forest' ? COLORS.danger : '#bdc3c7');
 
         return {
             x: names,
@@ -194,24 +249,24 @@ function createMetricsComparison() {
 
     // Criar botões do dropdown
     const buttons = metrics.map((metric, i) => ({
-        label: metricLabels[metric],
+        label: mobile ? metricLabels[metric].split(' ')[0] : metricLabels[metric],
         method: 'update',
         args: [
             { visible: metrics.map((_, j) => j === i) },
-            { title: `Comparação de Modelos - ${metricLabels[metric]}` }
+            { title: mobile ? metricLabels[metric] : `Comparação de Modelos - ${metricLabels[metric]}` }
         ]
     }));
 
-    const layout = {
-        ...LAYOUT_CONFIG,
-        title: 'Comparação de Modelos - ROC-AUC',
+    const layout = getResponsiveLayout({
+        title: mobile ? 'ROC-AUC' : 'Comparação de Modelos - ROC-AUC',
         xaxis: {
-            tickangle: -45,
-            tickfont: { size: 11 }
+            tickangle: mobile ? -60 : -45,
+            tickfont: { size: mobile ? 8 : 11 }
         },
         yaxis: {
-            title: 'Valor (%)',
-            range: [0, 100]
+            title: mobile ? '%' : 'Valor (%)',
+            range: [0, 100],
+            tickfont: { size: mobile ? 9 : 11 }
         },
         updatemenus: [{
             buttons: buttons,
@@ -222,11 +277,12 @@ function createMetricsComparison() {
             xanchor: 'left',
             yanchor: 'top',
             bgcolor: 'white',
-            bordercolor: COLORS.primary
+            bordercolor: COLORS.primary,
+            font: { size: mobile ? 9 : 11 }
         }]
-    };
+    });
 
-    Plotly.newPlot(element, traces, layout, PLOTLY_CONFIG);
+    Plotly.newPlot(element, traces, layout, mobile ? PLOTLY_CONFIG_MOBILE : PLOTLY_CONFIG);
 }
 
 /**
@@ -236,17 +292,19 @@ function createROCCurves() {
     const element = document.getElementById('chart-roc-curves');
     if (!element) return;
 
+    const mobile = isMobile();
     const traces = [];
     const modelColors = [COLORS.primary, COLORS.danger, COLORS.success, COLORS.warning];
 
     Object.keys(ROC_DATA).forEach((model, i) => {
         const data = ROC_DATA[model];
+        const shortName = mobile ? model.split(' ')[0] : model;
         traces.push({
             x: data.fpr,
             y: data.tpr,
             mode: 'lines',
-            name: `${model} (AUC: ${(data.auc * 100).toFixed(1)}%)`,
-            line: { color: modelColors[i], width: 2.5 },
+            name: mobile ? `${shortName} (${(data.auc * 100).toFixed(0)}%)` : `${model} (AUC: ${(data.auc * 100).toFixed(1)}%)`,
+            line: { color: modelColors[i], width: mobile ? 2 : 2.5 },
             hovertemplate: `<b>${model}</b><br>FPR: %{x:.2f}<br>TPR: %{y:.2f}<extra></extra>`
         });
     });
@@ -261,40 +319,47 @@ function createROCCurves() {
         hoverinfo: 'skip'
     });
 
-    const layout = {
-        ...LAYOUT_CONFIG,
-        title: 'Curvas ROC - Principais Modelos',
+    const layout = getResponsiveLayout({
+        title: mobile ? 'Curvas ROC' : 'Curvas ROC - Principais Modelos',
         xaxis: {
-            title: 'Taxa de Falsos Positivos (FPR)',
-            range: [0, 1]
+            title: mobile ? 'FPR' : 'Taxa de Falsos Positivos (FPR)',
+            range: [0, 1],
+            tickfont: { size: mobile ? 9 : 11 }
         },
         yaxis: {
-            title: 'Taxa de Verdadeiros Positivos (TPR)',
-            range: [0, 1]
+            title: mobile ? 'TPR' : 'Taxa de Verdadeiros Positivos (TPR)',
+            range: [0, 1],
+            tickfont: { size: mobile ? 9 : 11 }
         },
-        legend: {
+        legend: mobile ? {
+            orientation: 'h',
+            x: 0.5,
+            y: -0.25,
+            xanchor: 'center',
+            font: { size: 8 }
+        } : {
             x: 1,
             y: 0,
             xanchor: 'right',
             bgcolor: 'rgba(255,255,255,0.8)'
         },
-        shapes: [{
+        shapes: mobile ? [] : [{
             type: 'rect',
             x0: 0, x1: 0.2,
             y0: 0.8, y1: 1,
             fillcolor: 'rgba(46, 204, 113, 0.1)',
             line: { width: 0 }
         }],
-        annotations: [{
+        annotations: mobile ? [] : [{
             x: 0.1,
             y: 0.9,
             text: 'Zona<br>Ideal',
             showarrow: false,
             font: { size: 10, color: COLORS.success }
         }]
-    };
+    });
 
-    Plotly.newPlot(element, traces, layout, PLOTLY_CONFIG);
+    Plotly.newPlot(element, traces, layout, mobile ? PLOTLY_CONFIG_MOBILE : PLOTLY_CONFIG);
 }
 
 /**
@@ -303,6 +368,8 @@ function createROCCurves() {
 function createConfusionMatrix() {
     const element = document.getElementById('chart-confusion-matrix');
     if (!element) return;
+
+    const mobile = isMobile();
 
     // Random Forest confusion matrix
     const tn = 918, fp = 105, fn = 44, tp = 417;
@@ -316,53 +383,51 @@ function createConfusionMatrix() {
 
     const data = [{
         z: z,
-        x: ['Predito Negativo', 'Predito Positivo'],
-        y: ['Real Positivo', 'Real Negativo'],
+        x: mobile ? ['Pred. Neg.', 'Pred. Pos.'] : ['Predito Negativo', 'Predito Positivo'],
+        y: mobile ? ['Real Pos.', 'Real Neg.'] : ['Real Positivo', 'Real Negativo'],
         type: 'heatmap',
         colorscale: [
             [0, '#e3f2fd'],
             [0.5, '#64b5f6'],
             [1, '#1565c0']
         ],
-        showscale: true,
+        showscale: !mobile,
         hovertemplate: '%{text}<extra></extra>',
         text: zText
     }];
 
     // Adicionar anotações com valores
     const annotations = [];
-    const labels = [
-        ['Verdadeiro Negativo', 'Falso Positivo'],
-        ['Falso Negativo', 'Verdadeiro Positivo']
-    ];
+    const labels = mobile
+        ? [['VN', 'FP'], ['FN', 'VP']]
+        : [['Verdadeiro Negativo', 'Falso Positivo'], ['Falso Negativo', 'Verdadeiro Positivo']];
 
     for (let i = 0; i < 2; i++) {
         for (let j = 0; j < 2; j++) {
             annotations.push({
                 x: j,
                 y: i,
-                text: `<b>${z[i][j]}</b><br>${labels[i][j]}`,
+                text: mobile ? `<b>${z[i][j]}</b><br>${labels[i][j]}` : `<b>${z[i][j]}</b><br>${labels[i][j]}`,
                 showarrow: false,
-                font: { color: z[i][j] > 500 ? 'white' : 'black', size: 14 }
+                font: { color: z[i][j] > 500 ? 'white' : 'black', size: mobile ? 11 : 14 }
             });
         }
     }
 
-    const layout = {
-        ...LAYOUT_CONFIG,
-        title: 'Matriz de Confusão - Random Forest',
+    const layout = getResponsiveLayout({
+        title: mobile ? 'Matriz de Confusão' : 'Matriz de Confusão - Random Forest',
         annotations: annotations,
         xaxis: {
             side: 'bottom',
-            tickfont: { size: 14 }
+            tickfont: { size: mobile ? 10 : 14 }
         },
         yaxis: {
             autorange: 'reversed',
-            tickfont: { size: 14 }
+            tickfont: { size: mobile ? 10 : 14 }
         }
-    };
+    });
 
-    Plotly.newPlot(element, data, layout, PLOTLY_CONFIG);
+    Plotly.newPlot(element, data, layout, mobile ? PLOTLY_CONFIG_MOBILE : PLOTLY_CONFIG);
 }
 
 /**
@@ -372,8 +437,11 @@ function createRadarChart() {
     const element = document.getElementById('chart-radar');
     if (!element) return;
 
-    const metrics = ['Accuracy', 'Precision', 'Recall', 'F1-Score', 'ROC-AUC'];
-    const modelsToShow = ['Random Forest', 'Gradient Boosting', 'XGBoost', 'Logistic Regression'];
+    const mobile = isMobile();
+    const metrics = mobile ? ['Acc', 'Prec', 'Rec', 'F1', 'AUC'] : ['Accuracy', 'Precision', 'Recall', 'F1-Score', 'ROC-AUC'];
+    const modelsToShow = mobile
+        ? ['Random Forest', 'Gradient Boosting']
+        : ['Random Forest', 'Gradient Boosting', 'XGBoost', 'Logistic Regression'];
     const modelColors = [COLORS.primary, COLORS.danger, COLORS.success, COLORS.warning];
 
     const traces = modelsToShow.map((model, i) => {
@@ -391,30 +459,39 @@ function createRadarChart() {
             type: 'scatterpolar',
             r: values,
             theta: [...metrics, metrics[0]],
-            name: model,
+            name: mobile ? model.split(' ')[0] : model,
             fill: 'toself',
             fillcolor: `${modelColors[i]}20`,
-            line: { color: modelColors[i], width: 2 },
+            line: { color: modelColors[i], width: mobile ? 1.5 : 2 },
             hovertemplate: `<b>${model}</b><br>%{theta}: %{r:.1f}%<extra></extra>`
         };
     });
 
-    const layout = {
-        ...LAYOUT_CONFIG,
-        title: 'Comparação Multi-Métrica',
+    const layout = getResponsiveLayout({
+        title: mobile ? 'Radar Multi-Métrica' : 'Comparação Multi-Métrica',
         polar: {
             radialaxis: {
                 visible: true,
-                range: [70, 100]
+                range: [70, 100],
+                tickfont: { size: mobile ? 8 : 10 }
+            },
+            angularaxis: {
+                tickfont: { size: mobile ? 9 : 11 }
             }
         },
-        legend: {
+        legend: mobile ? {
+            orientation: 'h',
+            x: 0.5,
+            y: -0.15,
+            xanchor: 'center',
+            font: { size: 9 }
+        } : {
             x: 1.1,
             y: 0.5
         }
-    };
+    });
 
-    Plotly.newPlot(element, traces, layout, PLOTLY_CONFIG);
+    Plotly.newPlot(element, traces, layout, mobile ? PLOTLY_CONFIG_MOBILE : PLOTLY_CONFIG);
 }
 
 /**
@@ -424,16 +501,24 @@ function createFeatureImportance() {
     const element = document.getElementById('chart-feature-importance');
     if (!element) return;
 
+    const mobile = isMobile();
+
     // Ordenar por importância
-    const indices = FEATURE_IMPORTANCE.importance
+    let indices = FEATURE_IMPORTANCE.importance
         .map((val, idx) => ({ val, idx }))
         .sort((a, b) => a.val - b.val)
         .map(obj => obj.idx);
 
-    const features = indices.map(i => FEATURE_IMPORTANCE.features[i]);
+    // No mobile, mostrar apenas top 6 features
+    if (mobile) {
+        indices = indices.slice(-6);
+    }
+
+    const features = indices.map(i => mobile
+        ? FEATURE_IMPORTANCE.features[i].substring(0, 12)
+        : FEATURE_IMPORTANCE.features[i]);
     const importance = indices.map(i => FEATURE_IMPORTANCE.importance[i] * 100);
     const colors = indices.map(i => FEATURE_IMPORTANCE.colors[i]);
-    const categories = indices.map(i => FEATURE_IMPORTANCE.categories[i]);
 
     // Criar descrições detalhadas para cada feature
     const featureDescriptions = {
@@ -466,27 +551,30 @@ function createFeatureImportance() {
         hovertemplate: '<b>%{y}</b><br>' +
             '<b>Importância:</b> %{x:.1f}%<br>' +
             '<b>Categoria:</b> %{customdata.category}<br>' +
-            '<i>%{customdata.description}</i>' +
+            (mobile ? '' : '<i>%{customdata.description}</i>') +
             '<extra></extra>',
         customdata: customData,
         text: importance.map(v => v.toFixed(1) + '%'),
-        textposition: 'outside'
+        textposition: 'outside',
+        textfont: { size: mobile ? 9 : 12 }
     }];
 
-    const layout = {
-        ...LAYOUT_CONFIG,
-        title: 'Importância das Features (Random Forest)',
+    const layout = getResponsiveLayout({
+        title: mobile ? 'Importância Features' : 'Importância das Features (Random Forest)',
         xaxis: {
-            title: 'Importância (%)',
-            range: [0, 50]
+            title: mobile ? '%' : 'Importância (%)',
+            range: [0, 50],
+            tickfont: { size: mobile ? 9 : 11 }
         },
         yaxis: {
-            tickfont: { size: 11 }
+            tickfont: { size: mobile ? 9 : 11 }
         },
-        margin: { ...LAYOUT_CONFIG.margin, l: 130 }
-    };
+        margin: mobile
+            ? { t: 30, r: 40, b: 40, l: 90 }
+            : { t: 40, r: 20, b: 40, l: 130 }
+    });
 
-    Plotly.newPlot(element, data, layout, PLOTLY_CONFIG);
+    Plotly.newPlot(element, data, layout, mobile ? PLOTLY_CONFIG_MOBILE : PLOTLY_CONFIG);
 }
 
 /**
@@ -496,23 +584,25 @@ function createThresholdAnalysis() {
     const element = document.getElementById('chart-threshold');
     if (!element) return;
 
+    const mobile = isMobile();
+
     const traces = [
         {
             x: THRESHOLD_DATA.thresholds,
             y: THRESHOLD_DATA.sensitivity.map(v => v * 100),
             mode: 'lines+markers',
-            name: 'Sensibilidade',
-            line: { color: COLORS.success, width: 2.5 },
-            marker: { size: 8 },
+            name: mobile ? 'Sens.' : 'Sensibilidade',
+            line: { color: COLORS.success, width: mobile ? 2 : 2.5 },
+            marker: { size: mobile ? 6 : 8 },
             hovertemplate: 'Threshold: %{x}<br>Sensibilidade: %{y:.1f}%<extra></extra>'
         },
         {
             x: THRESHOLD_DATA.thresholds,
             y: THRESHOLD_DATA.specificity.map(v => v * 100),
             mode: 'lines+markers',
-            name: 'Especificidade',
-            line: { color: COLORS.info, width: 2.5 },
-            marker: { size: 8 },
+            name: mobile ? 'Espec.' : 'Especificidade',
+            line: { color: COLORS.info, width: mobile ? 2 : 2.5 },
+            marker: { size: mobile ? 6 : 8 },
             hovertemplate: 'Threshold: %{x}<br>Especificidade: %{y:.1f}%<extra></extra>'
         },
         {
@@ -520,8 +610,8 @@ function createThresholdAnalysis() {
             y: THRESHOLD_DATA.f2.map(v => v * 100),
             mode: 'lines+markers',
             name: 'F2-Score',
-            line: { color: COLORS.warning, width: 2.5 },
-            marker: { size: 8 },
+            line: { color: COLORS.warning, width: mobile ? 2 : 2.5 },
+            marker: { size: mobile ? 6 : 8 },
             hovertemplate: 'Threshold: %{x}<br>F2-Score: %{y:.1f}%<extra></extra>'
         }
     ];
@@ -535,10 +625,10 @@ function createThresholdAnalysis() {
         type: 'line',
         x0: t.x, x1: t.x,
         y0: 0, y1: 100,
-        line: { color: t.color, dash: 'dot', width: 2 }
+        line: { color: t.color, dash: 'dot', width: mobile ? 1.5 : 2 }
     }));
 
-    const annotations = [
+    const annotations = mobile ? [] : [
         { x: 0.3, y: 95, text: 'Triagem', color: COLORS.success },
         { x: 0.5, y: 87, text: 'Balanceado', color: COLORS.warning },
         { x: 0.8, y: 70, text: 'Confirmação', color: COLORS.danger }
@@ -551,29 +641,31 @@ function createThresholdAnalysis() {
         bgcolor: 'rgba(255,255,255,0.8)'
     }));
 
-    const layout = {
-        ...LAYOUT_CONFIG,
-        title: 'Análise de Threshold - Trade-offs',
+    const layout = getResponsiveLayout({
+        title: mobile ? 'Análise de Threshold' : 'Análise de Threshold - Trade-offs',
         xaxis: {
-            title: 'Threshold de Decisão',
+            title: mobile ? 'Threshold' : 'Threshold de Decisão',
             range: [0, 1],
-            dtick: 0.1
+            dtick: mobile ? 0.2 : 0.1,
+            tickfont: { size: mobile ? 9 : 11 }
         },
         yaxis: {
-            title: 'Valor (%)',
-            range: [0, 100]
+            title: mobile ? '%' : 'Valor (%)',
+            range: [0, 100],
+            tickfont: { size: mobile ? 9 : 11 }
         },
         legend: {
             x: 0.5,
-            y: -0.2,
+            y: mobile ? -0.25 : -0.2,
             xanchor: 'center',
-            orientation: 'h'
+            orientation: 'h',
+            font: { size: mobile ? 9 : 11 }
         },
         shapes: shapes,
         annotations: annotations
-    };
+    });
 
-    Plotly.newPlot(element, traces, layout, PLOTLY_CONFIG);
+    Plotly.newPlot(element, traces, layout, mobile ? PLOTLY_CONFIG_MOBILE : PLOTLY_CONFIG);
 }
 
 /**
