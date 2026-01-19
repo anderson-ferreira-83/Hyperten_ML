@@ -122,104 +122,6 @@ body {
     height: 22px;
 }
 
-/* Hamburger Menu Button */
-.nav-hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 44px;
-    height: 44px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    z-index: 1001;
-}
-
-.nav-hamburger span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--dark);
-    margin: 3px 0;
-    transition: var(--transition);
-    border-radius: 2px;
-}
-
-.nav-hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.nav-hamburger.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.nav-hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-}
-
-/* Mobile Menu */
-.nav-mobile {
-    display: none;
-    position: fixed;
-    top: 70px;
-    left: 0;
-    right: 0;
-    background: var(--white);
-    box-shadow: var(--shadow-lg);
-    padding: 20px;
-    z-index: 999;
-    max-height: calc(100vh - 70px);
-    overflow-y: auto;
-}
-
-.nav-mobile.active {
-    display: block;
-    animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.nav-mobile-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.nav-mobile-menu li {
-    border-bottom: 1px solid var(--gray-200);
-}
-
-.nav-mobile-menu li:last-child {
-    border-bottom: none;
-}
-
-.nav-mobile-menu a {
-    display: block;
-    padding: 15px 10px;
-    color: var(--dark);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: var(--transition);
-}
-
-.nav-mobile-menu a:hover,
-.nav-mobile-menu a:active {
-    color: var(--primary);
-    background: var(--gray-100);
-}
-
 .nav-cta {
     background: var(--primary);
     color: var(--white);
@@ -1337,11 +1239,11 @@ tr:hover {
 /* ===== Responsive - Tablet (992px) ===== */
 @media (max-width: 992px) {
     .nav-menu {
-        display: none;
+        gap: 15px;
     }
 
-    .nav-hamburger {
-        display: flex;
+    .nav-menu a {
+        font-size: 0.8rem;
     }
 
     .hero h1 {
@@ -1809,11 +1711,6 @@ tr:hover {
     .nav-github {
         width: 32px;
         height: 32px;
-    }
-
-    .nav-mobile {
-        top: 60px;
-        padding: 15px;
     }
 
     /* Hero */
