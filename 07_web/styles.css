@@ -644,7 +644,7 @@ header {
 .footer-content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 16px;
@@ -674,6 +674,8 @@ header {
 .footer-links {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
+  row-gap: 6px;
 }
 
 .footer-links a {
@@ -697,6 +699,12 @@ header {
   background: var(--bg);
   border-radius: var(--radius);
 }
+.footer-note {
+  display: inline-block;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--bg-accent);
+}
 
 .footer-dataset a {
   color: var(--secondary);
@@ -713,6 +721,9 @@ header {
 .footer-contact {
   font-size: 13px;
   color: var(--muted);
+  padding: 8px 12px;
+  background: var(--bg);
+  border-radius: var(--radius);
 }
 
 .footer-disclaimer {
