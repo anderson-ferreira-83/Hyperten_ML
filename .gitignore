@@ -15,8 +15,19 @@
 !05_artifacts/**
 !10_clinical_validation/
 !10_clinical_validation/**
-!13_github_pages/
-!13_github_pages/**
+!.nojekyll
+!_config.yml
+!index.html
+!assets/
+!assets/**
+!css/
+!css/**
+!data/
+!data/**
+!en/
+!en/**
+!js/
+!js/**
 !README.md
 
 # Byte-compiled / optimized / DLL files
