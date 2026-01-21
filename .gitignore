@@ -55,14 +55,20 @@ samconfig.toml
 *ACCOUNT_ID*
 
 # ============================================
+# Paginas (AWS/GitHub Pages) - implementacoes
+# ============================================
+12_deploy_aws/
+13_github_pages/
+
+# ============================================
 # Data files (keep structure, ignore large files)
 data/raw/*.csv
 data/processed/*.csv
 data/processed/*.pkl
 
 # Model files
-results/models/*.pkl
-results/models/*.joblib
+# results/models/*.pkl
+# results/models/*.joblib
 
 # IDE
 .vscode/
