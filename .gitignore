@@ -1,3 +1,21 @@
+# ============================================
+# VITRINE - manter apenas notebooks e resultados
+# ============================================
+*
+!.gitignore
+!01_eda/
+!01_eda/**
+!02_notebooks/
+!02_notebooks/**
+!03_models/
+!03_models/**
+!04_reports/
+!04_reports/**
+!05_artifacts/
+!05_artifacts/**
+!10_clinical_validation/
+!10_clinical_validation/**
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
