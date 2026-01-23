@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Gráficos Interativos - TCC Hipertensão
  * Usando Plotly.js para visualizações interativas
  */
@@ -260,14 +260,20 @@ function createMetricsComparison() {
     const layout = getResponsiveLayout({
         title: mobile ? 'ROC-AUC' : 'Comparação de Modelos - ROC-AUC',
         xaxis: {
+            title: mobile ? '' : 'Modelos',
             tickangle: mobile ? -60 : -45,
-            tickfont: { size: mobile ? 8 : 11 }
+            tickfont: { size: mobile ? 8 : 11 },
+            automargin: true
         },
         yaxis: {
             title: mobile ? '%' : 'Valor (%)',
             range: [0, 100],
-            tickfont: { size: mobile ? 9 : 11 }
+            tickfont: { size: mobile ? 9 : 11 },
+            automargin: true
         },
+        margin: mobile
+            ? { t: 30, r: 20, b: 90, l: 60 }
+            : { t: 50, r: 20, b: 90, l: 60 },
         updatemenus: [{
             buttons: buttons,
             direction: 'down',
@@ -670,18 +676,19 @@ function createFeatureImportance() {
     }];
 
     const layout = getResponsiveLayout({
-        title: mobile ? 'Importância Features' : 'Importância das Features (Random Forest)',
+        title: mobile ? 'Importância das Features' : 'Importância das Features (Random Forest)',
         xaxis: {
             title: mobile ? '%' : 'Importância (%)',
             range: [0, 50],
             tickfont: { size: mobile ? 9 : 11 }
         },
         yaxis: {
+            automargin: true,
             tickfont: { size: mobile ? 9 : 11 }
         },
         margin: mobile
-            ? { t: 30, r: 40, b: 40, l: 90 }
-            : { t: 40, r: 20, b: 40, l: 130 }
+            ? { t: 30, r: 40, b: 40, l: 120 }
+            : { t: 40, r: 20, b: 40, l: 160 }
     });
 
     Plotly.newPlot(element, data, layout, mobile ? PLOTLY_CONFIG_MOBILE : PLOTLY_CONFIG);
@@ -809,3 +816,5 @@ window.addEventListener('resize', () => {
         if (el) Plotly.Plots.resize(el);
     });
 });
+
+
