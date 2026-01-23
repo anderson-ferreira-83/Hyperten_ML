@@ -310,12 +310,12 @@ function createROCCurves() {
         });
     });
 
-    // Linha diagonal de refer?ncia
+    // Linha diagonal de referência
     traces.push({
         x: [0, 1],
         y: [0, 1],
         mode: 'lines',
-        name: 'Aleat?rio',
+        name: 'Aleatório',
         line: { color: COLORS.gray, dash: 'dash', width: 1 },
         hoverinfo: 'skip'
     });
@@ -469,14 +469,14 @@ function createConfusionMatrix() {
         args: [
             { z: [matrices[idx].z], text: [matrices[idx].zText] },
             {
-                title: mobile ? 'Matriz de Confus?o' : `Matriz de Confus?o - ${model}`,
+                title: mobile ? 'Matriz de Confusão' : `Matriz de Confusão - ${model}`,
                 annotations: matrices[idx].annotations
             }
         ]
     }));
 
     const layout = getResponsiveLayout({
-        title: mobile ? 'Matriz de Confus?o' : `Matriz de Confus?o - ${models[0]}`,
+        title: mobile ? 'Matriz de Confusão' : `Matriz de Confusão - ${models[0]}`,
         annotations: initial.annotations,
         xaxis: {
             side: 'bottom',
@@ -524,7 +524,7 @@ function createRadarChart() {
             MODELS_DATA.recall[idx] * 100,
             MODELS_DATA.f1_score[idx] * 100,
             MODELS_DATA.auc_roc[idx] * 100,
-            MODELS_DATA.accuracy[idx] * 100 // Fechar o pol?gono
+            MODELS_DATA.accuracy[idx] * 100 // Fechar o polígono
         ];
 
         return {
@@ -547,7 +547,7 @@ function createRadarChart() {
             method: 'update',
             args: [
                 { visible: allVisible },
-                { title: mobile ? 'Radar Multi-M?trica' : 'Compara??o Multi-M?trica' }
+                { title: mobile ? 'Radar Multi-Métrica' : 'Comparação Multi-Métrica' }
             ]
         },
         ...MODELS_DATA.names.map((model, i) => {
@@ -558,14 +558,14 @@ function createRadarChart() {
                 method: 'update',
                 args: [
                     { visible: visibility },
-                    { title: mobile ? 'Radar Multi-M?trica' : `Radar Multi-M?trica - ${model}` }
+                    { title: mobile ? 'Radar Multi-Métrica' : `Radar Multi-Métrica - ${model}` }
                 ]
             };
         })
     ];
 
     const layout = getResponsiveLayout({
-        title: mobile ? 'Radar Multi-M?trica' : 'Compara??o Multi-M?trica',
+        title: mobile ? 'Radar Multi-Métrica' : 'Comparação Multi-Métrica',
         polar: {
             radialaxis: {
                 visible: true,
@@ -625,9 +625,7 @@ function createFeatureImportance() {
         indices = indices.slice(-6);
     }
 
-    const features = indices.map(i => mobile
-        ? FEATURE_IMPORTANCE.features[i].substring(0, 12)
-        : FEATURE_IMPORTANCE.features[i]);
+    const features = indices.map(i => FEATURE_IMPORTANCE.features[i]);
     const importance = indices.map(i => FEATURE_IMPORTANCE.importance[i] * 100);
     const colors = indices.map(i => FEATURE_IMPORTANCE.colors[i]);
 

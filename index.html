@@ -25,8 +25,8 @@
                 <li><a href="#resultados">Resultados</a></li>
                 <li><a href="#interpretabilidade">Interpretabilidade</a></li>
                 <li><a href="#deploy">Deploy</a></li>
-                <li><a href="#equipe">Equipe</a></li>
                 <li><a href="#referencias">Referências</a></li>
+                <li><a href="#equipe">Equipe</a></li>
             </ul>
             <div class="nav-actions">
                 <div class="nav-langs">
@@ -217,7 +217,7 @@
                         Machine Learning.
                         Neste projeto, utilizamos dados reais de 4.240 pacientes, contendo informações clínicas e
                         demográficas.
-                        A <strong>prevalência de 31%</strong> indica que aproximadamente 1 em cada 3 pacientes no estudo
+                        <span class="no-break">A <strong>prevalência de 31%</strong></span> indica que aproximadamente 1 em cada 3 pacientes no estudo
                         possui hipertensão,
                         o que representa um desbalanceamento que foi tratado com técnicas específicas (SMOTE) durante o
                         treinamento.
@@ -359,6 +359,7 @@
             <div class="results-grid">
                 <div class="result-card best-model">
                     <span class="badge">Melhor Modelo</span>
+                    <span class="rank-badge">1º</span>
                     <h3>Random Forest</h3>
                     <div class="model-metrics">
                         <div class="model-metric">
@@ -384,19 +385,28 @@
                 </div>
 
                 <div class="result-card">
+                    <span class="rank-badge">2º</span>
                     <h3>Gradient Boosting</h3>
                     <p class="auc">AUC: 95.96%</p>
                     <p class="f1">F2: 84.80%</p>
                 </div>
                 <div class="result-card">
+                    <span class="rank-badge">3º</span>
                     <h3>XGBoost</h3>
                     <p class="auc">AUC: 95.34%</p>
                     <p class="f1">F2: 84.30%</p>
                 </div>
                 <div class="result-card">
+                    <span class="rank-badge">4º</span>
                     <h3>Logistic Regression</h3>
                     <p class="auc">AUC: 95.47%</p>
                     <p class="f1">F2: 82.81%</p>
+                </div>
+                <div class="result-card">
+                    <span class="rank-badge">5º</span>
+                    <h3>AdaBoost</h3>
+                    <p class="auc">AUC: 95.02%</p>
+                    <p class="f1">F2: 84.73%</p>
                 </div>
             </div>
 
@@ -623,7 +633,35 @@
                 </div>
             </div>
 
+            <div class="figures-grid">
+                <div class="figure-card">
+                    <h4>Importância das Features (Gráfico Interativo)</h4>
+                    <p class="chart-explanation">
+                        <strong>O que mostra:</strong> Versão interativa do ranking de importância das variáveis.
+                    </p>
+                    <p class="chart-explanation">
+                        Passe o mouse sobre as barras para ver detalhes de cada variável, incluindo sua categoria
+                        clínica e descrição. As variáveis de pressão arterial dominam, validando o conhecimento médico
+                        estabelecido.
+                    </p>
+                    <div id="chart-feature-importance" class="interactive-chart"></div>
+                </div>
+                <div class="figure-card">
+                    <h4>Análise de Threshold</h4>
+                    <p class="chart-explanation">
+                        <strong>O que mostra:</strong> Como sensibilidade e especificidade variam conforme o threshold.
+                    </p>
+                    <p class="chart-explanation">
+                        As linhas verticais pontilhadas indicam os três cenários clínicos recomendados. Note o trade-off:
+                        aumentar a sensibilidade reduz a especificidade e vice-versa. O ponto de cruzamento representa o
+                        threshold "ótimo" para equilíbrio entre ambas.
+                    </p>
+                    <div id="chart-threshold" class="interactive-chart"></div>
+                </div>
+            </div>
+
             <div class="threshold-section">
+                <h3 class="threshold-title">Interpretação prática dos thresholds</h3>
                 <h3>Thresholds Clínicos Recomendados</h3>
                 <p class="chart-explanation">
                     <strong>O que mostra:</strong> O threshold (limiar de decisão) determina a partir de qual
@@ -663,33 +701,6 @@
                         </div>
                         <p class="use-case">Minimizar falsos positivos</p>
                     </div>
-                </div>
-            </div>
-
-            <div class="figures-grid">
-                <div class="figure-card">
-                    <h4>Importância das Features (Gráfico Interativo)</h4>
-                    <p class="chart-explanation">
-                        <strong>O que mostra:</strong> Versão interativa do ranking de importância das variáveis.
-                    </p>
-                    <p class="chart-explanation">
-                        Passe o mouse sobre as barras para ver detalhes de cada variável, incluindo sua categoria
-                        clínica e descrição. As variáveis de pressão arterial dominam, validando o conhecimento médico
-                        estabelecido.
-                    </p>
-                    <div id="chart-feature-importance" class="interactive-chart"></div>
-                </div>
-                <div class="figure-card">
-                    <h4>Análise de Threshold</h4>
-                    <p class="chart-explanation">
-                        <strong>O que mostra:</strong> Como sensibilidade e especificidade variam conforme o threshold.
-                    </p>
-                    <p class="chart-explanation">
-                        As linhas verticais pontilhadas indicam os três cenários clínicos recomendados. Note o trade-off:
-                        aumentar a sensibilidade reduz a especificidade e vice-versa. O ponto de cruzamento representa o
-                        threshold "ótimo" para equilíbrio entre ambas.
-                    </p>
-                    <div id="chart-threshold" class="interactive-chart"></div>
                 </div>
             </div>
         </div>
