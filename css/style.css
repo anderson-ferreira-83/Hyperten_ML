@@ -1932,6 +1932,10 @@ tr:hover {
 }
 .info-content p {
     margin-top: 8px;
+    margin-bottom: 0;
+}
+.info-content p + p {
+    margin-top: 12px;
 }
 .info-note {
     display: inline-block;

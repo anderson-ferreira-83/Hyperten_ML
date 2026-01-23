@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -221,6 +221,8 @@
                         possui hipertensão,
                         o que representa um desbalanceamento que foi tratado com técnicas específicas (SMOTE) durante o
                         treinamento.
+                    </p>
+                    <p>
                         <strong>Dataset:</strong> O conjunto de dados utilizado neste projeto está disponível
                         publicamente no Kaggle.
                         <br><span class="info-note"><strong>Acesse o link:</strong> <a
@@ -346,9 +348,10 @@
                         detectar corretamente pacientes com hipertensão (alta sensibilidade) e não gerar alarmes falsos
                         desnecessários
                         (boa especificidade).
-                        <br><span class=\"info-note\">Em contexto médico, prioriza-se não deixar passar casos positivos
-                            (falsos negativos),
-                            por isso usamos o <strong>F2-Score</strong> como métrica principal de decisão.</span>
+                    </p>
+                    <p>
+                        <span class="info-note">Em contexto médico, prioriza-se não deixar passar casos positivos (falsos
+                            negativos), por isso usamos o <strong>F2-Score</strong> como métrica principal de decisão.</span>
                     </p>
                 </div>
             </div>
@@ -403,6 +406,8 @@
                     <p class="chart-explanation">
                         <strong>O que mostra:</strong> Compara o desempenho de todos os modelos testados usando
                         diferentes métricas.
+                    </p>
+                    <p class="chart-explanation">
                         Use o dropdown para alternar entre métricas. Quanto maior a barra, melhor o desempenho do modelo
                         naquela métrica específica.
                     </p>
@@ -413,9 +418,10 @@
                     <p class="chart-explanation">
                         <strong>O que mostra:</strong> A curva ROC ilustra a capacidade do modelo em distinguir entre
                         pacientes com e sem hipertensão.
+                    </p>
+                    <p class="chart-explanation">
                         Quanto mais a curva se aproxima do canto superior esquerdo, melhor o modelo. A área sob a curva
-                        (AUC) resume essa capacidade:
-                        valores próximos a 100% indicam excelente discriminação.
+                        (AUC) resume essa capacidade: valores próximos a 100% indicam excelente discriminação.
                     </p>
                     <div id="chart-roc-curves" class="interactive-chart"></div>
                 </div>
@@ -425,9 +431,10 @@
                         <strong>O que mostra:</strong> Resume os acertos e erros do modelo. <strong>Verdadeiros
                             Positivos (VP)</strong>: pacientes com hipertensão corretamente identificados.
                         <strong>Verdadeiros Negativos (VN)</strong>: pacientes saudáveis corretamente identificados.
-                        <strong>Falsos Negativos (FN)</strong>: pacientes com hipertensão não detectados (mais crítico
-                        em saúde).
-                        <strong>Falsos Positivos (FP)</strong>: alarmes falsos em pacientes saudáveis.
+                    </p>
+                    <p class="chart-explanation">
+                        <strong>Falsos Negativos (FN)</strong>: pacientes com hipertensão não detectados (mais crítico em
+                        saúde). <strong>Falsos Positivos (FP)</strong>: alarmes falsos em pacientes saudáveis.
                     </p>
                     <div id="chart-confusion-matrix" class="interactive-chart"></div>
                 </div>
@@ -436,9 +443,10 @@
                     <p class="chart-explanation">
                         <strong>O que mostra:</strong> Visualização comparativa de múltiplas métricas simultaneamente
                         para os principais modelos.
+                    </p>
+                    <p class="chart-explanation">
                         Cada eixo representa uma métrica diferente. Um modelo ideal teria todas as métricas próximas de
-                        100%, formando um polígono grande.
-                        Útil para identificar pontos fortes e fracos de cada modelo.
+                        100%, formando um polígono grande. Útil para identificar pontos fortes e fracos de cada modelo.
                     </p>
                     <div id="chart-radar" class="interactive-chart"></div>
                 </div>
@@ -499,8 +507,10 @@
                         critérios clinicamente relevantes,
                         aumentando a confiança no sistema e facilitando a tomada de decisão compartilhada com o
                         paciente.
-                        <br><span class=\"info-note\">Modelos "caixa-preta" que não explicam suas decisões são menos
-                            aceitos na prática clínica.</span>
+                    </p>
+                    <p>
+                        <span class="info-note">Modelos "caixa-preta" que não explicam suas decisões são menos aceitos na
+                            prática clínica.</span>
                     </p>
                 </div>
             </div>
@@ -620,8 +630,10 @@
                     probabilidade o modelo classifica
                     um paciente como "em risco". Um threshold mais baixo (ex: 0.30) detecta mais casos, mas gera mais
                     alarmes falsos.
-                    Um threshold mais alto (ex: 0.80) é mais preciso, mas pode deixar passar alguns casos.
-                    A escolha depende do contexto clínico: triagem populacional vs. confirmação diagnóstica.
+                </p>
+                <p class="chart-explanation">
+                    Um threshold mais alto (ex: 0.80) é mais preciso, mas pode deixar passar alguns casos. A escolha
+                    depende do contexto clínico: triagem populacional vs. confirmação diagnóstica.
                 </p>
                 <div class="threshold-cards">
                     <div class="threshold-card screening">
@@ -659,9 +671,11 @@
                     <h4>Importância das Features (Gráfico Interativo)</h4>
                     <p class="chart-explanation">
                         <strong>O que mostra:</strong> Versão interativa do ranking de importância das variáveis.
+                    </p>
+                    <p class="chart-explanation">
                         Passe o mouse sobre as barras para ver detalhes de cada variável, incluindo sua categoria
-                        clínica e descrição.
-                        As variáveis de pressão arterial dominam, validando o conhecimento médico estabelecido.
+                        clínica e descrição. As variáveis de pressão arterial dominam, validando o conhecimento médico
+                        estabelecido.
                     </p>
                     <div id="chart-feature-importance" class="interactive-chart"></div>
                 </div>
@@ -669,9 +683,11 @@
                     <h4>Análise de Threshold</h4>
                     <p class="chart-explanation">
                         <strong>O que mostra:</strong> Como sensibilidade e especificidade variam conforme o threshold.
-                        As linhas verticais pontilhadas indicam os três cenários clínicos recomendados.
-                        Note o trade-off: aumentar a sensibilidade reduz a especificidade e vice-versa.
-                        O ponto de cruzamento representa o threshold "ótimo" para equilíbrio entre ambas.
+                    </p>
+                    <p class="chart-explanation">
+                        As linhas verticais pontilhadas indicam os três cenários clínicos recomendados. Note o trade-off:
+                        aumentar a sensibilidade reduz a especificidade e vice-versa. O ponto de cruzamento representa o
+                        threshold "ótimo" para equilíbrio entre ambas.
                     </p>
                     <div id="chart-threshold" class="interactive-chart"></div>
                 </div>
@@ -692,9 +708,11 @@
                         permite que
                         o sistema seja acessado de qualquer lugar, 24 horas por dia, com alta disponibilidade e baixa
                         latência.
-                        <br><span class=\"info-note\">A arquitetura serverless (sem servidores dedicados) reduz custos e
-                            escala automaticamente conforme a demanda,
-                            tornando o sistema viável mesmo para instituições com recursos limitados.</span>
+                    </p>
+                    <p>
+                        <span class="info-note">A arquitetura serverless (sem servidores dedicados) reduz custos e escala
+                            automaticamente conforme a demanda, tornando o sistema viável mesmo para instituições com
+                            recursos limitados.</span>
                     </p>
                 </div>
             </div>
@@ -975,3 +993,4 @@
 </body>
 
 </html>
+
